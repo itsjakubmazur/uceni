@@ -1,4 +1,4 @@
-# Mikulášova cesta — architektura a datový model
+# Mikuláš se učí — architektura a datový model
 
 Návrh k schválení (fáze 1). Zatím bez kódu.
 
@@ -249,13 +249,13 @@ Totéž u počítání: `count.1`…`count.20` jako samostatné klipy pro klepac
 **Odhad objemu:** ~29 písmen × 5 + 21 čísel × 4 + 20 počítadel + ~15 pochval/povzbuzení
 + ~30 systémových ≈ **300 klipů, cca 2–4 MB** v mono MP3 48 kbps. Bez problému do PWA cache.
 
-**Otevřená otázka (viz §9):** jak má hlas říct samotný znak. V češtině TTS přečte „M"
-nejspíš jako název písmene „em". Zadání zakazuje izolované hlásky („Mmm"), takže
-doporučuji **název písmene + ukotvení slovem** a pro problémové znaky per-písmenný
-`letterNameOverride` + SSML (`<sub>`, `<phoneme>`), kde to provider umí. Srovnávací
-skript ve fázi 2 obsahuje větu „Tohle je Ř." přesně proto, ať to slyšíš.
+**ROZHODNUTO: znak se vyslovuje názvem písmene + ukotví slovem.** „Tohle je M. M jako
+Mikuláš." Hlas řekne „em", slovo hned dodá zvuk. Žádné izolované hlásky. U znaků, kde
+Azure název zkomolí (Ř, CH, Y, Č, Š, Ž), doladím přes `letterNameOverride` + SSML
+(`<sub alias>`, `<phoneme>`, `<prosody rate>`); věta „Tohle je Ř." je proto ve srovnávací
+sadě.
 
-**Srovnání providerů (fáze 2), stejných 6 vět:**
+**Srovnání hlasů (fáze 2), stejných 6 vět:**
 1. „Tohle je M. M jako Mikuláš."
 2. „Tohle je Ř."
 3. „Spočítáme to spolu. Jedna, dvě, tři."
@@ -263,9 +263,22 @@ skript ve fázi 2 obsahuje větu „Tohle je Ř." přesně proto, ať to slyší
 5. „Tohle je N. Zkus najít M."
 6. „Dneska ses naučil písmeno M a číslo tři. Zítra se na tebe těším."
 
-Providers: ElevenLabs (multilingual v2), Azure Neural cs-CZ, Google Cloud TTS cs-CZ.
-Výstup do `/voice-samples/{provider}-{voice}-{n}.mp3` + `index.html` pro poslech vedle sebe.
-Klíče jen v `.env.local`, skripty běží v Node, klient je nikdy nevidí.
+**ROZHODNUTO: provider je Azure Neural cs-CZ.** Srovnání tedy neprobíhá mezi providery,
+ale mezi hlasy a laděním uvnitř Azure — cs-CZ má dva neurální hlasy:
+`cs-CZ-VlastaNeural` (ž) a `cs-CZ-AntoninNeural` (m). Varianty ke srovnání:
+
+| id | hlas | prosody |
+|---|---|---|
+| vlasta-normal | Vlasta | bez úprav |
+| vlasta-klidna | Vlasta | rate −10 %, pitch +2 st, delší pauzy mezi větami |
+| vlasta-hrava  | Vlasta | rate −5 %, pitch +5 st |
+| antonin-normal | Antonín | bez úprav (kontrola, kdyby mu mužský hlas seděl víc) |
+
+Výstup do `voice-samples/{variant}-{n}.mp3` + `voice-samples/index.html` pro poslech
+vedle sebe na iPadu. Rozhraní `TtsProvider` zůstává, `elevenlabs.ts` a `google.ts` jsou
+neimplementované stuby za stejným interfacem pro případnou pozdější záměnu.
+Klíče jen v `.env.local` (`AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`), skripty běží
+v Node, klient je nikdy nevidí. `.env.local` je v `.gitignore`.
 
 **Generování:** `scripts/generate-audio.ts` spočítá `sha256(text + provider + voice + ssml)`,
 porovná s `public/audio/manifest.json` a vygeneruje jen rozdíl. `--only=id1,id2` pro
@@ -293,10 +306,12 @@ verze se aktivuje až mimo běžící sezení.
 
 ## 9. Co potřebuju od tebe rozhodnout
 
-1. **Seznam slov** — viz `docs/WORDS.md`, schválit nebo prohodit.
-2. **Název písmene vs. hláska** (§6) — doporučení: název + slovo.
-3. **Jméno appky** (titulek PWA, nadpis mapy). Návrh: „Mikulášova cesta".
-4. **Hlas:** paní učitelka = ženský hlas, potvrdit.
-5. **TTS provider:** ke kterým máš/chceš klíče (ElevenLabs je placený, Azure i Google mají
-   free tier). Bez klíčů fázi 2 nespustím.
-6. **Délka sezení** default 10 min — potvrdit.
+Rozhodnuto:
+- ✅ Název appky: **Mikuláš se učí**
+- ✅ Výslovnost znaku: název písmene + ukotvení slovem (§6)
+- ✅ TTS: Azure Neural cs-CZ, srovnání mezi hlasy Vlasta / Antonín a laděním
+
+Zbývá:
+1. **Seznam slov** — `docs/WORDS.md`, schválit nebo prohodit jednotlivé položky.
+2. **`AZURE_SPEECH_KEY` a `AZURE_SPEECH_REGION`** do `.env.local`. Bez nich fázi 2 nespustím.
+3. **Délka sezení** — beru default 10 min, nastavitelné v rodičovské zóně. Řekni, jestli jinak.
