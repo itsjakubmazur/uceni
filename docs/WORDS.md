@@ -51,19 +51,57 @@ Pořadí je z tvého zadání, nemění se.
 
 ## Jak se hláska podá
 
-**Znak se nikdy nevysloví.** Ani názvem („em", „eř"), ani protahovanou hláskou
-(„Mmmikuláš") — první dítěti překáží při skládání slov, druhé syntéza neumí.
-Písmeno je v promluvách vždycky „písmeno od ${něčeho}":
+Česká první třída učí **hlásku**, ne název písmene — shodně u analyticko-syntetické
+i u genetické metody. Abeceda a názvy písmen jsou učivo 2. třídy. U předškoláka je
+cílem slyšet první hlásku ve slově.
+
+Hlásku ale syntéza nepřehraje. Používáme proto postup z hodiny: **hláska se vyvodí
+ze tří slov** a dítě si ji vytáhne samo.
 
 | Situace | Promluva |
 |---|---|
-| Seznámení | „Podívej. Takhle začíná Mikuláš." |
+| Seznámení | „Poslouchej. Mikuláš. Máma. Med. Slyšíš, jak začínají stejně?" |
+| Kreslení znaku | „A takhle se to píše." |
 | Úloha | „Kde je písmeno od Mikuláše?" |
-| Oprava po chybě | „To je písmeno od nosu. Zkus najít písmeno od Mikuláše." |
 | Přiřazení obrázku | „Kde je Mikuláš?" |
 
-Proto má každé slovo v datech i 2. a 4. pád. Vazbu mezi tvarem písmene a jeho
-zvukem dělá obří znak na displeji vedle obrázku, ne hlas.
+Proto má každé písmeno v datech dvě další slova se stejným začátkem. Ta nepotřebují
+ilustraci, jen zazní:
+
+| Znak | Slovo s obrázkem | Další dvě slova |
+|---|---|---|
+| **M** | Mikuláš | máma, med |
+| **A** | anděl | ananas, Adam |
+| **E** | ementál | Eva, Emil |
+| **L** | lev | loď, les |
+| **O** | oko | oheň, ovce |
+| **P** | pes | pomeranč, postel |
+| **S** | sova | slunce, sýr |
+| **U** | ucho | ulice, ulita |
+| **I** | iglú | Ivan, Irena |
+| **T** | tygr | tatínek, taška |
+| **J** | jablko | jahoda, jazyk |
+| **V** | vlak | voda, vlk |
+| **K** | kočka | kolo, kniha |
+| **D** | dům | dort, dveře |
+| **N** | nos | noha, nebe |
+| **Z** | zebra | zub, zahrada |
+| **R** | ryba | ruka, růže |
+| **B** | banán | bota, balón |
+| **C** | citron | cibule, cukr |
+| **H** | had | hora, hlava |
+| **Y** | myš | sýr, motýl |
+| **F** | flétna | fialka, fazole |
+| **G** | gorila | guma, garáž |
+| **Č** | čert | čepice, čokoláda |
+| **Ř** | řepa | řeka, řízek |
+| **Š** | šnek | šála, škola |
+| **Ž** | žába | žirafa, žralok |
+| **CH** | chobotnice | chleba, chata |
+
+Název písmene („Říká se mu em.") je v datech taky, ale přehraje se jen tehdy, když
+si to zapneš v rodičovské zóně. Výchozí stav je vypnuto, protože v pěti letech
+překáží při skládání slov.
 
 ## Věty, které chci od tebe slyšet „ano"
 

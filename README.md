@@ -44,9 +44,10 @@ nejdřív „Premium", pak „Enhanced", teprve pak základní. Ověřit, co sys
 say -v '?' | grep cs_CZ
 ```
 
-Písmena se v promluvách nikdy nevyslovují — ani názvem („em", „eř"), ani protahovanou
-hláskou („Mmmikuláš"). Obojí bylo vyzkoušeno a zahozeno; podrobnosti proč jsou
-v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
+Hláska se nevyslovuje izolovaně, ale vyvodí se ze tří slov („Poslouchej. Mikuláš.
+Máma. Med. Slyšíš, jak začínají stejně?") — tak, jak se to dělá v první třídě.
+Název písmene je učivo 2. třídy a přehraje se jen na přání rodiče. Proč přesně,
+je v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
 
 ### Vygenerování celé sady
 
@@ -78,7 +79,7 @@ npm run voices -- --provider=elevenlabs
 npm run audio  -- --provider=elevenlabs
 ```
 
-Celá sada má ~353 promluv a asi 6 000 znaků, takže se vejde i do free tieru.
+Celá sada má ~383 promluv a asi 8 200 znaků, takže se vejde i do free tieru.
 Klíč čte **jen** Node při generování, do klientského kódu se nikdy nedostane.
 
 ## Přidání položky

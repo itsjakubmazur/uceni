@@ -23,28 +23,31 @@ export interface SpeechLine {
 function letterLines(l: LetterItem): SpeechLine[] {
   const key = l.glyph;
   const Word = cap(l.word);
+  const [echo1, echo2] = l.echoWords;
 
-  // Y nezačíná žádné české slovo, tak to promluva rovnou přizná.
-  if (l.soundInsideWord) {
-    return [
-      { id: `letter.${key}.intro`, text: `Tohle písmeno je schované uprostřed slova ${l.word}.`, note: l.note },
-      { id: `letter.${key}.this`, text: `To je písmeno ze slova ${l.word}.` },
-      { id: `letter.${key}.where`, text: `Kde je písmeno ze slova ${l.word}?` },
-      { id: `letter.${key}.tryFind`, text: `Zkus najít písmeno ze slova ${l.word}.` },
-      { id: `letter.${key}.word`, text: `${Word}.` },
-      { id: `letter.${key}.pickPicture`, text: `Kde je ${l.word}?` },
-      { id: `letter.${key}.pickPictureRetry`, text: `Zkus najít ${l.wordAccusative}.` },
-    ];
-  }
+  // Vyvození hlásky z trojice slov — tak, jak se to dělá v hodině.
+  // Dítě si hlásku vytáhne samo, syntéza říká jen celá slova.
+  const listen = l.soundInsideWord
+    ? `Poslouchej. ${Word}. ${cap(echo1)}. ${cap(echo2)}. Slyšíš to uprostřed?`
+    : `Poslouchej. ${Word}. ${cap(echo1)}. ${cap(echo2)}. Slyšíš, jak začínají stejně?`;
+
+  const anchor = l.soundInsideWord
+    ? `písmeno ze slova ${l.word}`
+    : `písmeno od ${l.wordGenitive}`;
 
   return [
-    { id: `letter.${key}.intro`, text: `Podívej. Takhle začíná ${l.word}.`, note: l.note },
-    { id: `letter.${key}.this`, text: `To je písmeno od ${l.wordGenitive}.` },
-    { id: `letter.${key}.where`, text: `Kde je písmeno od ${l.wordGenitive}?` },
-    { id: `letter.${key}.tryFind`, text: `Zkus najít písmeno od ${l.wordGenitive}.` },
+    { id: `letter.${key}.intro`, text: listen, note: l.note },
+    { id: `letter.${key}.this`, text: `To je ${anchor}.` },
+    { id: `letter.${key}.where`, text: `Kde je ${anchor}?` },
+    { id: `letter.${key}.tryFind`, text: `Zkus najít ${anchor}.` },
     { id: `letter.${key}.word`, text: `${Word}.` },
     { id: `letter.${key}.pickPicture`, text: `Kde je ${l.word}?` },
     { id: `letter.${key}.pickPictureRetry`, text: `Zkus najít ${l.wordAccusative}.` },
+    {
+      id: `letter.${key}.name`,
+      text: `Říká se mu ${l.letterName}.`,
+      note: 'Název písmene je učivo 2. třídy. Přehraje se jen tehdy, když si to rodič zapne.',
+    },
   ];
 }
 
@@ -118,6 +121,9 @@ const systemLines: SpeechLine[] = [
   { id: 'ui.letters', text: 'Písmena.' },
   { id: 'ui.map', text: 'Mapa.' },
   { id: 'ui.again', text: 'Ještě jednou.' },
+
+  { id: 'letter.write', text: 'A takhle se to píše.', note: 'Hraje, zatímco se znak kreslí tahy. Společné pro všechna písmena.' },
+  { id: 'letter.listenAgain', text: 'Poslechni si to ještě jednou.' },
   { id: 'ui.back', text: 'Zpátky.' },
 
   { id: 'count.prompt', text: 'Spočítáme to spolu. Klepej na ně.' },

@@ -15,6 +15,18 @@ describe('písmena', () => {
     expect(LETTERS[0]!.word).toBe('Mikuláš');
   });
 
+  it('má ke každému písmenu dvě další slova se stejným začátkem', () => {
+    for (const l of LETTERS) {
+      expect(l.echoWords, l.glyph).toHaveLength(2);
+      const all = [l.word, ...l.echoWords].map((w) => w.toLowerCase());
+      expect(new Set(all).size, `${l.glyph}: slova se opakují`).toBe(3);
+      if (l.soundInsideWord) continue;
+      for (const w of l.echoWords) {
+        expect(w.toUpperCase().startsWith(l.glyph), `${l.glyph} → ${w}`).toBe(true);
+      }
+    }
+  });
+
   it('má u každého písmene slovo ve všech potřebných pádech i ilustraci', () => {
     for (const l of LETTERS) {
       expect(l.word.length, l.glyph).toBeGreaterThan(1);
@@ -103,6 +115,22 @@ describe('promluvy', () => {
     }
   });
 
+  it('vyvodí hlásku ze tří slov, ne z izolovaného zvuku', () => {
+    for (const l of LETTERS) {
+      const intro = speechById.get(`letter.${l.glyph}.intro`)!.text;
+      for (const word of [l.word, ...l.echoWords]) {
+        expect(intro.toLowerCase(), l.glyph).toContain(word.toLowerCase());
+      }
+    }
+  });
+
+  it('drží název písmene stranou v samostatné promluvě', () => {
+    // Název je učivo 2. třídy. Smí existovat, ale nesmí se vloudit jinam.
+    for (const l of LETTERS) {
+      expect(speechById.get(`letter.${l.glyph}.name`)!.text).toBe(`Říká se mu ${l.letterName}.`);
+    }
+  });
+
   it('neobsahují názvy písmen ani protahované hlásky', () => {
     // „eř", „em", „bé" dítěti překážejí při skládání slov; „Mmm" syntéza neumí.
     // \b je v JS jen ASCII, takže by „obtažené" falešně matchlo „en“.
@@ -111,6 +139,7 @@ describe('promluvy', () => {
     const NAMES = 'em|en|es|ef|el|er|eř|eš|bé|cé|čé|dé|gé|há|chá|ká|pé|vé|žet|zet|ypsilon';
     const letterNames = new RegExp(`(?<!\\p{L})(${NAMES})(?!\\p{L})`, 'iu');
     for (const s of SPEECH) {
+      if (s.id.endsWith('.name')) continue; // jediné místo, kde název smí zaznít
       expect(s.text, s.id).not.toMatch(letterNames);
       expect(s.text, s.id).not.toMatch(/(.)\1{2,}/i);
     }

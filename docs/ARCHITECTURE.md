@@ -143,6 +143,7 @@ interface Settings {
   sessionMinutes: number;          // default 10
   areas: { numbers: boolean; letters: boolean };
   voiceId: string;                 // vybraný hlas z fáze 2
+  sayLetterNames: boolean;         // „Říká se mu em." — učivo 2. třídy, výchozí false
   reducedMotion: 'auto' | 'on' | 'off';
   effectsVolume: number; speechVolume: number;
 }
@@ -249,29 +250,38 @@ Totéž u počítání: `count.1`…`count.20` jako samostatné klipy pro klepac
 **Odhad objemu:** ~29 písmen × 5 + 21 čísel × 4 + 20 počítadel + ~15 pochval/povzbuzení
 + ~30 systémových ≈ **300 klipů, cca 2–4 MB** v mono MP3 48 kbps. Bez problému do PWA cache.
 
-**ROZHODNUTO (po poslechovém testu): znak se nevyslovuje vůbec. Nese ho slovo.**
+**ROZHODNUTO: hláska se vyvodí ze tří slov. Název písmene je volitelný a vypnutý.**
 
-Vyzkoušeny a zahozeny dvě cesty:
+Opřeno o to, jak se čtení učí v české první třídě:
 
-1. *Název písmene* („Tohle je M." → hlas řekne „em"; Ř dokonce „eř"). Pedagogicky
-   škodí: kdo zná M jako „em" a Á jako „á", přečte MÁMA jako „em-á-em-á" a nespojí
-   to. Názvy písmen se ve škole učí až mnohem později, kvůli hláskování nahlas.
-2. *Protahovaná hláska* („Mmmikuláš"). Správné, ale syntéza to neumí — na hlase
-   Zuzana z toho vyjde koktání. A nešlo by to ani teoreticky u ražených hlásek
-   (P T K D B C G Č), které se bez samohlásky vyslovit nedají ani člověkem.
+- **Analyticko-syntetická metoda** vyvodí slovo z mluvené řeči a rozloží ho na
+  hlásky. „Nečtou se názvy písmen, ale vyslovuje se pouze odpovídající samostatná
+  hláska."
+- **Genetická metoda** slovo hláskuje a skládá (L-U-K = LUK) s cílem, „aby si dítě
+  každé písmeno propojilo s odpovídající hláskou". Jede na **velkých tiskacích
+  a na celé abecedě od začátku** — přesně na tom stojí i tahle aplikace.
+- **Abeceda, tedy názvy písmen, je učivo 2. třídy**, o dva roky později.
+- U předškoláka je cílem **sluchové vnímání a fonematické uvědomování**: slyšet
+  první hlásku ve slově, skládat slova ze dvou tří hlásek. Ne abeceda.
 
-Zůstává třetí cesta: **písmeno se vždycky ukotví svým slovem a nevysloví se samo.**
+Hlásku samotnou ale syntéza nepřehraje: izolovaný znak přečte názvem („em", „eř"),
+protahovaná hláska („Mmmikuláš") zní jako koktání a u ražených hlásek (P T K D B C G Č)
+nejde vyslovit ani člověkem. Používáme proto postup z hodiny — **vyvození hlásky
+z více slov**, kde dítě hlásku vytáhne samo:
 
 | Situace | Promluva |
 |---|---|
-| Seznámení | „Podívej. Takhle začíná Mikuláš." |
+| Seznámení | „Poslouchej. Mikuláš. Máma. Med. Slyšíš, jak začínají stejně?" |
+| Kreslení znaku | „A takhle se to píše." (společné pro všechna písmena) |
 | Úloha | „Kde je písmeno od Mikuláše?" |
 | Oprava po chybě | „To je písmeno od nosu. Zkus najít písmeno od Mikuláše." |
 | Přiřazení obrázku | „Kde je Mikuláš?" |
-| Y (jediná výjimka) | „Tohle písmeno je schované uprostřed slova myš." |
+| Y (jediná výjimka) | „Poslouchej. Myš. Sýr. Motýl. Slyšíš to uprostřed?" |
 
-Vazbu mezi tvarem a hláskou dělá obří znak na displeji a obrázek, ne hlas. Hlas
-říká jen to, co umí říct přirozeně: celá česká slova.
+Trojice slov je v datech u každého písmene (`echoWords`) a nepotřebuje ilustraci,
+jen zazní. Název písmene existuje jako samostatná promluva `letter.X.name`
+(„Říká se mu em.") a přehraje se **jen když si to rodič v rodičovské zóně zapne**;
+výchozí stav je vypnuto.
 
 **Srovnání hlasů (fáze 2), stejných 6 vět:**
 1. „Tohle je M. M jako Mikuláš."
@@ -327,7 +337,7 @@ verze se aktivuje až mimo běžící sezení.
 
 Rozhodnuto:
 - ✅ Název appky: **Mikuláš se učí**
-- ✅ Výslovnost znaku: znak se nevyslovuje, nese ho slovo (§6)
+- ✅ Výslovnost znaku: hláska se vyvodí ze tří slov, název je volitelný (§6)
 - ✅ TTS: systémový hlas macOS, Zuzana Premium
 
 Zbývá:
