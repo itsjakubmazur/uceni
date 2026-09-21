@@ -197,3 +197,58 @@ describe('hash promluvy', () => {
     expect(hashLine('Tohle je M.', sig)).not.toBe(hashLine('Tohle je M.', { ...sig, rate: 150 }));
   });
 });
+
+describe('ilustrace', () => {
+  it('existují ke každému písmenu', async () => {
+    const { hasIllustration } = await import('../src/theatre/Illustrations.tsx');
+    for (const l of LETTERS) {
+      expect(hasIllustration(l.illustration), `${l.glyph} → ${l.illustration}`).toBe(true);
+    }
+  });
+
+  it('nemají přebytečné položky, které nikam nepatří', async () => {
+    const { illustrationIds } = await import('../src/theatre/Illustrations.tsx');
+    const used = new Set(LETTERS.map((l) => l.illustration));
+    for (const id of illustrationIds()) {
+      expect(used.has(id), `ilustrace „${id}" není k žádnému písmenu`).toBe(true);
+    }
+  });
+});
+
+describe('tahy pro obtahování', () => {
+  it('existují ke každému písmenu i číslu', async () => {
+    const { missingStrokes } = await import('../src/content/strokes.ts');
+    const glyphs = [...LETTERS.map((l) => l.glyph), ...NUMBERS.map((n) => n.glyph)];
+    expect(missingStrokes(glyphs)).toEqual([]);
+  });
+
+  it('začínají příkazem přesunu, jinak by je prohlížeč nevykreslil', async () => {
+    const { strokesFor } = await import('../src/content/strokes.ts');
+    for (const l of LETTERS) {
+      for (const stroke of strokesFor(l.glyph)) {
+        expect(stroke.d.trim().startsWith('M'), `${l.glyph}: ${stroke.d}`).toBe(true);
+      }
+    }
+  });
+
+  it('skládají víceznakový nápis vedle sebe', async () => {
+    const { strokesForText } = await import('../src/content/strokes.ts');
+    const { strokes, width } = strokesForText('12');
+    expect(width).toBe(200);
+    expect(new Set(strokes.map((s) => s.offsetX))).toEqual(new Set([0, 100]));
+  });
+});
+
+describe('směr tahů', () => {
+  it('vede svislice shora dolů, ne zdola nahoru', async () => {
+    const { strokesFor } = await import('../src/content/strokes.ts');
+    for (const glyph of ['M', 'N', 'P', 'B', 'D', 'E', 'F', 'H', 'I', 'K', 'L', 'R', 'T']) {
+      const first = strokesFor(glyph)[0]!;
+      const m = /^M\s*(-?[\d.]+)[ ,]+(-?[\d.]+)\s*L\s*(-?[\d.]+)[ ,]+(-?[\d.]+)/.exec(first.d);
+      if (!m) continue;
+      const [x1, y1, x2, y2] = [Number(m[1]), Number(m[2]), Number(m[3]), Number(m[4])];
+      const vertical = Math.abs(x2 - x1) < 2;
+      if (vertical) expect(y2, `${glyph}: první tah jde vzhůru`).toBeGreaterThan(y1);
+    }
+  });
+});
