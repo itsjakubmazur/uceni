@@ -21,17 +21,33 @@ import type { ProviderOptions, SynthesizeRequest, SynthesizeResult, TtsProvider 
 
 const run = promisify(execFile);
 
-export const DEFAULT_VOICE = 'Zuzana';
 export const DEFAULT_RATE = 160;
 
+/** Prémiová varianta zní výrazně líp než základní, tak ji hledáme první. */
+const QUALITY_ORDER = ['premium', 'enhanced', ''];
+
+async function listVoices(): Promise<{ name: string; locale: string }[]> {
+  const { stdout } = await run('say', ['-v', '?']);
+  return stdout
+    .split('\n')
+    .map((line) => line.match(/^(.+?)\s{2,}([a-z]{2}_[A-Z]{2})/))
+    .filter((m): m is RegExpMatchArray => m !== null)
+    .map((m) => ({ name: m[1]!.trim(), locale: m[2]! }));
+}
+
 export function macosSayProvider(opts: ProviderOptions = {}): TtsProvider {
-  const voice = opts.voice ?? DEFAULT_VOICE;
   const rate = opts.rate ?? DEFAULT_RATE;
   const pause = opts.sentencePauseMs ?? 0;
 
+  // Když hlas nezadáš, vybere se při preflightu nejlepší dostupný český.
+  // Do hashe v manifestu jde až ten vybraný, takže výměna hlasu přegeneruje audio.
+  let voice = opts.voice ?? '';
+
   return {
     name: 'macos-say',
-    signature: { voice, rate, pause },
+    get signature() {
+      return { voice: voice || '(vybere se automaticky)', rate, pause };
+    },
 
     async preflight() {
       if (process.platform !== 'darwin') {
@@ -39,21 +55,34 @@ export function macosSayProvider(opts: ProviderOptions = {}): TtsProvider {
           'Provider „macos-say" běží jen na macOS. Na jiném systému zvol jiný provider.',
         );
       }
-      const { stdout } = await run('say', ['-v', '?']);
-      const available = stdout
-        .split('\n')
-        .map((line) => line.match(/^(.+?)\s{2,}([a-z]{2}_[A-Z]{2})/))
-        .filter((m): m is RegExpMatchArray => m !== null)
-        .map((m) => ({ name: m[1]!.trim(), locale: m[2]! }));
 
-      if (!available.some((v) => v.name === voice)) {
-        const czech = available.filter((v) => v.locale.startsWith('cs')).map((v) => v.name);
+      const available = await listVoices();
+      const czech = available.filter((v) => v.locale.startsWith('cs'));
+
+      if (voice) {
+        if (!available.some((v) => v.name === voice)) {
+          throw new Error(
+            `Hlas „${voice}" není v systému nainstalovaný.\n` +
+              `České hlasy, které vidím: ${czech.map((v) => v.name).join(', ') || '(žádné)'}\n` +
+              'Stáhneš je v Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému → Spravovat hlasy.',
+          );
+        }
+        return;
+      }
+
+      if (!czech.length) {
         throw new Error(
-          `Hlas „${voice}" není v systému nainstalovaný.\n` +
-            `České hlasy, které vidím: ${czech.length ? czech.join(', ') : '(žádné)'}\n` +
-            'Stáhneš je v Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému → Spravovat hlasy.',
+          'Nenašel jsem v systému žádný český hlas.\n' +
+            'Stáhni ho v Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému → Spravovat hlasy → Čeština.',
         );
       }
+
+      const best = QUALITY_ORDER.map((tier) =>
+        czech.find((v) => v.name.toLowerCase().includes(tier)),
+      ).find((v): v is { name: string; locale: string } => v !== undefined);
+
+      voice = best!.name;
+      console.log(`Hlas: ${voice}`);
     },
 
     async synthesize({ text, outPathWithoutExt }: SynthesizeRequest): Promise<SynthesizeResult> {

@@ -249,11 +249,29 @@ Totéž u počítání: `count.1`…`count.20` jako samostatné klipy pro klepac
 **Odhad objemu:** ~29 písmen × 5 + 21 čísel × 4 + 20 počítadel + ~15 pochval/povzbuzení
 + ~30 systémových ≈ **300 klipů, cca 2–4 MB** v mono MP3 48 kbps. Bez problému do PWA cache.
 
-**ROZHODNUTO: znak se vyslovuje názvem písmene + ukotví slovem.** „Tohle je M. M jako
-Mikuláš." Hlas řekne „em", slovo hned dodá zvuk. Žádné izolované hlásky. U znaků, kde
-Azure název zkomolí (Ř, CH, Y, Č, Š, Ž), doladím přes `letterNameOverride` + SSML
-(`<sub alias>`, `<phoneme>`, `<prosody rate>`); věta „Tohle je Ř." je proto ve srovnávací
-sadě.
+**ROZHODNUTO (po poslechovém testu): znak se nevyslovuje vůbec. Nese ho slovo.**
+
+Vyzkoušeny a zahozeny dvě cesty:
+
+1. *Název písmene* („Tohle je M." → hlas řekne „em"; Ř dokonce „eř"). Pedagogicky
+   škodí: kdo zná M jako „em" a Á jako „á", přečte MÁMA jako „em-á-em-á" a nespojí
+   to. Názvy písmen se ve škole učí až mnohem později, kvůli hláskování nahlas.
+2. *Protahovaná hláska* („Mmmikuláš"). Správné, ale syntéza to neumí — na hlase
+   Zuzana z toho vyjde koktání. A nešlo by to ani teoreticky u ražených hlásek
+   (P T K D B C G Č), které se bez samohlásky vyslovit nedají ani člověkem.
+
+Zůstává třetí cesta: **písmeno se vždycky ukotví svým slovem a nevysloví se samo.**
+
+| Situace | Promluva |
+|---|---|
+| Seznámení | „Podívej. Takhle začíná Mikuláš." |
+| Úloha | „Kde je písmeno od Mikuláše?" |
+| Oprava po chybě | „To je písmeno od nosu. Zkus najít písmeno od Mikuláše." |
+| Přiřazení obrázku | „Kde je Mikuláš?" |
+| Y (jediná výjimka) | „Tohle písmeno je schované uprostřed slova myš." |
+
+Vazbu mezi tvarem a hláskou dělá obří znak na displeji a obrázek, ne hlas. Hlas
+říká jen to, co umí říct přirozeně: celá česká slova.
 
 **Srovnání hlasů (fáze 2), stejných 6 vět:**
 1. „Tohle je M. M jako Mikuláš."
@@ -263,22 +281,23 @@ sadě.
 5. „Tohle je N. Zkus najít M."
 6. „Dneska ses naučil písmeno M a číslo tři. Zítra se na tebe těším."
 
-**ROZHODNUTO: provider je Azure Neural cs-CZ.** Srovnání tedy neprobíhá mezi providery,
-ale mezi hlasy a laděním uvnitř Azure — cs-CZ má dva neurální hlasy:
-`cs-CZ-VlastaNeural` (ž) a `cs-CZ-AntoninNeural` (m). Varianty ke srovnání:
+**ROZHODNUTO: provider je systémový hlas macOS (`say` + `afconvert`).** Azure padl na
+registraci, která vyžaduje vlastní tenant i platební kartu. Systémová **Zuzana
+v prémiové variantě** je proti základní výrazně lepší, je to rodilá čeština, běží
+offline a nestojí nic. Skript si prémiovou variantu vybere sám, pokud je stažená.
+Varianty ke srovnání:
 
-| id | hlas | prosody |
-|---|---|---|
-| vlasta-normal | Vlasta | bez úprav |
-| vlasta-klidna | Vlasta | rate −10 %, pitch +2 st, delší pauzy mezi větami |
-| vlasta-hrava  | Vlasta | rate −5 %, pitch +5 st |
-| antonin-normal | Antonín | bez úprav (kontrola, kdyby mu mužský hlas seděl víc) |
+| varianta | tempo |
+|---|---|
+| tempo-klidne | 140 slov/min |
+| tempo-stredni | 160 slov/min |
+| tempo-svizne | 180 slov/min |
+| tempo-s-pauzami | 145 + delší ticho mezi větami |
 
-Výstup do `voice-samples/{variant}-{n}.mp3` + `voice-samples/index.html` pro poslech
-vedle sebe na iPadu. Rozhraní `TtsProvider` zůstává, `elevenlabs.ts` a `google.ts` jsou
-neimplementované stuby za stejným interfacem pro případnou pozdější záměnu.
-Klíče jen v `.env.local` (`AZURE_SPEECH_KEY`, `AZURE_SPEECH_REGION`), skripty běží
-v Node, klient je nikdy nevidí. `.env.local` je v `.gitignore`.
+Výstup do `voice-samples/` + `voice-samples/index.html` pro poslech vedle sebe na iPadu.
+Rozhraní `TtsProvider` zůstává, takže výměna providera je výměna jednoho souboru;
+`elevenlabs.ts` je hotový pro případ, že by systémový hlas přestal stačit.
+Klíče jen v `.env.local`, skripty běží v Node, klient je nikdy nevidí.
 
 **Generování:** `scripts/generate-audio.ts` spočítá `sha256(text + provider + voice + ssml)`,
 porovná s `public/audio/manifest.json` a vygeneruje jen rozdíl. `--only=id1,id2` pro
@@ -308,10 +327,9 @@ verze se aktivuje až mimo běžící sezení.
 
 Rozhodnuto:
 - ✅ Název appky: **Mikuláš se učí**
-- ✅ Výslovnost znaku: název písmene + ukotvení slovem (§6)
-- ✅ TTS: Azure Neural cs-CZ, srovnání mezi hlasy Vlasta / Antonín a laděním
+- ✅ Výslovnost znaku: znak se nevyslovuje, nese ho slovo (§6)
+- ✅ TTS: systémový hlas macOS, Zuzana Premium
 
 Zbývá:
-1. **Seznam slov** — `docs/WORDS.md`, schválit nebo prohodit jednotlivé položky.
-2. **`AZURE_SPEECH_KEY` a `AZURE_SPEECH_REGION`** do `.env.local`. Bez nich fázi 2 nespustím.
-3. **Délka sezení** — beru default 10 min, nastavitelné v rodičovské zóně. Řekni, jestli jinak.
+1. **Vygenerovat audio** — `npm run audio` na Macu, viz README.
+2. **Délka sezení** — beru default 10 min, nastavitelné v rodičovské zóně.

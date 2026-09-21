@@ -51,17 +51,19 @@ Pořadí je z tvého zadání, nemění se.
 
 ## Jak se hláska podá
 
-Písmena se nepředstavují názvem („em", „bé"), ale hláskou — název písmene dítěti
-překáží při skládání slov. Ne všechny hlásky se ale dají vyslovit samostatně:
+**Znak se nikdy nevysloví.** Ani názvem („em", „eř"), ani protahovanou hláskou
+(„Mmmikuláš") — první dítěti překáží při skládání slov, druhé syntéza neumí.
+Písmeno je v promluvách vždycky „písmeno od ${něčeho}":
 
-| Skupina | Písmena | Jak to promluva podá |
-|---|---|---|
-| Samohlásky | A E O U I Y | „Anděl. Á jako anděl." |
-| Trvací | M L S J V N Z R H F Ř Š Ž CH | „Mikuláš. Slyšíš to na začátku? Mmmikuláš." |
-| Ražené a polozávěrové | P T K D B C G Č | „Pes. Slyšíš to na začátku? Pes. To je P." |
+| Situace | Promluva |
+|---|---|
+| Seznámení | „Podívej. Takhle začíná Mikuláš." |
+| Úloha | „Kde je písmeno od Mikuláše?" |
+| Oprava po chybě | „To je písmeno od nosu. Zkus najít písmeno od Mikuláše." |
+| Přiřazení obrázku | „Kde je Mikuláš?" |
 
-Ražená hláska se samostatně vyslovit nedá ani člověkem — bez samohlásky je z „p"
-jen fouknutí. Proto ji vždycky nese celé slovo a nikdy se neizoluje.
+Proto má každé slovo v datech i 2. a 4. pád. Vazbu mezi tvarem písmene a jeho
+zvukem dělá obří znak na displeji vedle obrázku, ne hlas.
 
 ## Věty, které chci od tebe slyšet „ano"
 

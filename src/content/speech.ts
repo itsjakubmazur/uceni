@@ -8,7 +8,7 @@
  * - Text se nikdy nemění „jen tak": změna textu = nový hash = přegenerování klipu.
  */
 
-import { LETTERS, spokenName, type LetterItem } from './items.letters.ts';
+import { LETTERS, type LetterItem } from './items.letters.ts';
 import { NUMBERS, COUNTING_WORDS, type NumberItem } from './items.numbers.ts';
 
 export interface SpeechLine {
@@ -21,24 +21,30 @@ export interface SpeechLine {
 /* ---------------------------------------------------------------- písmena */
 
 function letterLines(l: LetterItem): SpeechLine[] {
-  const name = spokenName(l);
   const key = l.glyph;
+  const Word = cap(l.word);
 
-  const intro = l.soundInsideWord
-    ? `Tohle je ${name}. Schovává se uprostřed slova ${l.word}.`
-    : `Tohle je ${name}. ${cap(name)} jako ${l.word}.`;
-
-  const pick = l.soundInsideWord
-    ? `Kde je schované ${name}?`
-    : `Co začíná na ${name}?`;
+  // Y nezačíná žádné české slovo, tak to promluva rovnou přizná.
+  if (l.soundInsideWord) {
+    return [
+      { id: `letter.${key}.intro`, text: `Tohle písmeno je schované uprostřed slova ${l.word}.`, note: l.note },
+      { id: `letter.${key}.this`, text: `To je písmeno ze slova ${l.word}.` },
+      { id: `letter.${key}.where`, text: `Kde je písmeno ze slova ${l.word}?` },
+      { id: `letter.${key}.tryFind`, text: `Zkus najít písmeno ze slova ${l.word}.` },
+      { id: `letter.${key}.word`, text: `${Word}.` },
+      { id: `letter.${key}.pickPicture`, text: `Kde je ${l.word}?` },
+      { id: `letter.${key}.pickPictureRetry`, text: `Zkus najít ${l.wordAccusative}.` },
+    ];
+  }
 
   return [
-    { id: `letter.${key}.intro`, text: intro, note: l.note },
-    { id: `letter.${key}.this`, text: `Tohle je ${name}.` },
-    { id: `letter.${key}.where`, text: `Kde je ${name}?` },
-    { id: `letter.${key}.tryFind`, text: `Zkus najít ${name}.` },
-    { id: `letter.${key}.word`, text: `${cap(l.word)}.` },
-    { id: `letter.${key}.pickPicture`, text: pick },
+    { id: `letter.${key}.intro`, text: `Podívej. Takhle začíná ${l.word}.`, note: l.note },
+    { id: `letter.${key}.this`, text: `To je písmeno od ${l.wordGenitive}.` },
+    { id: `letter.${key}.where`, text: `Kde je písmeno od ${l.wordGenitive}?` },
+    { id: `letter.${key}.tryFind`, text: `Zkus najít písmeno od ${l.wordGenitive}.` },
+    { id: `letter.${key}.word`, text: `${Word}.` },
+    { id: `letter.${key}.pickPicture`, text: `Kde je ${l.word}?` },
+    { id: `letter.${key}.pickPictureRetry`, text: `Zkus najít ${l.wordAccusative}.` },
   ];
 }
 
@@ -151,28 +157,20 @@ export const VARIANT_GROUPS = {
 /**
  * Věty pro srovnání hlasů. Schválně pokrývají to nejtěžší z celé aplikace.
  *
- * Skupina „zvuk" rozhoduje spor, který se nedá vyřešit teorií: má se písmeno
- * představit názvem („em"), nebo hláskou („mmm")? Hláska je pedagogicky
- * správně — název písmene dítěti brání skládat slova. Otázka je jen, jestli
- * ji syntéza zvládne vyslovit, nebo z ní udělá koktání.
+ * Protahování hlásky („Mmmikuláš") tu bývalo taky — vyzkoušeno na hlase Zuzana
+ * a zahozeno, syntéza z toho dělá koktání. Stejně tak názvy písmen („eř"),
+ * které navíc dítěti překážejí při skládání slov. Zbylo to, co Zuzana umí
+ * říct přirozeně: celá česká slova.
  */
-export const VOICE_TEST_SENTENCES: readonly {
-  id: string;
-  text: string;
-  why: string;
-  group: 'základ' | 'zvuk';
-}[] = [
-  { id: 'test-1', text: 'Tohle je M. M jako Mikuláš.', why: 'Základní tvar promluvy. Přečte hlas „M" jako „em"?', group: 'základ' },
-  { id: 'test-2', text: 'Tohle je eř. Eř jako řepa.', why: 'Nejtěžší česká hláska. Tady cizí modely padají.', group: 'základ' },
-  { id: 'test-3', text: 'Spočítáme to spolu. Jedna, dvě, tři.', why: 'Rytmus počítání a pauzy mezi čísly.', group: 'základ' },
-  { id: 'test-4', text: 'To je ono! Moc ti to jde.', why: 'Radost. Zní to vřele, nebo jako hlášení na nádraží?', group: 'základ' },
-  { id: 'test-5', text: 'Tohle je N. Zkus najít M.', why: 'Oprava po chybě. Nesmí znít přísně.', group: 'základ' },
-  { id: 'test-6', text: 'Dneska ses naučil písmeno M a číslo tři. Zítra se na tebe těším.', why: 'Delší věta, intonace na konci.', group: 'základ' },
-
-  { id: 'zvuk-1', text: 'Mikuláš. Slyšíš to na začátku? Mmmikuláš.', why: 'TRVACÍ HLÁSKA. Zahučí to hezky, nebo to zní jako koktání? Tohle je ta hlavní otázka.', group: 'zvuk' },
-  { id: 'zvuk-2', text: 'Sova. Slyšíš to na začátku? Sssova.', why: 'Druhá trvací hláska pro kontrolu. Sykavka se protahuje jinak než nosovka.', group: 'zvuk' },
-  { id: 'zvuk-3', text: 'Pes. Slyšíš to na začátku? Pes. To je P.', why: 'RAŽENÁ HLÁSKA. Tu nejde protáhnout ani člověkem, takže ji nese celé slovo. Zní to srozumitelně?', group: 'zvuk' },
-  { id: 'zvuk-4', text: 'Kde je M jako Mikuláš?', why: 'Otázka v úloze bez názvu písmene. Není to moc dlouhé na to, aby to zaznělo stokrát?', group: 'zvuk' },
+export const VOICE_TEST_SENTENCES: readonly { id: string; text: string; why: string }[] = [
+  { id: 'test-1', text: 'Podívej. Takhle začíná Mikuláš.', why: 'Seznámení s písmenem. Znak se nevyslovuje, nese ho slovo.' },
+  { id: 'test-2', text: 'Kde je písmeno od Mikuláše?', why: 'Otázka v úloze. Tuhle větu Mikuláš uslyší stokrát — není moc dlouhá?' },
+  { id: 'test-3', text: 'To je písmeno od nosu. Zkus najít písmeno od Mikuláše.', why: 'Oprava po chybě, poskládaná ze dvou klipů. Nesmí znít přísně.' },
+  { id: 'test-4', text: 'Podívej. Takhle začíná řepa.', why: 'Nejtěžší česká hláska uvnitř běžného slova.' },
+  { id: 'test-5', text: 'Spočítáme to spolu. Jedna, dvě, tři.', why: 'Rytmus počítání a pauzy mezi čísly.' },
+  { id: 'test-6', text: 'To je ono! Moc ti to jde.', why: 'Radost. Zní to vřele, nebo jako hlášení na nádraží?' },
+  { id: 'test-7', text: 'Tohle je pětka. Číslo pět.', why: 'Číslice má jiný tvar než počet. Nezní „pětka" divně?' },
+  { id: 'test-8', text: 'Dneska ses naučil písmeno od Mikuláše a číslo tři. Zítra se na tebe těším.', why: 'Závěr sezení. Delší věta, intonace na konci.' },
 ];
 
 function cap(s: string): string {

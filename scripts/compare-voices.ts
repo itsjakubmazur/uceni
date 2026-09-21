@@ -80,11 +80,8 @@ async function main(): Promise<void> {
 }
 
 function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
-  let lastGroup = '';
   const sentences = VOICE_TEST_SENTENCES.map((s, i) => {
-    const heading = s.group === lastGroup ? '' : `<h2 class="group">${esc(groupTitle(s.group))}</h2>`;
-    lastGroup = s.group;
-    return `${heading}
+    return `
     <section>
       <h3>${i + 1}. „${esc(s.text)}"</h3>
       <p class="why">${esc(s.why)}</p>
@@ -115,7 +112,6 @@ function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
   .intro { color: color-mix(in oklab, currentColor 60%, transparent); margin-top: 0; }
   ul { color: color-mix(in oklab, currentColor 70%, transparent); font-size: .95rem; }
   section { margin: 2.5rem 0; padding-top: 1.25rem; border-top: 1px solid color-mix(in oklab, currentColor 15%, transparent); }
-  h2.group { font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; margin: 3rem 0 0; color: color-mix(in oklab, currentColor 50%, transparent); }
   h3 { font-size: 1.15rem; margin: 0 0 .25rem; }
   .why { margin: 0 0 1rem; font-size: .9rem; color: color-mix(in oklab, currentColor 55%, transparent); }
   .row { display: flex; align-items: center; gap: 1rem; margin: .6rem 0; flex-wrap: wrap; }
@@ -135,12 +131,6 @@ ${sentences}
 </body>
 </html>
 `;
-}
-
-function groupTitle(group: string): string {
-  return group === 'zvuk'
-    ? 'Hláska, nebo název písmene?'
-    : 'Základní promluvy';
 }
 
 const esc = (s: string): string =>

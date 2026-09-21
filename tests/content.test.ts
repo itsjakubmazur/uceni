@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LETTERS, spokenName } from '../src/content/items.letters.ts';
+import { LETTERS } from '../src/content/items.letters.ts';
 import { NUMBERS, COUNTING_WORDS } from '../src/content/items.numbers.ts';
 import { SPEECH, VARIANT_GROUPS, speechById } from '../src/content/speech.ts';
 import { safeFileBase, hashLine } from '../scripts/lib/manifest.ts';
@@ -15,10 +15,11 @@ describe('písmena', () => {
     expect(LETTERS[0]!.word).toBe('Mikuláš');
   });
 
-  it('má u každého písmene slovo i ilustraci', () => {
+  it('má u každého písmene slovo ve všech potřebných pádech i ilustraci', () => {
     for (const l of LETTERS) {
       expect(l.word.length, l.glyph).toBeGreaterThan(1);
       expect(l.illustration, l.glyph).toMatch(/^[a-z]+$/);
+      expect(l.wordGenitive.length, l.glyph).toBeGreaterThan(1);
       expect(l.wordAccusative.length, l.glyph).toBeGreaterThan(1);
     }
   });
@@ -82,7 +83,7 @@ describe('promluvy', () => {
 
   it('pokrývají každé písmeno i číslo', () => {
     for (const l of LETTERS) {
-      for (const suffix of ['intro', 'this', 'where', 'tryFind', 'word', 'pickPicture']) {
+      for (const suffix of ['intro', 'this', 'where', 'tryFind', 'word', 'pickPicture', 'pickPictureRetry']) {
         expect(speechById.has(`letter.${l.glyph}.${suffix}`), `${l.glyph}.${suffix}`).toBe(true);
       }
     }
@@ -91,11 +92,35 @@ describe('promluvy', () => {
     }
   });
 
-  it('uvedou znak jeho názvem a ukotví slovem', () => {
+  it('ukotví písmeno slovem a nikdy nevysloví znak samotný', () => {
     for (const l of LETTERS) {
-      const intro = speechById.get(`letter.${l.glyph}.intro`)!.text;
-      expect(intro, l.glyph).toContain(spokenName(l));
-      expect(intro, l.glyph).toContain(l.word);
+      const forms = [l.word, l.wordGenitive, l.wordAccusative];
+      for (const suffix of ['intro', 'this', 'where', 'tryFind', 'word', 'pickPicture', 'pickPictureRetry']) {
+        const text = speechById.get(`letter.${l.glyph}.${suffix}`)!.text.toLowerCase();
+        const anchored = forms.some((form) => text.includes(form.toLowerCase()));
+        expect(anchored, `${l.glyph}.${suffix}: „${text}"`).toBe(true);
+      }
+    }
+  });
+
+  it('neobsahují názvy písmen ani protahované hlásky', () => {
+    // „eř", „em", „bé" dítěti překážejí při skládání slov; „Mmm" syntéza neumí.
+    // \b je v JS jen ASCII, takže by „obtažené" falešně matchlo „en“.
+    // Hranice slova proto hlídáme přes Unicode písmena.
+    // „té" a „já" jsou zároveň běžná česká slova, ty hlídat nejde.
+    const NAMES = 'em|en|es|ef|el|er|eř|eš|bé|cé|čé|dé|gé|há|chá|ká|pé|vé|žet|zet|ypsilon';
+    const letterNames = new RegExp(`(?<!\\p{L})(${NAMES})(?!\\p{L})`, 'iu');
+    for (const s of SPEECH) {
+      expect(s.text, s.id).not.toMatch(letterNames);
+      expect(s.text, s.id).not.toMatch(/(.)\1{2,}/i);
+    }
+  });
+
+  it('se ptají na obrázek v prvním pádu, ne ve čtvrtém', () => {
+    // „Kde je sovu?" je přesně ten druh chyby, kterou dítě nenahlásí.
+    for (const l of LETTERS) {
+      const q = speechById.get(`letter.${l.glyph}.pickPicture`)!.text;
+      expect(q, l.glyph).toBe(`Kde je ${l.word}?`);
     }
   });
 

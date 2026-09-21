@@ -35,20 +35,26 @@ open voice-samples/index.html       # poslechni si to, ideálně na iPadu
 Vygeneruje šest vět, které pokrývají to nejtěžší z celé aplikace (mimo jiné „Tohle je eř."
 a počítání „jedna, dvě, tři"), v několika variantách vedle sebe.
 
-Hlas **Zuzana** je součástí macOS. Prémiovou variantu stáhneš v
-*Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému → Spravovat hlasy → Čeština*.
-Ověř, že ji vidí i příkazová řádka:
+Hlas **Zuzana** je součástí macOS a prémiová varianta zní výrazně líp než základní.
+Stáhneš ji v *Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému →
+Spravovat hlasy → Čeština*. Skript si ji vybere sám — mezi českými hlasy hledá
+nejdřív „Premium", pak „Enhanced", teprve pak základní. Ověřit, co systém vidí:
 
 ```bash
 say -v '?' | grep cs_CZ
 ```
+
+Písmena se v promluvách nikdy nevyslovují — ani názvem („em", „eř"), ani protahovanou
+hláskou („Mmmikuláš"). Obojí bylo vyzkoušeno a zahozeno; podrobnosti proč jsou
+v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
 
 ### Vygenerování celé sady
 
 ```bash
 npm run audio:dry                   # ukáže, co by se generovalo, nic nevytvoří
 npm run audio                       # vygeneruje jen chybějící a změněné
-npm run audio -- --voice="Zuzana (Premium)" --rate=150
+npm run audio -- --rate=150         # tempo v slovech za minutu
+npm run audio -- --voice="Zuzana (Premium)"
 npm run audio -- --only=letter.M.intro,praise.3
 npm run audio -- --force            # znovu úplně všechno
 ```
@@ -72,7 +78,7 @@ npm run voices -- --provider=elevenlabs
 npm run audio  -- --provider=elevenlabs
 ```
 
-Celá sada má ~325 promluv a asi 5 200 znaků, takže se vejde i do free tieru.
+Celá sada má ~353 promluv a asi 6 000 znaků, takže se vejde i do free tieru.
 Klíč čte **jen** Node při generování, do klientského kódu se nikdy nedostane.
 
 ## Přidání položky
