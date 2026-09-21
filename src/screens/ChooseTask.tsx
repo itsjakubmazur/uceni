@@ -26,7 +26,7 @@ export function ChooseTask({
     <>
       <Sign>{question(itemId)}</Sign>
 
-      <div className="absolute inset-x-0 bottom-[18.5%] z-20 flex items-end justify-center gap-[clamp(14px,3vw,52px)] px-[6%]">
+      <div className="absolute inset-x-0 bottom-[18.5%] z-20 flex items-end justify-center gap-[clamp(8px,3vw,52px)] px-[3%]">
         {options.map((id, i) => (
           <Slide
             key={id}

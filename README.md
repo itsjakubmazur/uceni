@@ -1,109 +1,116 @@
 # Mikuláš se učí
 
 Webová aplikace, která předškoláka naučí čísla a písmena — celá přes hlas, obrázky a dotyk.
-Primárně iPad (landscape i portrait), jazyk čeština.
+Žádný text není potřeba k ovládání. Primárně iPad (na šířku i na výšku), sekundárně telefon.
 
+- [DESIGN.md](DESIGN.md) — závazný design systém světa
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — struktura, datový model, engine, hlas, PWA
 - [docs/WORDS.md](docs/WORDS.md) — slova k písmenům, obsah čísel
-
-## Stav
-
-| Fáze | Co | Stav |
-|---|---|---|
-| 1 | Architektura, datový model, slova | hotovo |
-| 2 | Hlas: srovnání a generování | skripty hotové, čeká se na vygenerování |
-| 3 | Koncepty světa a maskota | vybráno papírové divadlo + Kulisák, viz [DESIGN.md](DESIGN.md) |
-| 4 | Engine a čísla | hotovo: seznámení, poznávání, počítání |
-| 5–8 | Písmena, obtahování, mapa, rodičovská zóna, deploy | před námi |
-
-## Hlas
-
-Aplikace za běhu nikam nevolá. Všechny promluvy se **jednou** předgenerují do
-`public/audio/` a commitnou do repa; v prohlížeči se pak přehrávají jen hotové soubory.
-Web Speech API je pouze nouzová záloha, kdyby soubor chyběl.
-
-Texty promluv jsou **výhradně** v [`src/content/speech.ts`](src/content/speech.ts).
-Nikde jinde v kódu žádný text, který se má vyslovit, nebude.
-
-### Poslech a výběr hlasu
-
-```bash
-npm install
-npm run voices                      # macOS Zuzana ve třech tempech + varianta s pauzami
-open voice-samples/index.html       # poslechni si to, ideálně na iPadu
-```
-
-Vygeneruje šest vět, které pokrývají to nejtěžší z celé aplikace (mimo jiné „Tohle je eř."
-a počítání „jedna, dvě, tři"), v několika variantách vedle sebe.
-
-Výchozí nastavení je **tempo 145 slov za minutu s delším tichem mezi větami** — vybráno
-poslechem na iPadu, pro pětiletého je srozumitelnější než svižnější varianty.
-
-Hlas **Zuzana** je součástí macOS a prémiová varianta zní výrazně líp než základní.
-Stáhneš ji v *Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému →
-Spravovat hlasy → Čeština*. Skript si ji vybere sám — mezi českými hlasy hledá
-nejdřív „Premium", pak „Enhanced", teprve pak základní. Ověřit, co systém vidí:
-
-```bash
-say -v '?' | grep cs_CZ
-```
-
-Hláska se nevyslovuje izolovaně, ale vyvodí se ze tří slov („Poslouchej. Mikuláš.
-Máma. Med. Slyšíš, jak začínají stejně?") — tak, jak se to dělá v první třídě.
-Název písmene je učivo 2. třídy a přehraje se jen na přání rodiče. Proč přesně,
-je v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
-
-### Vygenerování celé sady
-
-```bash
-npm run audio:dry                   # ukáže, co by se generovalo, nic nevytvoří
-npm run audio                       # vygeneruje jen chybějící a změněné
-npm run audio -- --rate=160         # jiné tempo, výchozí je 145
-npm run audio -- --pause=0          # bez delších pauz mezi větami
-npm run audio -- --voice="Zuzana (Premium)"
-npm run audio -- --only=letter.M.intro,praise.3
-npm run audio -- --force            # znovu úplně všechno
-```
-
-Skript si vede `public/audio/manifest.json` s hashem textu a nastavení hlasu. Když později
-prohodíš slovo u jednoho písmene, přegeneruje se pár souborů, ne celá sada. Manifest je
-zároveň to, co za běhu mapuje ID promluvy na soubor — proto můžou mít soubory ASCII názvy
-(`letter.R_.intro.m4a`) a nevadí rozdíl mezi macOS a Linuxem v kódování diakritiky.
-
-Na macOS je výstup **m4a/AAC**, ne mp3: macOS neumí mp3 kódovat bez doinstalování ffmpeg,
-kdežto `afconvert` je v systému vždycky. Safari i iOS m4a přehrají bez problémů.
-
-### Jiný provider
-
-Providery jsou za jedním rozhraním v [`scripts/tts/`](scripts/tts/). Kromě macOS je
-připravený ElevenLabs:
-
-```bash
-echo 'ELEVENLABS_API_KEY=...' >> .env.local     # .env.local je v .gitignore
-npm run voices -- --provider=elevenlabs
-npm run audio  -- --provider=elevenlabs
-```
-
-Celá sada má ~383 promluv a asi 8 200 znaků, takže se vejde i do free tieru.
-Klíč čte **jen** Node při generování, do klientského kódu se nikdy nedostane.
-
-## Přidání položky
-
-1. Písmeno → `src/content/items.letters.ts`, číslo → `src/content/items.numbers.ts`.
-2. Promluvy se z položek odvodí samy (šablony jsou v `src/content/speech.ts`).
-3. `npm test` ověří, že slovo začíná správnou hláskou, ID nekolidují a texty jsou v pořádku.
-4. `npm run audio` dogeneruje jen nové klipy.
+- [docs/CONCEPTS.md](docs/CONCEPTS.md) — tři koncepty světa, ze kterých se vybíralo
 
 ## Spuštění
 
 ```bash
+npm install
 npm run dev          # Vite vypíše i adresu „Network" — tu otevři na iPadu
+```
+
+```bash
 npm run build
 npm run preview
 ```
 
-Koncepty světa zůstávají dostupné na `?koncepty`. Jednotlivou úlohu si jde
-prohlédnout bez proklikávání: `?uloha=pocitani&polozka=num:7`.
+Postranní vchody pro vývoj a kontrolu, v běžném provozu na ně nikdo nesáhne:
+
+| Adresa | Co ukáže |
+|---|---|
+| `?koncepty` | tři původní koncepty světa a maskoty |
+| `?uloha=pocitani&polozka=num:7` | klepací počítání |
+| `?uloha=obrazek&polozka=let:M` | přiřazení obrázku k písmenu |
+| `?uloha=obtahovani&polozka=let:M` | obtahování prstem |
+| `?uloha=mapa&hotovo=11` | mapa s vymyšleným postupem |
+
+## Jak se to učí
+
+Obě hlavní české metody prvopočátečního čtení učí **hlásku**, ne název písmene; názvy
+a abeceda jsou učivo druhé třídy. Syntéza ale izolovanou hlásku vyslovit neumí, takže
+se vyvozuje ze tří slov — přesně jak to dělá učitelka:
+
+> „Poslouchej. Mikuláš. Máma. Med. Slyšíš, jak začínají stejně?"
+
+Písmeno pak v promluvách vystupuje jako **„písmeno od Mikuláše"** a nikdy se nevysloví
+samo. Podrobnosti proč jsou v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
+
+Položka prochází pěti stupni: seznámení → poznávání ze dvou → poznávání ze tří až čtyř →
+přiřazení (počet k číslici, obrázek k písmenu) → obtahování. **Zvládnutá je při čtyřech
+správných z posledních pěti pokusů ve stupni 3 a výš**, počítá se jen správně napoprvé
+a bez nápovědy. Nová položka se odemkne až po zvládnutí předchozí, nejvýš dvě rozpracované
+naráz. Zvládnuté se vracejí v rostoucích intervalech měřených v sezeních, ne ve dnech.
+
+Chyba nikdy není červená: špatná volba se jemně zavrtí, hlas pojmenuje, co dítě vybralo,
+a nabídne další pokus. Po dvou chybách začne správná možnost dýchat, po třetí se úloha
+vyřeší jako ukázka, aby dítě neuvízlo.
+
+## Hlas
+
+Aplikace za běhu nikam nevolá. Všech ~383 promluv se **jednou** předgeneruje do
+`public/audio/` a commitne do repa; v prohlížeči se přehrávají jen hotové soubory.
+Web Speech API je pouze nouzová záloha, kdyby soubor chyběl.
+
+Texty jsou **výhradně** v [`src/content/speech.ts`](src/content/speech.ts).
+
+### Výběr hlasu
+
+```bash
+npm run voices
+open voice-samples/index.html      # poslechni na iPadu, přes jeho reproduktor
+```
+
+Vygeneruje osm vět, které pokrývají to nejtěžší z celé aplikace, ve čtyřech variantách
+tempa. Výchozí je **Zuzana Premium, 145 slov za minutu s delšími pauzami mezi větami** —
+vybráno poslechem. Prémiovou variantu stáhneš v *Nastavení → Zpřístupnění → Čtení
+a mluvení → Hlas systému → Spravovat hlasy → Čeština*; skript si ji najde sám.
+
+### Vygenerování sady
+
+```bash
+npm run audio:dry                  # ukáže, co by se generovalo
+npm run audio                      # jen chybějící a změněné
+npm run audio -- --only=letter.M.intro,praise.3
+npm run audio -- --rate=160 --pause=0
+npm run audio -- --force
+```
+
+Manifest v `public/audio/manifest.json` drží hash textu i nastavení hlasu, takže změna
+jednoho slova přegeneruje pár klipů, ne celou sadu. Je zároveň tím, co za běhu mapuje ID
+promluvy na soubor — proto můžou mít soubory ASCII názvy (`letter.R_.intro.m4a`)
+a nevadí rozdíl mezi macOS (NFD) a Linuxem (NFC) v kódování diakritiky.
+
+Na macOS je výstup **m4a/AAC**: mp3 neumí macOS kódovat bez ffmpeg, kdežto `afconvert`
+je v systému vždycky. Safari i iOS m4a přehrají a aplikaci na formátu nezáleží.
+
+V rodičovské zóně na kartě **Hlasy** jde každou promluvu přehrát, označit k přegenerování
+a případně k ní napsat lepší text. Označené se zkopírují jako seznam pro `--only=`.
+
+## Přidání položky
+
+1. Písmeno → [`src/content/items.letters.ts`](src/content/items.letters.ts)
+   (slovo, 2. a 4. pád, dvě slova se stejným začátkem, zaměnitelné znaky, klíč ilustrace).
+   Číslo → [`src/content/items.numbers.ts`](src/content/items.numbers.ts).
+2. Obrázek přikresli do [`src/theatre/Illustrations.tsx`](src/theatre/Illustrations.tsx)
+   pod stejným klíčem.
+3. Tahy pro obtahování do [`src/content/strokes.ts`](src/content/strokes.ts), pokud jde
+   o nový znak.
+4. Promluvy se odvodí ze šablon samy.
+5. `npm test` ověří, že slovo začíná správnou hláskou, ilustrace i tahy existují, ID
+   nekolidují a promluva neobsahuje název písmene.
+6. `npm run audio` dogeneruje jen nové klipy.
+
+## Rodičovská zóna
+
+Podrž **pravý horní roh tři vteřiny**. Během držení se plní tenký oblouk. Obsahuje přehled
+zvládnutých položek a posledních sezení, délku sezení, zapnutí a vypnutí oblastí, hlasitosti,
+přepínač „říkat i názvy písmen" (výchozí vypnuto), smazání postupu a přehled všech promluv.
 
 ## Testy a kontrola vzhledu
 
@@ -111,22 +118,45 @@ prohlédnout bez proklikávání: `?uloha=pocitani&polozka=num:7`.
 npm test             # engine a obsah, čisté funkce bez prohlížeče
 npm run typecheck
 npm run shots        # screenshoty konceptů v rozlišení iPadu a telefonu
-npm run flow         # projde appku jako dítě a hlásí chyby v konzoli
+npm run flow         # projde aplikaci jako dítě a hlásí chyby v konzoli
 ```
 
-`shots` a `flow` potřebují běžící `npm run preview` a Chromium. V prostředí,
-kde Playwright hledá prohlížeč jinde, než kde leží, se cesta předá přes
-`CHROMIUM_PATH`.
+`shots` a `flow` potřebují běžící `npm run preview`. Když Playwright hledá prohlížeč jinde,
+než kde leží, cesta se předá přes `CHROMIUM_PATH`.
+
+## Nasazení
+
+Vercel, bez konfigurace navíc — [`vercel.json`](vercel.json) má build, SPA přesměrování
+i hlavičky pro cache.
+
+```bash
+npx vercel            # poprvé: propojí projekt
+npx vercel --prod
+```
+
+Nebo přes web: v Vercelu *Add New → Project*, vybrat repozitář, nechat výchozí nastavení
+(Vite se detekuje sám) a nasadit.
+
+Offline: service worker předukládá **všechno včetně audia**, dohromady kolem 8 MB.
+První načtení je proto delší, zato appka funguje i na chatě bez signálu. Nová verze se
+nikdy nenasadí uprostřed úlohy — čeká, až bude Mikuláš na rozcestníku.
+
+Na iPadu se přidá na plochu přes *Sdílet → Přidat na plochu*; pak běží na celou obrazovku
+bez adresního řádku.
 
 ## Struktura
 
 | Adresář | Co v něm je |
 |---|---|
-| `src/content/` | veškerá data: položky, slova, promluvy |
+| `src/content/` | veškerá data: položky, slova, promluvy, tahy |
 | `src/engine/` | pedagogika jako čisté funkce, žádný React ani IO |
 | `src/data/` | postup za rozhraním `ProgressRepository` (IndexedDB, později Supabase) |
-| `src/audio/` | přehrávání promluv, syntéza efektů |
-| `src/theatre/` | jeviště, rampa, diapozitivy, počítané motivy |
-| `src/screens/` | jednotlivé obrazovky |
+| `src/audio/` | přehrávání promluv, syntéza efektů ve Web Audio |
+| `src/theatre/` | jeviště, rampa, diapozitivy, ilustrace, počítané motivy |
+| `src/screens/` | jednotlivé obrazovky a typy úloh |
 | `src/mascots/` | Kulisák a zahozené návrhy |
+| `src/concepts/` | původní tři koncepty světa, ponechané pro srovnání |
 | `scripts/` | generování hlasu a kontrola vzhledu |
+
+Pravidlo: `engine/` nesmí importovat nic z `react`, `data/` ani `audio/`. Bere stav,
+vrací rozhodnutí. Proto je celá pedagogika testovatelná bez prohlížeče.

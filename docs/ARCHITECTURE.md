@@ -335,6 +335,9 @@ verze se aktivuje až mimo běžící sezení.
 
 ## 9. Co potřebuju od tebe rozhodnout
 
+Hotovo: všechny fáze. Stav a návody jsou v [README](../README.md),
+design systém v [DESIGN.md](../DESIGN.md).
+
 Rozhodnuto:
 - ✅ Název appky: **Mikuláš se učí**
 - ✅ Výslovnost znaku: hláska se vyvodí ze tří slov, název je volitelný (§6)

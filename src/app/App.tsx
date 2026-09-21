@@ -9,8 +9,13 @@ import { CountTask } from '../screens/CountTask.tsx';
 import { MatchTask } from '../screens/MatchTask.tsx';
 import { TraceTask } from '../screens/TraceTask.tsx';
 import { EndScreen } from '../screens/EndScreen.tsx';
+import { MapScreen } from '../screens/MapScreen.tsx';
+import { ParentZone } from '../screens/ParentZone.tsx';
+import { ParentCorner } from '../screens/ParentCorner.tsx';
 import { useSession } from './useSession.ts';
-import type { ItemId } from '../engine/types.ts';
+import type { EngineState, ItemId } from '../engine/types.ts';
+import { LETTERS } from '../content/items.letters.ts';
+import { NUMBERS } from '../content/items.numbers.ts';
 
 /**
  * Celé divadlo zůstává na místě a mění se jen to, co se na něm hraje.
@@ -25,6 +30,7 @@ export function App() {
   //   ?uloha=pocitani&polozka=num:5
   //   ?uloha=obrazek&polozka=let:M
   //   ?uloha=obtahovani&polozka=let:M
+  //   ?uloha=mapa&hotovo=8
   const preview = previewFromUrl();
   if (preview) {
     const reload = () => window.location.reload();
@@ -32,6 +38,9 @@ export function App() {
       <Stage litCount={4}>
         {preview.kind === 'pocitani' && <CountTask itemId={preview.itemId} onDone={reload} />}
         {preview.kind === 'obtahovani' && <TraceTask itemId={preview.itemId} onDone={reload} />}
+        {preview.kind === 'mapa' && (
+          <MapScreen state={fakeProgress(preview.count)} onBack={reload} />
+        )}
         {preview.kind === 'obrazek' && (
           <MatchTask
             itemId={preview.itemId}
@@ -49,6 +58,19 @@ export function App() {
     return <StartScreen onStart={() => void session.begin()} />;
   }
 
+  if (session.phase === 'rodice') {
+    return (
+      <ParentZone
+        repo={session.repo}
+        state={session.state}
+        settings={session.settings}
+        onClose={session.goHome}
+        onSettingsChange={session.changeSettings}
+        onReset={session.resetProgress}
+      />
+    );
+  }
+
   const { task } = session;
 
   return (
@@ -62,7 +84,11 @@ export function App() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.22 }}
         >
-          {session.phase === 'home' && <HomeScreen onChoose={session.chooseArea} />}
+          {session.phase === 'home' && (
+            <HomeScreen onChoose={session.chooseArea} onMap={session.showMap} areas={session.settings.areas} />
+          )}
+
+          {session.phase === 'map' && <MapScreen state={session.state} onBack={session.goHome} />}
 
           {session.phase === 'task' && task?.kind === 'intro' && (
             <IntroTask itemId={task.itemId} onDone={session.finishIntro} />
@@ -113,18 +139,43 @@ export function App() {
           )}
         </motion.div>
       </AnimatePresence>
+
+      <ParentCorner onOpen={session.openParentZone} />
     </Stage>
   );
 }
 
 /** Náhled úlohy z adresy. V hotové aplikaci se na tyhle parametry nikdy nesáhne. */
-function previewFromUrl(): { kind: string; itemId: ItemId; options: ItemId[] } | null {
+function previewFromUrl(): { kind: string; itemId: ItemId; options: ItemId[]; count: number } | null {
   const params = new URLSearchParams(window.location.search);
   const kind = params.get('uloha');
-  if (!kind || !['pocitani', 'obrazek', 'obtahovani'].includes(kind)) return null;
+  if (!kind || !['pocitani', 'obrazek', 'obtahovani', 'mapa'].includes(kind)) return null;
   const itemId = (params.get('polozka') as ItemId) ?? 'num:5';
   const options = (params.get('moznosti') ?? `${itemId},let:P,let:S`).split(',') as ItemId[];
-  return { kind, itemId, options };
+  const count = Number(params.get('hotovo') ?? 0);
+  return { kind, itemId, options, count };
+}
+
+/** Vymyšlený postup pro náhled mapy. Nikdy se nikam neukládá. */
+function fakeProgress(count: number): EngineState {
+  const order = [...LETTERS.map((l) => l.id), ...NUMBERS.map((n) => n.id)] as ItemId[];
+  const items = Object.fromEntries(
+    order.map((id, i) => [
+      id,
+      {
+        itemId: id,
+        area: id.startsWith('num') ? 'numbers' : 'letters',
+        state: i < count ? 'mastered' : 'locked',
+        stage: 1,
+        recent: [],
+        stageStreak: 0,
+        review: null,
+        updatedAt: 0,
+        dirty: false,
+      },
+    ]),
+  );
+  return { sessionIndex: 0, items } as unknown as EngineState;
 }
 
 function masteredIds(state: NonNullable<ReturnType<typeof useSession>['state']>): ItemId[] {

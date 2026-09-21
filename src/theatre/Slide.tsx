@@ -54,7 +54,7 @@ export function Slide({
       <div className="relative">
         <Glass
           radius={3}
-          className="h-[clamp(140px,19vw,238px)] w-[clamp(124px,16vw,208px)]"
+          className="h-[clamp(104px,19vw,238px)] w-[clamp(92px,16vw,208px)]"
           style={{ boxShadow: '0 18px 28px -18px rgba(43,30,22,.9)' }}
         >
           <span
@@ -79,7 +79,7 @@ export function Slide({
           )}
           <span
             className="relative block font-bold leading-none text-[#1F1710]"
-            style={{ fontSize: 'clamp(72px, 10vw, 142px)' }}
+            style={{ fontSize: 'clamp(54px, 10vw, 142px)' }}
           >
             {glyph}
           </span>
