@@ -18,10 +18,17 @@ export interface NumberItem {
   readonly cardinal: string;
   /** Rozvržení jako na kostce (subitizing) — dává smysl do šesti. */
   readonly diceLayout: boolean;
+  /** Motiv počítaných předmětů. Patří do světa, ne generické puntíky. */
+  readonly motif: Motif;
   /** Vizuálně nebo sluchově zaměnitelná čísla pro těžší úlohy. */
   readonly confusables: readonly number[];
   readonly note?: string;
 }
+
+/** Motivy jsou z papírového divadla: co by v něm šlo vystřihnout a spočítat. */
+export type Motif = 'lampa' | 'hvezda' | 'ptak' | 'list' | 'domek';
+
+const MOTIFS: Motif[] = ['lampa', 'hvezda', 'ptak', 'list', 'domek'];
 
 const N = (
   value: number,
@@ -38,6 +45,8 @@ const N = (
   digitAccusative,
   cardinal,
   diceLayout: value >= 1 && value <= 6,
+  // Motiv se střídá, ať každé číslo vypadá jinak, ale u jednoho čísla je vždy stejný.
+  motif: MOTIFS[value % MOTIFS.length]!,
   confusables,
   note,
 });

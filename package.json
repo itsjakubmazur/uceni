@@ -12,7 +12,8 @@
     "audio:dry": "tsx scripts/generate-audio.ts --dry",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "shots": "tsx scripts/review/shots.ts"
+    "shots": "tsx scripts/review/shots.ts",
+    "flow": "tsx scripts/review/flow.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
@@ -28,6 +29,7 @@
     "vitest": "^5.0.1"
   },
   "dependencies": {
+    "idb-keyval": "^6.3.0",
     "motion": "^12.23.24",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"

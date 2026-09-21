@@ -131,14 +131,20 @@ export function Kulisak({ state = 'waiting', mouth = 0, className = '' }: Mascot
 
       {/* šála přes rameno */}
       <path d="M88 176 Q 120 190 152 176 L156 192 Q 120 206 84 192 Z" fill="#B0392B" />
+      {/*
+        Konec šály se hýbe otáčením kolem místa, kde vychází z uzlu — ne
+        morfováním cesty. Motion mezi dvěma řetězci `d` interpolovat neumí
+        a místo toho ho nastaví na undefined, což SVG shodí.
+      */}
       <motion.path
         d="M150 190 Q 178 206 170 238"
         stroke="#B0392B"
         strokeWidth="13"
         fill="none"
         strokeLinecap="round"
-        animate={{ d: ['M150 190 Q 178 206 170 238', 'M150 190 Q 184 198 178 232', 'M150 190 Q 178 206 170 238'] }}
+        animate={{ rotate: [-5, 6, -5] }}
         transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ transformOrigin: '150px 190px' }}
       />
     </motion.svg>
   );

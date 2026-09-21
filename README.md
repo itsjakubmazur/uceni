@@ -12,8 +12,9 @@ Primárně iPad (landscape i portrait), jazyk čeština.
 |---|---|---|
 | 1 | Architektura, datový model, slova | hotovo |
 | 2 | Hlas: srovnání a generování | skripty hotové, čeká se na vygenerování |
-| 3 | Koncepty světa a maskota | ⟵ tady jsme |
-| 4–8 | Engine, čísla, písmena, obtahování, mapa, rodičovská zóna, deploy | před námi |
+| 3 | Koncepty světa a maskota | vybráno papírové divadlo + Kulisák, viz [DESIGN.md](DESIGN.md) |
+| 4 | Engine a čísla | hotovo: seznámení, poznávání, počítání |
+| 5–8 | Písmena, obtahování, mapa, rodičovská zóna, deploy | před námi |
 
 ## Hlas
 
@@ -93,8 +94,39 @@ Klíč čte **jen** Node při generování, do klientského kódu se nikdy nedos
 3. `npm test` ověří, že slovo začíná správnou hláskou, ID nekolidují a texty jsou v pořádku.
 4. `npm run audio` dogeneruje jen nové klipy.
 
-## Testy
+## Spuštění
 
 ```bash
-npm test
+npm run dev          # Vite vypíše i adresu „Network" — tu otevři na iPadu
+npm run build
+npm run preview
 ```
+
+Koncepty světa zůstávají dostupné na `?koncepty`. Jednotlivou úlohu si jde
+prohlédnout bez proklikávání: `?uloha=pocitani&polozka=num:7`.
+
+## Testy a kontrola vzhledu
+
+```bash
+npm test             # engine a obsah, čisté funkce bez prohlížeče
+npm run typecheck
+npm run shots        # screenshoty konceptů v rozlišení iPadu a telefonu
+npm run flow         # projde appku jako dítě a hlásí chyby v konzoli
+```
+
+`shots` a `flow` potřebují běžící `npm run preview` a Chromium. V prostředí,
+kde Playwright hledá prohlížeč jinde, než kde leží, se cesta předá přes
+`CHROMIUM_PATH`.
+
+## Struktura
+
+| Adresář | Co v něm je |
+|---|---|
+| `src/content/` | veškerá data: položky, slova, promluvy |
+| `src/engine/` | pedagogika jako čisté funkce, žádný React ani IO |
+| `src/data/` | postup za rozhraním `ProgressRepository` (IndexedDB, později Supabase) |
+| `src/audio/` | přehrávání promluv, syntéza efektů |
+| `src/theatre/` | jeviště, rampa, diapozitivy, počítané motivy |
+| `src/screens/` | jednotlivé obrazovky |
+| `src/mascots/` | Kulisák a zahozené návrhy |
+| `scripts/` | generování hlasu a kontrola vzhledu |
