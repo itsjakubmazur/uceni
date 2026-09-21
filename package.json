@@ -4,15 +4,32 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
     "voices": "tsx scripts/compare-voices.ts",
     "audio": "tsx scripts/generate-audio.ts",
     "audio:dry": "tsx scripts/generate-audio.ts --dry",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "shots": "tsx scripts/review/shots.ts"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.0",
     "@types/node": "^26.6.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "playwright": "^1.63.0",
+    "tailwindcss": "^4.1.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
+  },
+  "dependencies": {
+    "motion": "^12.23.24",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

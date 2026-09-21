@@ -10,7 +10,8 @@
     "noUnusedLocals": true,
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "jsx": "react-jsx",
+    "types": ["node", "vite/client"]
   },
   "include": ["src", "scripts", "tests"]
 }
