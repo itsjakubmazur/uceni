@@ -297,12 +297,12 @@ v prémiové variantě** je proti základní výrazně lepší, je to rodilá č
 offline a nestojí nic. Skript si prémiovou variantu vybere sám, pokud je stažená.
 Varianty ke srovnání:
 
-| varianta | tempo |
-|---|---|
-| tempo-klidne | 140 slov/min |
-| tempo-stredni | 160 slov/min |
-| tempo-svizne | 180 slov/min |
-| tempo-s-pauzami | 145 + delší ticho mezi větami |
+| varianta | tempo | |
+|---|---|---|
+| tempo-klidne | 140 slov/min | |
+| tempo-stredni | 160 slov/min | |
+| tempo-svizne | 180 slov/min | |
+| tempo-s-pauzami | 145 + delší ticho mezi větami | ✅ vybráno |
 
 Výstup do `voice-samples/` + `voice-samples/index.html` pro poslech vedle sebe na iPadu.
 Rozhraní `TtsProvider` zůstává, takže výměna providera je výměna jednoho souboru;
@@ -338,7 +338,7 @@ verze se aktivuje až mimo běžící sezení.
 Rozhodnuto:
 - ✅ Název appky: **Mikuláš se učí**
 - ✅ Výslovnost znaku: hláska se vyvodí ze tří slov, název je volitelný (§6)
-- ✅ TTS: systémový hlas macOS, Zuzana Premium
+- ✅ TTS: systémový hlas macOS, Zuzana Premium, tempo 145 s pauzami mezi větami
 
 Zbývá:
 1. **Vygenerovat audio** — `npm run audio` na Macu, viz README.

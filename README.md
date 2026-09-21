@@ -35,6 +35,9 @@ open voice-samples/index.html       # poslechni si to, ideálně na iPadu
 Vygeneruje šest vět, které pokrývají to nejtěžší z celé aplikace (mimo jiné „Tohle je eř."
 a počítání „jedna, dvě, tři"), v několika variantách vedle sebe.
 
+Výchozí nastavení je **tempo 145 slov za minutu s delším tichem mezi větami** — vybráno
+poslechem na iPadu, pro pětiletého je srozumitelnější než svižnější varianty.
+
 Hlas **Zuzana** je součástí macOS a prémiová varianta zní výrazně líp než základní.
 Stáhneš ji v *Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému →
 Spravovat hlasy → Čeština*. Skript si ji vybere sám — mezi českými hlasy hledá
@@ -54,7 +57,8 @@ je v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
 ```bash
 npm run audio:dry                   # ukáže, co by se generovalo, nic nevytvoří
 npm run audio                       # vygeneruje jen chybějící a změněné
-npm run audio -- --rate=150         # tempo v slovech za minutu
+npm run audio -- --rate=160         # jiné tempo, výchozí je 145
+npm run audio -- --pause=0          # bez delších pauz mezi větami
 npm run audio -- --voice="Zuzana (Premium)"
 npm run audio -- --only=letter.M.intro,praise.3
 npm run audio -- --force            # znovu úplně všechno

@@ -21,7 +21,9 @@ import type { ProviderOptions, SynthesizeRequest, SynthesizeResult, TtsProvider 
 
 const run = promisify(execFile);
 
-export const DEFAULT_RATE = 160;
+/** Vybráno poslechem na iPadu: pomalejší tempo s delším tichem mezi větami. */
+export const DEFAULT_RATE = 145;
+export const DEFAULT_SENTENCE_PAUSE_MS = 300;
 
 /** Prémiová varianta zní výrazně líp než základní, tak ji hledáme první. */
 const QUALITY_ORDER = ['premium', 'enhanced', ''];
@@ -37,7 +39,7 @@ async function listVoices(): Promise<{ name: string; locale: string }[]> {
 
 export function macosSayProvider(opts: ProviderOptions = {}): TtsProvider {
   const rate = opts.rate ?? DEFAULT_RATE;
-  const pause = opts.sentencePauseMs ?? 0;
+  const pause = opts.sentencePauseMs ?? DEFAULT_SENTENCE_PAUSE_MS;
 
   // Když hlas nezadáš, vybere se při preflightu nejlepší dostupný český.
   // Do hashe v manifestu jde až ten vybraný, takže výměna hlasu přegeneruje audio.
