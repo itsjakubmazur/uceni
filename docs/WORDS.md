@@ -30,7 +30,7 @@ Pořadí je z tvého zadání, nemění se.
 | 18 | **B** | banán | banán | bota | |
 | 19 | **C** | citron | citron | cibule | Pozor: *c* se čte „c", ne „k" — citron sedí. |
 | 20 | **H** | had | had | hruška | |
-| 21 | **Y** | motýl | motýl | sýr, pyžamo | **Výjimka:** žádné české slovo nezačíná na Y. Promluva: „Tohle je Y. Říkáme mu ypsilon. Schovává se uprostřed slova motýl." Ve slově se Y při vyslovení zvýrazní. |
+| 21 | **Y** | myš | myš | motýl, sýr | **Výjimka:** žádné české slovo nezačíná na Y. V „myš" je Y jediná samohláska, takže ji nejde přeslechnout. Promluva to přizná: „Tohle je ypsilon. Schovává se uprostřed slova myš." |
 | 22 | **F** | flétna | zobcová flétna | fotbalový míč | Flétna je nezaměnitelná; „fotbal" je činnost, ne věc. |
 | 23 | **G** | gorila | gorila | guma | |
 | 24 | **Č** | čert | čert | čáp | Mikuláš – anděl – čert, uzavírá trojici ze začátku. |
@@ -49,8 +49,22 @@ Pořadí je z tvého zadání, nemění se.
 - 11–20 se učí jako „deset a ještě jedna" — počítadlo drží desítku pohromadě.
 - Zaměnitelné dvojice pro těžší úlohy: 6/9, 2/5, 7/1, 13/31 (jen ukázkově), 12/21.
 
+## Jak se hláska podá
+
+Písmena se nepředstavují názvem („em", „bé"), ale hláskou — název písmene dítěti
+překáží při skládání slov. Ne všechny hlásky se ale dají vyslovit samostatně:
+
+| Skupina | Písmena | Jak to promluva podá |
+|---|---|---|
+| Samohlásky | A E O U I Y | „Anděl. Á jako anděl." |
+| Trvací | M L S J V N Z R H F Ř Š Ž CH | „Mikuláš. Slyšíš to na začátku? Mmmikuláš." |
+| Ražené a polozávěrové | P T K D B C G Č | „Pes. Slyšíš to na začátku? Pes. To je P." |
+
+Ražená hláska se samostatně vyslovit nedá ani člověkem — bez samohlásky je z „p"
+jen fouknutí. Proto ji vždycky nese celé slovo a nikdy se neizoluje.
+
 ## Věty, které chci od tebe slyšet „ano"
 
 - Dvojice **Mikuláš – anděl – čert** jako kotva světa (A a Č).
-- **Y přes motýl** s vysvětlující promluvou místo předstírání, že Y něco začíná.
+- **Y přes myš** s vysvětlující promluvou místo předstírání, že Y něco začíná.
 - **Ementál** u E (jediná trochu „dospělá" volba na seznamu).

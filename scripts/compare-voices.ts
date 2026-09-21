@@ -80,10 +80,13 @@ async function main(): Promise<void> {
 }
 
 function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
-  const sentences = VOICE_TEST_SENTENCES.map(
-    (s, i) => `
+  let lastGroup = '';
+  const sentences = VOICE_TEST_SENTENCES.map((s, i) => {
+    const heading = s.group === lastGroup ? '' : `<h2 class="group">${esc(groupTitle(s.group))}</h2>`;
+    lastGroup = s.group;
+    return `${heading}
     <section>
-      <h2>${i + 1}. „${esc(s.text)}"</h2>
+      <h3>${i + 1}. „${esc(s.text)}"</h3>
       <p class="why">${esc(s.why)}</p>
       ${rows
         .map(({ variant, files }) =>
@@ -92,8 +95,8 @@ function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
             : `<div class="row failed"><span>${esc(variant.label)}</span><em>nevygenerováno</em></div>`,
         )
         .join('\n      ')}
-    </section>`,
-  ).join('\n');
+    </section>`;
+  }).join('\n');
 
   const legend = rows
     .map(({ variant }) => `<li><strong>${esc(variant.label)}</strong> — ${esc(variant.why)}</li>`)
@@ -112,7 +115,8 @@ function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
   .intro { color: color-mix(in oklab, currentColor 60%, transparent); margin-top: 0; }
   ul { color: color-mix(in oklab, currentColor 70%, transparent); font-size: .95rem; }
   section { margin: 2.5rem 0; padding-top: 1.25rem; border-top: 1px solid color-mix(in oklab, currentColor 15%, transparent); }
-  h2 { font-size: 1.15rem; margin: 0 0 .25rem; }
+  h2.group { font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; margin: 3rem 0 0; color: color-mix(in oklab, currentColor 50%, transparent); }
+  h3 { font-size: 1.15rem; margin: 0 0 .25rem; }
   .why { margin: 0 0 1rem; font-size: .9rem; color: color-mix(in oklab, currentColor 55%, transparent); }
   .row { display: flex; align-items: center; gap: 1rem; margin: .6rem 0; flex-wrap: wrap; }
   .row span { flex: 0 0 13rem; font-size: .9rem; }
@@ -122,7 +126,7 @@ function page(rows: { variant: Variant; files: (string | null)[] }[]): string {
 </head>
 <body>
   <h1>Který hlas bude učit Mikuláše?</h1>
-  <p class="intro">Šest vět, které pokrývají to nejtěžší z celé aplikace. Poslechni si je
+  <p class="intro">Věty, které pokrývají to nejtěžší z celé aplikace. Poslechni si je
   nejlépe na iPadu a přes ten reproduktor, na kterém to bude doopravdy hrát.</p>
   <ul>
       ${legend}
@@ -131,6 +135,12 @@ ${sentences}
 </body>
 </html>
 `;
+}
+
+function groupTitle(group: string): string {
+  return group === 'zvuk'
+    ? 'Hláska, nebo název písmene?'
+    : 'Základní promluvy';
 }
 
 const esc = (s: string): string =>

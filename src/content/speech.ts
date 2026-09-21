@@ -148,14 +148,31 @@ export const VARIANT_GROUPS = {
   encourage: encourage.map((_, i) => `encourage.${i + 1}`),
 } as const;
 
-/** Šest vět pro srovnání hlasů. Schválně pokrývají to nejtěžší. */
-export const VOICE_TEST_SENTENCES: readonly { id: string; text: string; why: string }[] = [
-  { id: 'test-1', text: 'Tohle je M. M jako Mikuláš.', why: 'Základní tvar promluvy. Přečte hlas „M" jako „em"?' },
-  { id: 'test-2', text: 'Tohle je eř. Eř jako řepa.', why: 'Nejtěžší česká hláska. Tady cizí modely padají.' },
-  { id: 'test-3', text: 'Spočítáme to spolu. Jedna, dvě, tři.', why: 'Rytmus počítání a pauzy mezi čísly.' },
-  { id: 'test-4', text: 'To je ono! Moc ti to jde.', why: 'Radost. Zní to vřele, nebo jako hlášení na nádraží?' },
-  { id: 'test-5', text: 'Tohle je N. Zkus najít M.', why: 'Oprava po chybě. Nesmí znít přísně.' },
-  { id: 'test-6', text: 'Dneska ses naučil písmeno M a číslo tři. Zítra se na tebe těším.', why: 'Delší věta, intonace na konci.' },
+/**
+ * Věty pro srovnání hlasů. Schválně pokrývají to nejtěžší z celé aplikace.
+ *
+ * Skupina „zvuk" rozhoduje spor, který se nedá vyřešit teorií: má se písmeno
+ * představit názvem („em"), nebo hláskou („mmm")? Hláska je pedagogicky
+ * správně — název písmene dítěti brání skládat slova. Otázka je jen, jestli
+ * ji syntéza zvládne vyslovit, nebo z ní udělá koktání.
+ */
+export const VOICE_TEST_SENTENCES: readonly {
+  id: string;
+  text: string;
+  why: string;
+  group: 'základ' | 'zvuk';
+}[] = [
+  { id: 'test-1', text: 'Tohle je M. M jako Mikuláš.', why: 'Základní tvar promluvy. Přečte hlas „M" jako „em"?', group: 'základ' },
+  { id: 'test-2', text: 'Tohle je eř. Eř jako řepa.', why: 'Nejtěžší česká hláska. Tady cizí modely padají.', group: 'základ' },
+  { id: 'test-3', text: 'Spočítáme to spolu. Jedna, dvě, tři.', why: 'Rytmus počítání a pauzy mezi čísly.', group: 'základ' },
+  { id: 'test-4', text: 'To je ono! Moc ti to jde.', why: 'Radost. Zní to vřele, nebo jako hlášení na nádraží?', group: 'základ' },
+  { id: 'test-5', text: 'Tohle je N. Zkus najít M.', why: 'Oprava po chybě. Nesmí znít přísně.', group: 'základ' },
+  { id: 'test-6', text: 'Dneska ses naučil písmeno M a číslo tři. Zítra se na tebe těším.', why: 'Delší věta, intonace na konci.', group: 'základ' },
+
+  { id: 'zvuk-1', text: 'Mikuláš. Slyšíš to na začátku? Mmmikuláš.', why: 'TRVACÍ HLÁSKA. Zahučí to hezky, nebo to zní jako koktání? Tohle je ta hlavní otázka.', group: 'zvuk' },
+  { id: 'zvuk-2', text: 'Sova. Slyšíš to na začátku? Sssova.', why: 'Druhá trvací hláska pro kontrolu. Sykavka se protahuje jinak než nosovka.', group: 'zvuk' },
+  { id: 'zvuk-3', text: 'Pes. Slyšíš to na začátku? Pes. To je P.', why: 'RAŽENÁ HLÁSKA. Tu nejde protáhnout ani člověkem, takže ji nese celé slovo. Zní to srozumitelně?', group: 'zvuk' },
+  { id: 'zvuk-4', text: 'Kde je M jako Mikuláš?', why: 'Otázka v úloze bez názvu písmene. Není to moc dlouhé na to, aby to zaznělo stokrát?', group: 'zvuk' },
 ];
 
 function cap(s: string): string {
