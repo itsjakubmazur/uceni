@@ -3,9 +3,87 @@
 Webová aplikace, která předškoláka naučí čísla a písmena — celá přes hlas, obrázky a dotyk.
 Primárně iPad (landscape i portrait), jazyk čeština.
 
-Stav: **fáze 1 — návrh schválen v části rozhodnutí, čeká se na schválení seznamu slov a na Azure klíč.**
-
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — struktura, datový model, engine, hlas, PWA
 - [docs/WORDS.md](docs/WORDS.md) — slova k písmenům, obsah čísel
 
-Návod na přidávání položek, generování hlasu a nasazení přibude, jakmile bude co spouštět.
+## Stav
+
+| Fáze | Co | Stav |
+|---|---|---|
+| 1 | Architektura, datový model, slova | hotovo |
+| 2 | Hlas: srovnání a generování | skripty hotové, čeká se na vygenerování |
+| 3 | Koncepty světa a maskota | ⟵ tady jsme |
+| 4–8 | Engine, čísla, písmena, obtahování, mapa, rodičovská zóna, deploy | před námi |
+
+## Hlas
+
+Aplikace za běhu nikam nevolá. Všechny promluvy se **jednou** předgenerují do
+`public/audio/` a commitnou do repa; v prohlížeči se pak přehrávají jen hotové soubory.
+Web Speech API je pouze nouzová záloha, kdyby soubor chyběl.
+
+Texty promluv jsou **výhradně** v [`src/content/speech.ts`](src/content/speech.ts).
+Nikde jinde v kódu žádný text, který se má vyslovit, nebude.
+
+### Poslech a výběr hlasu
+
+```bash
+npm install
+npm run voices                      # macOS Zuzana ve třech tempech + varianta s pauzami
+open voice-samples/index.html       # poslechni si to, ideálně na iPadu
+```
+
+Vygeneruje šest vět, které pokrývají to nejtěžší z celé aplikace (mimo jiné „Tohle je eř."
+a počítání „jedna, dvě, tři"), v několika variantách vedle sebe.
+
+Hlas **Zuzana** je součástí macOS. Prémiovou variantu stáhneš v
+*Nastavení → Zpřístupnění → Čtení a mluvení → Hlas systému → Spravovat hlasy → Čeština*.
+Ověř, že ji vidí i příkazová řádka:
+
+```bash
+say -v '?' | grep cs_CZ
+```
+
+### Vygenerování celé sady
+
+```bash
+npm run audio:dry                   # ukáže, co by se generovalo, nic nevytvoří
+npm run audio                       # vygeneruje jen chybějící a změněné
+npm run audio -- --voice="Zuzana (Premium)" --rate=150
+npm run audio -- --only=letter.M.intro,praise.3
+npm run audio -- --force            # znovu úplně všechno
+```
+
+Skript si vede `public/audio/manifest.json` s hashem textu a nastavení hlasu. Když později
+prohodíš slovo u jednoho písmene, přegeneruje se pár souborů, ne celá sada. Manifest je
+zároveň to, co za běhu mapuje ID promluvy na soubor — proto můžou mít soubory ASCII názvy
+(`letter.R_.intro.m4a`) a nevadí rozdíl mezi macOS a Linuxem v kódování diakritiky.
+
+Na macOS je výstup **m4a/AAC**, ne mp3: macOS neumí mp3 kódovat bez doinstalování ffmpeg,
+kdežto `afconvert` je v systému vždycky. Safari i iOS m4a přehrají bez problémů.
+
+### Jiný provider
+
+Providery jsou za jedním rozhraním v [`scripts/tts/`](scripts/tts/). Kromě macOS je
+připravený ElevenLabs:
+
+```bash
+echo 'ELEVENLABS_API_KEY=...' >> .env.local     # .env.local je v .gitignore
+npm run voices -- --provider=elevenlabs
+npm run audio  -- --provider=elevenlabs
+```
+
+Celá sada má ~325 promluv a asi 5 200 znaků, takže se vejde i do free tieru.
+Klíč čte **jen** Node při generování, do klientského kódu se nikdy nedostane.
+
+## Přidání položky
+
+1. Písmeno → `src/content/items.letters.ts`, číslo → `src/content/items.numbers.ts`.
+2. Promluvy se z položek odvodí samy (šablony jsou v `src/content/speech.ts`).
+3. `npm test` ověří, že slovo začíná správnou hláskou, ID nekolidují a texty jsou v pořádku.
+4. `npm run audio` dogeneruje jen nové klipy.
+
+## Testy
+
+```bash
+npm test
+```
