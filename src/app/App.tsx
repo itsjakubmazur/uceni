@@ -10,6 +10,7 @@ import { MatchTask } from '../screens/MatchTask.tsx';
 import { TraceTask } from '../screens/TraceTask.tsx';
 import { EndScreen } from '../screens/EndScreen.tsx';
 import { MapScreen } from '../screens/MapScreen.tsx';
+import { Interlude } from '../screens/Interlude.tsx';
 import { ParentZone } from '../screens/ParentZone.tsx';
 import { ParentCorner } from '../screens/ParentCorner.tsx';
 import { useSession } from './useSession.ts';
@@ -31,6 +32,7 @@ export function App() {
   //   ?uloha=obrazek&polozka=let:M
   //   ?uloha=obtahovani&polozka=let:M
   //   ?uloha=mapa&hotovo=8
+  //   ?uloha=mezihra&varianta=1
   const preview = previewFromUrl();
   if (preview) {
     const reload = () => window.location.reload();
@@ -38,6 +40,9 @@ export function App() {
       <Stage litCount={4}>
         {preview.kind === 'pocitani' && <CountTask itemId={preview.itemId} onDone={reload} />}
         {preview.kind === 'obtahovani' && <TraceTask itemId={preview.itemId} onDone={reload} />}
+        {preview.kind === 'mezihra' && (
+          <Interlude variant={preview.count} onDone={() => window.location.reload()} />
+        )}
         {preview.kind === 'mapa' && (
           <MapScreen state={fakeProgress(preview.count)} onBack={reload} />
         )}
@@ -77,7 +82,14 @@ export function App() {
     <Stage litCount={session.litCount}>
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${session.phase}-${task?.itemId ?? ''}-${task?.kind ?? ''}`}
+          data-uloha={
+            session.phase === 'task' && task ? `${task.itemId} ${task.kind}` : undefined
+          }
+          key={
+            session.phase === 'interlude'
+              ? `mezihra-${session.interlude?.variant ?? 0}`
+              : `${session.phase}-${task?.itemId ?? ''}-${task?.kind ?? ''}`
+          }
           className="absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -89,6 +101,12 @@ export function App() {
           )}
 
           {session.phase === 'map' && <MapScreen state={session.state} onBack={session.goHome} />}
+
+          {session.phase === 'interlude' && session.interlude && (
+            <div data-mezihra={session.interlude.variant} className="absolute inset-0">
+              <Interlude variant={session.interlude.variant} onDone={session.finishInterlude} />
+            </div>
+          )}
 
           {session.phase === 'task' && task?.kind === 'intro' && (
             <IntroTask itemId={task.itemId} onDone={session.finishIntro} />
@@ -149,10 +167,10 @@ export function App() {
 function previewFromUrl(): { kind: string; itemId: ItemId; options: ItemId[]; count: number } | null {
   const params = new URLSearchParams(window.location.search);
   const kind = params.get('uloha');
-  if (!kind || !['pocitani', 'obrazek', 'obtahovani', 'mapa'].includes(kind)) return null;
+  if (!kind || !['pocitani', 'obrazek', 'obtahovani', 'mapa', 'mezihra'].includes(kind)) return null;
   const itemId = (params.get('polozka') as ItemId) ?? 'num:5';
   const options = (params.get('moznosti') ?? `${itemId},let:P,let:S`).split(',') as ItemId[];
-  const count = Number(params.get('hotovo') ?? 0);
+  const count = Number(params.get('hotovo') ?? params.get('varianta') ?? 0);
   return { kind, itemId, options, count };
 }
 

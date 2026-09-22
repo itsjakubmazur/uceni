@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { NUMBERS } from '../content/items.numbers.ts';
 import { LETTERS } from '../content/items.letters.ts';
-import { audio } from '../audio/AudioEngine.ts';
+import { director } from '../audio/director.ts';
 import { sfx } from '../audio/sfx.ts';
 import { say } from '../app/speechFor.ts';
+import { Illustration } from '../theatre/Illustrations.tsx';
+import { letterById } from '../content/items.letters.ts';
 import type { EngineState, ItemId } from '../engine/types.ts';
 
 /**
@@ -16,6 +18,10 @@ import type { EngineState, ItemId } from '../engine/types.ts';
  *
  * Mikulášovo M má vlastní místo hned na začátku cesty a vlastní tvar —
  * je to jeho lampa, ne jedna z řady.
+ *
+ * Mapa je zároveň hračka, ne jen výkaz. Na rozsvícenou lampu se dá klepat
+ * a vyskočí z ní to, co k ní patří — obrázek slova nebo znak. Bez toho by
+ * to byl graf postupu, a graf postupu pětiletého nezajímá.
  */
 
 const ROWS = 3;
@@ -66,6 +72,8 @@ export function MapScreen({ state, onBack }: { state: EngineState | null; onBack
 
 function MapLamp({ node, lit, index }: { node: Node; lit: boolean; index: number }) {
   const r = node.special ? 28 : 20;
+  const [popped, setPopped] = useState(0);
+  const letter = letterById.get(node.itemId as `let:${string}`);
 
   return (
     <g
@@ -73,9 +81,29 @@ function MapLamp({ node, lit, index }: { node: Node; lit: boolean; index: number
       onPointerDown={(e) => {
         e.stopPropagation();
         sfx.tap();
-        void audio.say(say.this(node.itemId));
+        if (lit) {
+          setPopped((n) => n + 1);
+          director.sayAlways(letter ? say.word(node.itemId) : say.this(node.itemId));
+        } else {
+          director.say(say.this(node.itemId));
+        }
       }}
     >
+      {/* Co z lampy vyskočí: u písmene jeho obrázek, u čísla jeho znak. */}
+      {lit && popped > 0 && letter && (
+        <motion.g
+          key={popped}
+          initial={{ opacity: 0, y: 0, scale: 0.4 }}
+          animate={{ opacity: [0, 1, 1, 0], y: -r * 3.4, scale: 1 }}
+          transition={{ duration: 1.9, times: [0, 0.15, 0.7, 1], ease: 'easeOut' }}
+        >
+          <foreignObject x={node.x - 34} y={node.y - 34} width="68" height="68">
+            <div style={{ width: '100%', height: '100%' }}>
+              <Illustration id={letter.illustration} />
+            </div>
+          </foreignObject>
+        </motion.g>
+      )}
       {lit && (
         <motion.circle
           cx={node.x}

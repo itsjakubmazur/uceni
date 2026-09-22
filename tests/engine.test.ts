@@ -12,7 +12,9 @@ import {
   planSession,
   startSession,
   advance,
-  nextTask,
+  nextStep,
+  isInterlude,
+  availableCount,
   unlockNext,
   type Area,
   type Attempt,
@@ -230,47 +232,148 @@ describe('stavba úlohy', () => {
 });
 
 describe('sezení', () => {
-  it('spočítá rozpočet úloh z minut', () => {
-    const plan = planSession(10, createRng(1), DEFAULT_CONFIG);
+  it('spočítá rozpočet úloh z minut, když je dost látky', () => {
+    const plan = planSession(10, createRng(1), DEFAULT_CONFIG, 40);
     expect(plan.taskBudget).toBeGreaterThan(30);
     expect(plan.taskBudget).toBeLessThan(60);
   });
 
+  it('zkrátí sezení, když je odemčeno málo položek', () => {
+    // Dvě odemčené položky a deset minut by znamenalo dvacet opakování
+    // jednoho znaku. První sezení proto musí být krátké.
+    const plan = planSession(10, createRng(1), DEFAULT_CONFIG, 2);
+    expect(plan.taskBudget).toBeLessThanOrEqual(12);
+    expect(plan.maxPerItem).toBeLessThanOrEqual(6);
+  });
+
+  it('nechá sezení růst, jak dítěti přibývá látky', () => {
+    const budgets = [2, 6, 12, 30].map(
+      (n) => planSession(10, createRng(1), DEFAULT_CONFIG, n).taskBudget,
+    );
+    for (let i = 1; i < budgets.length; i++) {
+      expect(budgets[i]!).toBeGreaterThanOrEqual(budgets[i - 1]!);
+    }
+  });
+
   it('vyhradí opakování dvacet až třicet procent úloh', () => {
     for (let seed = 1; seed < 30; seed++) {
-      const plan = planSession(10, createRng(seed), DEFAULT_CONFIG);
+      const plan = planSession(10, createRng(seed), DEFAULT_CONFIG, 40);
       const share = plan.reviewBudget / plan.taskBudget;
       expect(share).toBeGreaterThanOrEqual(0.19);
       expect(share).toBeLessThanOrEqual(0.31);
     }
   });
 
-  it('nedá stejnou položku dvakrát za sebou, když je z čeho vybírat', () => {
-    const state = initState(ORDER, DEFAULT_CONFIG);
-    let cursor = startSession(planSession(10, createRng(3), DEFAULT_CONFIG));
-    const rng = createRng(9);
-    let previous: string | undefined;
-    for (let i = 0; i < 12; i++) {
-      const task = nextTask(state, cursor, ['numbers'], SOURCES, rng)!;
-      expect(task.itemId).not.toBe(previous);
-      previous = task.itemId;
-      cursor = advance(cursor, task);
+  /** Projde celé sezení a vrátí, co po sobě přišlo. */
+  function playSession(seed: number, areas: Area[] = ['numbers']) {
+    let state = initState(ORDER, DEFAULT_CONFIG);
+    let cursor = startSession(
+      planSession(10, createRng(seed), DEFAULT_CONFIG, availableCount(state, areas)),
+    );
+    const rng = createRng(seed + 100);
+    const steps: ReturnType<typeof nextStep>[] = [];
+
+    let guard = 0;
+    while (cursor.done < cursor.plan.taskBudget && guard++ < 400) {
+      const step = nextStep(state, cursor, areas, SOURCES, rng);
+      if (!step) break;
+      steps.push(step);
+      cursor = advance(cursor, step);
+      if (!isInterlude(step)) {
+        // Dítě odpovídá správně, ať se stupně posouvají jako v reálu.
+        state = applyAttempt(
+          state,
+          attempt(step.itemId, step.stage, true),
+          DEFAULT_CONFIG,
+        );
+        state = unlockNext(state, ORDER, DEFAULT_CONFIG);
+      }
+    }
+    return { steps, cursor, state };
+  }
+
+  it('nedá stejnou položku dvakrát za sebou', () => {
+    for (let seed = 1; seed < 12; seed++) {
+      const { steps } = playSession(seed);
+      const tasks = steps.flatMap((s) => (s && !isInterlude(s) ? [s] : []));
+      for (let i = 1; i < tasks.length; i++) {
+        expect(tasks[i]!.itemId, `seed ${seed}`).not.toBe(tasks[i - 1]!.itemId);
+      }
     }
   });
 
-  it('skončí, až je rozpočet vyčerpaný', () => {
-    const state = initState(ORDER, DEFAULT_CONFIG);
-    const plan = { taskBudget: 3, reviewBudget: 1 };
-    let cursor = startSession(plan);
-    const rng = createRng(5);
-    let count = 0;
-    while (cursor.done < plan.taskBudget) {
-      const task = nextTask(state, cursor, ['numbers'], SOURCES, rng)!;
-      cursor = advance(cursor, task);
-      count++;
-      expect(count).toBeLessThan(20);
+  it('nedá tři stejné druhy úloh za sebou', () => {
+    for (let seed = 1; seed < 12; seed++) {
+      const { steps } = playSession(seed);
+      const kinds = steps.flatMap((s) => (s && !isInterlude(s) ? [s.kind] : []));
+      for (let i = 2; i < kinds.length; i++) {
+        const three = kinds[i] === kinds[i - 1] && kinds[i - 1] === kinds[i - 2];
+        expect(three, `seed ${seed}: ${kinds.slice(i - 2, i + 1).join(',')}`).toBe(false);
+      }
     }
-    expect(cursor.done).toBe(3);
+  });
+
+  it('počítá dostupnou látku jen v oblasti, která se hraje', () => {
+    const state = initState(ORDER, DEFAULT_CONFIG);
+    expect(availableCount(state, ['numbers'])).toBe(2);
+    expect(availableCount(state, ['letters'])).toBe(2);
+    expect(availableCount(state, ['numbers', 'letters'])).toBe(4);
+  });
+
+  it('nenechá jednu položku sežrat celé sezení', () => {
+    for (let seed = 1; seed < 12; seed++) {
+      const { steps, cursor } = playSession(seed);
+      const counts = new Map<string, number>();
+      for (const s of steps) {
+        if (!s || isInterlude(s)) continue;
+        counts.set(s.itemId, (counts.get(s.itemId) ?? 0) + 1);
+      }
+      for (const [id, n] of counts) {
+        expect(n, `seed ${seed}: ${id}`).toBeLessThanOrEqual(cursor.plan.maxPerItem);
+      }
+    }
+  });
+
+  it('obtahuje jednu položku nejvýš jednou za sezení', () => {
+    for (let seed = 1; seed < 12; seed++) {
+      const { steps } = playSession(seed);
+      const traces = new Map<string, number>();
+      for (const s of steps) {
+        if (!s || isInterlude(s) || s.kind !== 'trace') continue;
+        traces.set(s.itemId, (traces.get(s.itemId) ?? 0) + 1);
+      }
+      for (const [id, n] of traces) {
+        expect(n, `seed ${seed}: ${id} obtaženo ${n}×`).toBe(1);
+      }
+    }
+  });
+
+  it('seznámí s položkou jen jednou za sezení', () => {
+    for (let seed = 1; seed < 12; seed++) {
+      const { steps } = playSession(seed);
+      const intros = new Map<string, number>();
+      for (const s of steps) {
+        if (!s || isInterlude(s) || s.kind !== 'intro') continue;
+        intros.set(s.itemId, (intros.get(s.itemId) ?? 0) + 1);
+      }
+      for (const [, n] of intros) expect(n).toBe(1);
+    }
+  });
+
+  it('proloží sezení mezihrami', () => {
+    const { steps, cursor } = playSession(3);
+    const interludes = steps.filter((s) => s && isInterlude(s)).length;
+    expect(interludes).toBeGreaterThan(1);
+    // Nikdy dvě mezihry za sebou.
+    for (let i = 1; i < steps.length; i++) {
+      if (steps[i] && isInterlude(steps[i]!)) expect(isInterlude(steps[i - 1]!)).toBe(false);
+    }
+    expect(cursor.plan.interludeEvery).toBeGreaterThanOrEqual(4);
+  });
+
+  it('skončí, až je rozpočet vyčerpaný', () => {
+    const { cursor } = playSession(5);
+    expect(cursor.done).toBe(cursor.plan.taskBudget);
   });
 
   it('v závěru sezení už nezavádí nic nového', () => {
@@ -278,17 +381,18 @@ describe('sezení', () => {
     state = answer(state, 'num:1', 3, [true, true, true, true, true]);
     state = { ...state, sessionIndex: 2 };
 
-    const plan = { taskBudget: 10, reviewBudget: 2 };
-    let cursor = { ...startSession(plan), done: 9 };
-    const task = nextTask(state, cursor, ['numbers'], SOURCES, createRng(11))!;
-    expect(task.isReview).toBe(true);
+    const plan = { taskBudget: 10, reviewBudget: 2, interludeEvery: 5, maxPerItem: 4 };
+    const cursor = { ...startSession(plan), done: 9 };
+    const step = nextStep(state, cursor, ['numbers'], SOURCES, createRng(11))!;
+    expect(isInterlude(step)).toBe(false);
+    expect((step as { isReview: boolean }).isReview).toBe(true);
   });
 
   it('funguje i když ještě není co opakovat', () => {
     const state = initState(ORDER, DEFAULT_CONFIG);
-    const cursor = startSession({ taskBudget: 10, reviewBudget: 3 });
-    const task = nextTask(state, cursor, ['numbers'], SOURCES, createRng(2));
-    expect(task).not.toBeNull();
-    expect(task!.isReview).toBe(false);
+    const cursor = startSession({ taskBudget: 10, reviewBudget: 3, interludeEvery: 5, maxPerItem: 4 });
+    const step = nextStep(state, cursor, ['numbers'], SOURCES, createRng(2));
+    expect(step).not.toBeNull();
+    expect(isInterlude(step!)).toBe(false);
   });
 });

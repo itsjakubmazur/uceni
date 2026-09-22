@@ -18,6 +18,7 @@ export function Slide({
   tilt,
   index,
   feedback,
+  correct,
   onPick,
 }: {
   glyph: string;
@@ -25,6 +26,8 @@ export function Slide({
   tilt: number;
   index: number;
   feedback: SlideFeedback;
+  /** Jen pro automatickou kontrolu průchodu — v UI se nijak neprojeví. */
+  correct: boolean;
   onPick: () => void;
 }) {
   return (
@@ -50,6 +53,7 @@ export function Slide({
       }
       whileTap={{ scale: 0.965, rotate: 0 }}
       onPointerDown={onPick}
+      data-spravne={correct ? 'ano' : 'ne'}
     >
       <div className="relative">
         <Glass

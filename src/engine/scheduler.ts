@@ -93,6 +93,18 @@ export function stalestMastered(state: EngineState, areas: readonly Area[]): Ite
   return mastered[0] ?? null;
 }
 
+/**
+ * Kolik položek má dítě v daných oblastech k dispozici.
+ *
+ * Počítá se jen to, co je odemčené **a v oblasti, která se zrovna hraje**.
+ * Kdyby se sčítaly obě oblasti, vyšel by dvojnásobný rozpočet sezení a
+ * jedno písmeno by přišlo dvakrát tolikrát, než je zdrávo.
+ */
+export function availableCount(state: EngineState, areas: readonly Area[]): number {
+  return Object.values(state.items).filter((p) => areas.includes(p.area) && p.state !== 'locked')
+    .length;
+}
+
 export function learningItems(state: EngineState, areas: readonly Area[]): ItemProgress[] {
   return Object.values(state.items)
     .filter((p) => areas.includes(p.area) && p.state === 'learning')

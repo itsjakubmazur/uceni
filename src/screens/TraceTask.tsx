@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { Sign } from '../theatre/Sign.tsx';
-import { audio } from '../audio/AudioEngine.ts';
+import { director } from '../audio/director.ts';
 import { sfx } from '../audio/sfx.ts';
 import { glyphOf } from '../app/speechFor.ts';
 import { strokesForText } from '../content/strokes.ts';
@@ -56,13 +56,13 @@ export function TraceTask({ itemId, onDone }: { itemId: ItemId; onDone: () => vo
     coveredRef.current = [];
     advancing.current = false;
     setTrail([]);
-    void audio.say('trace.start');
+    director.say('trace.start');
   }, [itemId]);
 
   useEffect(() => {
     if (done) {
       sfx.lampLit();
-      void audio.say('trace.done');
+      director.say('trace.done');
       const timer = window.setTimeout(onDone, 1800);
       return () => window.clearTimeout(timer);
     }
@@ -122,6 +122,9 @@ export function TraceTask({ itemId, onDone }: { itemId: ItemId; onDone: () => vo
     if (ratio < COVERAGE_NEEDED) return;
 
     advancing.current = true;
+    // Mezi tahy se zásadně nemluví. „Ještě jeden tah" po každém tahu je ta
+    // nejotravnější věta v celé aplikaci — dokončený tah oznámí tón a to,
+    // že zůstane napsaný. Hlas se ozve až na konci znaku.
     sfx.countStep(current);
     window.setTimeout(() => {
       coveredRef.current = [];
@@ -129,7 +132,6 @@ export function TraceTask({ itemId, onDone }: { itemId: ItemId; onDone: () => vo
       setTrail([]);
       setCurrent((c) => c + 1);
       advancing.current = false;
-      if (current + 1 < strokes.length) void audio.say('trace.again');
     }, 160);
   };
 

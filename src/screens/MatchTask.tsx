@@ -79,6 +79,7 @@ export function MatchTask({
             state={
               picked === id ? (id === itemId ? 'correct' : 'wrong') : mistakes >= 2 && id === itemId ? 'hint' : 'idle'
             }
+            correct={id === itemId}
             onPick={() => onPick(id)}
           />
         ))}
@@ -93,6 +94,7 @@ function PictureCard({
   lift,
   tilt,
   state,
+  correct,
   onPick,
 }: {
   itemId: ItemId;
@@ -100,6 +102,8 @@ function PictureCard({
   lift: number;
   tilt: number;
   state: 'idle' | 'wrong' | 'correct' | 'hint';
+  /** Jen pro automatickou kontrolu průchodu. */
+  correct: boolean;
   onPick: () => void;
 }) {
   const letter = letterById.get(itemId as `let:${string}`);
@@ -123,6 +127,7 @@ function PictureCard({
       }
       whileTap={{ scale: 0.965, rotate: 0 }}
       onPointerDown={onPick}
+      data-spravne={state === 'correct' || correct ? 'ano' : 'ne'}
     >
       <div
         className="relative grid place-items-center p-[clamp(8px,1vw,14px)]"

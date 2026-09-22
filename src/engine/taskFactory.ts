@@ -28,9 +28,10 @@ export function buildTask(
   source: DistractorSource,
   rng: Rng,
   isReview = false,
+  kindOverride?: Task['kind'],
 ): Task {
   const stage = item.stage;
-  const kind = taskKind(stage, item.area);
+  const kind = kindOverride ?? taskKind(stage, item.area);
 
   if (kind === 'intro' || kind === 'count' || kind === 'trace') {
     return { kind, itemId: item.itemId, area: item.area, stage, options: [], isReview };
@@ -66,6 +67,25 @@ function taskKind(stage: Stage, area: ItemProgress['area']): Task['kind'] {
   if (stage === 2 || stage === 3) return 'choose';
   if (stage === 4) return area === 'numbers' ? 'count' : 'match';
   return 'trace';
+}
+
+/**
+ * Druhy úloh, které položka v daném stupni snese, od té nejvhodnější.
+ *
+ * Kdyby byl druh úlohy pevně svázaný se stupněm, dvě položky v podobném
+ * stupni by nutně vyrobily tři stejné úlohy za sebou. Takhle má plánovač
+ * z čeho vybírat, aniž by musel slevit z pravidel proti monotonii — a
+ * míchat lehčí úlohu do těžší je navíc pedagogicky v pořádku.
+ */
+export function kindsFor(item: ItemProgress): Task['kind'][] {
+  const matching: Task['kind'] = item.area === 'numbers' ? 'count' : 'match';
+  if (item.stage === 1) return ['intro'];
+  // I druhý stupeň má alternativu. Bez ní dvě položky v témže stupni
+  // vyrobí tři stejné úlohy za sebou, protože plánovač nemá kam uhnout.
+  if (item.stage === 2) return ['choose', matching];
+  if (item.stage === 3) return ['choose', matching];
+  if (item.stage === 4) return [matching, 'choose'];
+  return ['trace', matching, 'choose'];
 }
 
 /** Položky, které dítě už aspoň jednou vidělo, kromě té právě procvičované. */

@@ -13,7 +13,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "shots": "tsx scripts/review/shots.ts",
-    "flow": "tsx scripts/review/flow.ts"
+    "flow": "tsx scripts/review/flow.ts",
+    "play": "tsx scripts/review/play.ts"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",

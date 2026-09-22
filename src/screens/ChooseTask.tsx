@@ -35,6 +35,7 @@ export function ChooseTask({
             tilt={TILTS[i % TILTS.length]!}
             index={i}
             feedback={feedbackFor(id, itemId, picked, mistakes)}
+            correct={id === itemId}
             onPick={() => onPick(id)}
           />
         ))}

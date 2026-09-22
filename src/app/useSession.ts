@@ -3,24 +3,30 @@ import {
   DEFAULT_CONFIG,
   advance,
   applyAttempt,
+  availableCount,
   createRng,
   initState,
-  nextTask,
+  isInterlude,
+  nextStep,
   planSession,
   startSession,
   unlockNext,
   type Area,
   type EngineState,
+  type Interlude,
   type ItemId,
+  type Step,
   type Task,
 } from '../engine/index.ts';
 import { NUMBERS } from '../content/items.numbers.ts';
 import { LETTERS } from '../content/items.letters.ts';
+import { VARIANT_GROUPS } from '../content/speech.ts';
 import { audio } from '../audio/AudioEngine.ts';
+import { director } from '../audio/director.ts';
 import { sfx } from '../audio/sfx.ts';
 import { createIdbRepository } from '../data/idbRepository.ts';
 import { DEFAULT_SETTINGS, type ProgressRepository, type Settings } from '../data/ProgressRepository.ts';
-import { FALLBACK_TEXTS, makeVariantPicker, say, speechKey } from './speechFor.ts';
+import { FALLBACK_TEXTS, say, speechKey } from './speechFor.ts';
 import { applyPendingUpdate } from './serviceWorker.ts';
 
 const ORDER: Record<Area, readonly ItemId[]> = {
@@ -43,12 +49,13 @@ const SOURCES = {
   },
 };
 
-export type Phase = 'locked' | 'home' | 'task' | 'map' | 'end' | 'rodice';
+export type Phase = 'locked' | 'home' | 'task' | 'interlude' | 'map' | 'end' | 'rodice';
 
 export interface SessionApi {
   phase: Phase;
   repo: ProgressRepository;
   task: Task | null;
+  interlude: Interlude | null;
   state: EngineState | null;
   settings: Settings;
   litCount: number;
@@ -60,6 +67,7 @@ export interface SessionApi {
   answer(optionId: ItemId): void;
   finishIntro(): void;
   finishCount(): void;
+  finishInterlude(): void;
   showMap(): void;
   openParentZone(): void;
   changeSettings(patch: Partial<Settings>): void;
@@ -70,26 +78,26 @@ export interface SessionApi {
 export function useSession(): SessionApi {
   const repo = useMemo(() => createIdbRepository(), []);
   const rng = useMemo(() => createRng(Date.now() & 0xffff), []);
-  const praise = useMemo(() => makeVariantPicker('praise'), []);
-  const encourage = useMemo(() => makeVariantPicker('encourage'), []);
 
   const [phase, setPhase] = useState<Phase>('locked');
   const [state, setState] = useState<EngineState | null>(null);
   const [settings, setSettings] = useState<Settings>(DEFAULT_SETTINGS);
   const [task, setTask] = useState<Task | null>(null);
+  const [interlude, setInterlude] = useState<Interlude | null>(null);
   const [mistakes, setMistakes] = useState(0);
   const [masteredToday, setMasteredToday] = useState<ItemId[]>([]);
-  const masteredTodayRef = useRef<ItemId[]>([]);
   const [areas, setAreas] = useState<Area[]>(['numbers']);
 
-  // Nastavení čte i funkce, která se nemá překreslovat při každé změně.
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
-  const cursor = useRef(startSession(planSession(10, rng, DEFAULT_CONFIG)));
+  const cursor = useRef(startSession(planSession(10, rng, DEFAULT_CONFIG, 2)));
   const busy = useRef(false);
   const sessionId = useRef<string | null>(null);
   const correctFirstTry = useRef(0);
+  const masteredTodayRef = useRef<ItemId[]>([]);
+  /** Položky, u kterých už dnes zazněla celá otázka. Podruhé stačí kratší pobídnutí. */
+  const heardFullPrompt = useRef<Set<ItemId>>(new Set());
 
   useEffect(() => {
     void (async () => {
@@ -120,31 +128,87 @@ export function useSession(): SessionApi {
     if (audio.context) sfx.attach(audio.context, settings.effectsVolume);
     audio.setVolume(settings.speechVolume);
     setPhase('home');
-    void audio.say('ui.welcome');
+    director.say('ui.welcome');
   }, [settings.effectsVolume, settings.speechVolume]);
 
-  const pushTask = useCallback(
+  /**
+   * Řekne, co má dítě dělat.
+   *
+   * Poprvé v sezení celá otázka, podruhé už jen krátké pobídnutí. Desetkrát
+   * za sebou „Kde je písmeno od Mikuláše?" je přesně ten druh opakování,
+   * po kterém aplikace přestane bavit.
+   */
+  const speakPrompt = useCallback((step: Task) => {
+    audio.stop();
+    const first = !heardFullPrompt.current.has(step.itemId);
+    heardFullPrompt.current.add(step.itemId);
+
+    if (step.kind === 'intro') {
+      const names = settingsRef.current.sayLetterNames && step.area === 'letters';
+      director.sayAlways(
+        say.intro(step.itemId),
+        'letter.write',
+        ...(names ? [`${speechKey(step.itemId)}.name`] : []),
+      );
+      return;
+    }
+
+    if (step.kind === 'choose') {
+      if (first) director.sayAlways(say.where(step.itemId));
+      else director.sayAlways(say.word(step.itemId));
+      return;
+    }
+
+    if (step.kind === 'match') {
+      director.sayAlways(`${speechKey(step.itemId)}.pickPicture`);
+      return;
+    }
+
+    if (step.kind === 'count') {
+      // Pokyn k počítání stačí jednou za čas, ne u každého počítání.
+      director.say('count.prompt');
+    }
+  }, []);
+
+  const pushStep = useCallback(
     (from: EngineState, active: Area[]) => {
-      const next = nextTask(from, cursor.current, active, SOURCES, rng);
-      if (!next) {
+      const step: Step | null = nextStep(from, cursor.current, active, SOURCES, rng);
+
+      if (!step) {
         setPhase('end');
         return;
       }
-      setTask(next);
+
+      if (isInterlude(step)) {
+        cursor.current = advance(cursor.current, step);
+        setInterlude(step);
+        setPhase('interlude');
+        return;
+      }
+
+      setTask(step);
+      setInterlude(null);
+      setPhase('task');
       setMistakes(0);
-      speakPrompt(next, settingsRef.current.sayLetterNames);
-      void audio.preload([say.this(next.itemId), 'praise.1', 'praise.2']);
+      speakPrompt(step);
+      void audio.preload([say.this(step.itemId), ...VARIANT_GROUPS.praise.slice(0, 3)]);
     },
-    [rng],
+    [rng, speakPrompt],
   );
 
   const chooseArea = useCallback(
     (area: Area) => {
       if (!state) return;
-      setAreas([area]);
-      cursor.current = startSession(planSession(settings.sessionMinutes, rng, DEFAULT_CONFIG));
-      setMasteredToday([]);
+      const active: Area[] = [area];
+      setAreas(active);
+
+      director.reset();
+      heardFullPrompt.current = new Set();
+      cursor.current = startSession(
+        planSession(settings.sessionMinutes, rng, DEFAULT_CONFIG, availableCount(state, active)),
+      );
       masteredTodayRef.current = [];
+      setMasteredToday([]);
       correctFirstTry.current = 0;
       sessionId.current = `s-${Date.now()}`;
       void repo.startSession({
@@ -155,11 +219,11 @@ export function useSession(): SessionApi {
         correctFirstTry: 0,
         newlyMastered: [],
       });
-      setPhase('task');
-      pushTask(state, [area]);
+
       sfx.tap();
+      pushStep(state, active);
     },
-    [pushTask, repo, rng, settings.sessionMinutes, state],
+    [pushStep, repo, rng, settings.sessionMinutes, state],
   );
 
   const settle = useCallback(
@@ -196,29 +260,32 @@ export function useSession(): SessionApi {
 
       cursor.current = advance(cursor.current, task);
 
-      window.setTimeout(() => {
-        busy.current = false;
-        if (cursor.current.done >= cursor.current.plan.taskBudget) {
-          setPhase('end');
-          void audio.say('session.end.great');
-          // Sezení se uzavře až tady: engine posune čítač, na kterém stojí
-          // opakovací intervaly, a rodičovská zóna dostane záznam.
-          const closed = { ...unlocked, sessionIndex: unlocked.sessionIndex + 1 };
-          persist(closed);
-          if (sessionId.current) {
-            void repo.endSession(sessionId.current, {
-              endedAt: Date.now(),
-              taskCount: cursor.current.done,
-              correctFirstTry: correctFirstTry.current,
-              newlyMastered: masteredTodayRef.current,
-            });
+      window.setTimeout(
+        () => {
+          busy.current = false;
+          if (cursor.current.done >= cursor.current.plan.taskBudget) {
+            setPhase('end');
+            director.sayAlways('session.end.great');
+            // Sezení se uzavře až tady: engine posune čítač, na kterém stojí
+            // opakovací intervaly, a rodičovská zóna dostane záznam.
+            const closed = { ...unlocked, sessionIndex: unlocked.sessionIndex + 1 };
+            persist(closed);
+            if (sessionId.current) {
+              void repo.endSession(sessionId.current, {
+                endedAt: Date.now(),
+                taskCount: cursor.current.done,
+                correctFirstTry: correctFirstTry.current,
+                newlyMastered: masteredTodayRef.current,
+              });
+            }
+            return;
           }
-          return;
-        }
-        pushTask(unlocked, areas);
-      }, justMastered ? 1500 : 900);
+          pushStep(unlocked, areas);
+        },
+        justMastered ? 1500 : 850,
+      );
     },
-    [areas, persist, pushTask, repo, state, task],
+    [areas, persist, pushStep, repo, state, task],
   );
 
   const answer = useCallback(
@@ -228,8 +295,8 @@ export function useSession(): SessionApi {
       if (optionId === task.itemId) {
         busy.current = true;
         sfx.correct();
-        audio.stop();
-        void audio.say(praise());
+        // Pochvala nezazní pokaždé. První zvládnutá položka v sezení ano.
+        director.praise(VARIANT_GROUPS.praise, masteredTodayRef.current.length === 0);
         settle(true, mistakes > 0);
         return;
       }
@@ -237,8 +304,7 @@ export function useSession(): SessionApi {
       // Chyba nikdy není červená. Hlas pojmenuje, co dítě vybralo,
       // a hned nabídne další pokus.
       sfx.nudge();
-      audio.stop();
-      void audio.say(say.this(optionId), say.tryFind(task.itemId));
+      director.sayAlways(say.this(optionId), say.tryFind(task.itemId));
       setMistakes((m) => {
         const next = m + 1;
         if (next >= 3) {
@@ -249,7 +315,7 @@ export function useSession(): SessionApi {
         return next;
       });
     },
-    [mistakes, praise, settle, task],
+    [mistakes, settle, task],
   );
 
   const finishIntro = useCallback(() => {
@@ -261,19 +327,25 @@ export function useSession(): SessionApi {
   const finishCount = useCallback(() => {
     if (busy.current) return;
     busy.current = true;
-    void audio.say(praise());
+    director.praise(VARIANT_GROUPS.praise);
     settle(true, false);
-  }, [praise, settle]);
+  }, [settle]);
+
+  const finishInterlude = useCallback(() => {
+    if (!state) return;
+    pushStep(state, areas);
+  }, [areas, pushStep, state]);
 
   const showMap = useCallback(() => {
     setPhase('map');
-    void audio.say('map.intro');
+    director.say('map.intro');
   }, []);
 
   const goHome = useCallback(() => {
     audio.stop();
     setPhase('home');
     setTask(null);
+    setInterlude(null);
     // Na rozcestníku je restart neškodný, takže tady se nasadí čekající verze.
     applyPendingUpdate();
   }, []);
@@ -299,19 +371,21 @@ export function useSession(): SessionApi {
   const resetProgress = useCallback(() => {
     const fresh = initState(ORDER, DEFAULT_CONFIG);
     setState(fresh);
+    masteredTodayRef.current = [];
     setMasteredToday([]);
     void repo.resetProgress();
     void repo.saveState(fresh);
   }, [repo]);
 
   useEffect(() => {
-    if (phase === 'task' && mistakes === 2) void audio.say(encourage());
-  }, [encourage, mistakes, phase]);
+    if (phase === 'task' && mistakes === 2) director.encourage(VARIANT_GROUPS.encourage);
+  }, [mistakes, phase]);
 
   return {
     phase,
     repo,
     task,
+    interlude,
     state,
     settings,
     litCount,
@@ -322,22 +396,11 @@ export function useSession(): SessionApi {
     answer,
     finishIntro,
     finishCount,
+    finishInterlude,
     showMap,
     openParentZone,
     changeSettings,
     resetProgress,
     goHome,
   };
-}
-
-function speakPrompt(task: Task, sayLetterNames: boolean): void {
-  audio.stop();
-  if (task.kind === 'intro') {
-    // Název písmene zazní jen tehdy, když si ho rodič zapnul. Výchozí je
-    // vypnuto, protože v pěti letech překáží při skládání slov.
-    const extra = sayLetterNames && task.area === 'letters' ? [`${speechKey(task.itemId)}.name`] : [];
-    void audio.say(say.intro(task.itemId), 'letter.write', ...extra);
-  } else if (task.kind === 'choose') void audio.say(say.where(task.itemId));
-  else if (task.kind === 'count') void audio.say('count.prompt');
-  else if (task.kind === 'match') void audio.say(`${speechKey(task.itemId)}.pickPicture`);
 }
