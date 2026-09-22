@@ -224,12 +224,13 @@
     "generatedAt": "2026-09-21T07:41:53.218Z"
   },
   "letter.A.intro": {
-    "hash": "5b19010ab8aa9d25",
+    "hash": "43ac58cea695d18a",
+    "text": "Á jako anděl.",
     "file": "letter.A.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 56219,
-    "generatedAt": "2026-09-21T07:38:26.051Z"
+    "bytes": 19559,
+    "generatedAt": "2026-09-22T18:07:55.468Z"
   },
   "letter.A.name": {
     "hash": "3b4ff8bdbdeced94",
@@ -256,28 +257,31 @@
     "generatedAt": "2026-09-21T07:38:29.486Z"
   },
   "letter.A.this": {
-    "hash": "8bceb3d5d4847337",
+    "hash": "c9c2df517ecb73a0",
+    "text": "To je á.",
     "file": "letter.A.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19011,
-    "generatedAt": "2026-09-21T07:38:26.631Z"
+    "bytes": 16078,
+    "generatedAt": "2026-09-22T18:07:56.036Z"
   },
   "letter.A.tryFind": {
-    "hash": "c178a15eb0500b5e",
+    "hash": "d2f4037aaa7beb6e",
+    "text": "Zkus najít á.",
     "file": "letter.A.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22238,
-    "generatedAt": "2026-09-21T07:38:27.796Z"
+    "bytes": 21845,
+    "generatedAt": "2026-09-22T18:07:57.179Z"
   },
   "letter.A.where": {
-    "hash": "17ae93255dae5ca8",
+    "hash": "1ac6771f9e46669b",
+    "text": "Kde je á?",
     "file": "letter.A.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20970,
-    "generatedAt": "2026-09-21T07:38:27.212Z"
+    "bytes": 18045,
+    "generatedAt": "2026-09-22T18:07:56.604Z"
   },
   "letter.A.word": {
     "hash": "5b62f495213b1041",
@@ -288,12 +292,13 @@
     "generatedAt": "2026-09-21T07:38:28.349Z"
   },
   "letter.B.intro": {
-    "hash": "28086317fc28dc4a",
+    "hash": "e5bd3b7940e452ce",
+    "text": "Bé jako banán.",
     "file": "letter.B.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55791,
-    "generatedAt": "2026-09-21T07:39:40.776Z"
+    "bytes": 13194,
+    "generatedAt": "2026-09-22T18:08:33.344Z"
   },
   "letter.B.name": {
     "hash": "0f6fcddc7a759d32",
@@ -320,28 +325,31 @@
     "generatedAt": "2026-09-21T07:39:44.254Z"
   },
   "letter.B.this": {
-    "hash": "0893ca288bb5c303",
+    "hash": "3ce491fa4bbe36fd",
+    "text": "To je bé.",
     "file": "letter.B.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19158,
-    "generatedAt": "2026-09-21T07:39:41.360Z"
+    "bytes": 9505,
+    "generatedAt": "2026-09-22T18:08:33.976Z"
   },
   "letter.B.tryFind": {
-    "hash": "46da758508ca75fd",
+    "hash": "74b2c6decf4ef91a",
+    "text": "Zkus najít bé.",
     "file": "letter.B.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23925,
-    "generatedAt": "2026-09-21T07:39:42.547Z"
+    "bytes": 14002,
+    "generatedAt": "2026-09-22T18:08:35.146Z"
   },
   "letter.B.where": {
-    "hash": "aa0eb420281da180",
+    "hash": "c8001e58233f372b",
+    "text": "Kde je bé?",
     "file": "letter.B.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22360,
-    "generatedAt": "2026-09-21T07:39:41.951Z"
+    "bytes": 10857,
+    "generatedAt": "2026-09-22T18:08:34.552Z"
   },
   "letter.B.word": {
     "hash": "84dd6ac94e54938e",
@@ -352,12 +360,13 @@
     "generatedAt": "2026-09-21T07:39:43.105Z"
   },
   "letter.C.intro": {
-    "hash": "479834fb652c43f4",
+    "hash": "95ac7f0f447af839",
+    "text": "Cé jako citron.",
     "file": "letter.C.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55135,
-    "generatedAt": "2026-09-21T07:39:45.474Z"
+    "bytes": 15167,
+    "generatedAt": "2026-09-22T18:08:35.728Z"
   },
   "letter.C.name": {
     "hash": "52cfd705f7b678e6",
@@ -384,28 +393,31 @@
     "generatedAt": "2026-09-21T07:39:48.961Z"
   },
   "letter.C.this": {
-    "hash": "5df7dda6a7e13810",
+    "hash": "8a3526ff50ec83b8",
+    "text": "To je cé.",
     "file": "letter.C.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19958,
-    "generatedAt": "2026-09-21T07:39:46.058Z"
+    "bytes": 9836,
+    "generatedAt": "2026-09-22T18:08:36.329Z"
   },
   "letter.C.tryFind": {
-    "hash": "68471507fb7ca182",
+    "hash": "a9814d60c5f1ba0a",
+    "text": "Zkus najít cé.",
     "file": "letter.C.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 24148,
-    "generatedAt": "2026-09-21T07:39:47.243Z"
+    "bytes": 15747,
+    "generatedAt": "2026-09-22T18:08:37.512Z"
   },
   "letter.C.where": {
-    "hash": "3b1ff9c8782c3aca",
+    "hash": "685e8d3a4344c8c7",
+    "text": "Kde je cé?",
     "file": "letter.C.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22397,
-    "generatedAt": "2026-09-21T07:39:46.650Z"
+    "bytes": 12454,
+    "generatedAt": "2026-09-22T18:08:36.911Z"
   },
   "letter.C.word": {
     "hash": "3715a64414e50eec",
@@ -416,12 +428,13 @@
     "generatedAt": "2026-09-21T07:39:47.804Z"
   },
   "letter.Č.intro": {
-    "hash": "6bac5e38b419245b",
+    "hash": "e7c074dd9055a30d",
+    "text": "Čé jako čert.",
     "file": "letter.C_.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 59133,
-    "generatedAt": "2026-09-21T07:40:09.012Z"
+    "bytes": 14775,
+    "generatedAt": "2026-09-22T18:08:47.690Z"
   },
   "letter.Č.name": {
     "hash": "1928cd17b7130439",
@@ -448,28 +461,31 @@
     "generatedAt": "2026-09-21T07:40:12.490Z"
   },
   "letter.Č.this": {
-    "hash": "36ce939d3495f893",
+    "hash": "8b2f836f41b9ca21",
+    "text": "To je čé.",
     "file": "letter.C_.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21353,
-    "generatedAt": "2026-09-21T07:40:09.601Z"
+    "bytes": 9738,
+    "generatedAt": "2026-09-22T18:08:48.308Z"
   },
   "letter.Č.tryFind": {
-    "hash": "01f139d54289f71a",
+    "hash": "bae30b2c8352374d",
+    "text": "Zkus najít čé.",
     "file": "letter.C_.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23228,
-    "generatedAt": "2026-09-21T07:40:10.784Z"
+    "bytes": 15861,
+    "generatedAt": "2026-09-22T18:08:49.532Z"
   },
   "letter.Č.where": {
-    "hash": "770ed3a28e5a66f0",
+    "hash": "22f7641d11cf85dc",
+    "text": "Kde je čé?",
     "file": "letter.C_.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22981,
-    "generatedAt": "2026-09-21T07:40:10.191Z"
+    "bytes": 12787,
+    "generatedAt": "2026-09-22T18:08:48.930Z"
   },
   "letter.Č.word": {
     "hash": "e6e633ead725d021",
@@ -480,12 +496,13 @@
     "generatedAt": "2026-09-21T07:40:11.343Z"
   },
   "letter.D.intro": {
-    "hash": "f3da03a6b38b6276",
+    "hash": "b0d519943714f28d",
+    "text": "Dé jako dům.",
     "file": "letter.D.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 54373,
-    "generatedAt": "2026-09-21T07:39:22.051Z"
+    "bytes": 12884,
+    "generatedAt": "2026-09-22T18:08:23.799Z"
   },
   "letter.D.name": {
     "hash": "22db5d4b6097c529",
@@ -512,28 +529,31 @@
     "generatedAt": "2026-09-21T07:39:25.518Z"
   },
   "letter.D.this": {
-    "hash": "509d016a829bed7e",
+    "hash": "3c0c959e0449bbea",
+    "text": "To je dé.",
     "file": "letter.D.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18224,
-    "generatedAt": "2026-09-21T07:39:22.634Z"
+    "bytes": 9407,
+    "generatedAt": "2026-09-22T18:08:24.385Z"
   },
   "letter.D.tryFind": {
-    "hash": "36800a9e609d5457",
+    "hash": "e9b741bd0d40945c",
+    "text": "Zkus najít dé.",
     "file": "letter.D.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21554,
-    "generatedAt": "2026-09-21T07:39:23.812Z"
+    "bytes": 13762,
+    "generatedAt": "2026-09-22T18:08:25.573Z"
   },
   "letter.D.where": {
-    "hash": "021ec39cb197b12f",
+    "hash": "daee5cbd4e64b9ab",
+    "text": "Kde je dé?",
     "file": "letter.D.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19640,
-    "generatedAt": "2026-09-21T07:39:23.223Z"
+    "bytes": 10933,
+    "generatedAt": "2026-09-22T18:08:24.973Z"
   },
   "letter.D.word": {
     "hash": "630696e490640647",
@@ -544,12 +564,13 @@
     "generatedAt": "2026-09-21T07:39:24.369Z"
   },
   "letter.E.intro": {
-    "hash": "fe260e5a2f88692f",
+    "hash": "c8d787f0a1dee5c7",
+    "text": "É jako ementál.",
     "file": "letter.E.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 56280,
-    "generatedAt": "2026-09-21T07:38:30.706Z"
+    "bytes": 23402,
+    "generatedAt": "2026-09-22T18:07:57.760Z"
   },
   "letter.E.name": {
     "hash": "4778f4c96a1e509c",
@@ -576,28 +597,31 @@
     "generatedAt": "2026-09-21T07:38:34.160Z"
   },
   "letter.E.this": {
-    "hash": "1f9be7d2894657ce",
+    "hash": "945b07a0fcec3790",
+    "text": "To je é.",
     "file": "letter.E.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19572,
-    "generatedAt": "2026-09-21T07:38:31.288Z"
+    "bytes": 15563,
+    "generatedAt": "2026-09-22T18:07:58.335Z"
   },
   "letter.E.tryFind": {
-    "hash": "422717de76e60c62",
+    "hash": "0cefd93e78feb8aa",
+    "text": "Zkus najít é.",
     "file": "letter.E.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22821,
-    "generatedAt": "2026-09-21T07:38:32.458Z"
+    "bytes": 21725,
+    "generatedAt": "2026-09-22T18:07:59.492Z"
   },
   "letter.E.where": {
-    "hash": "7346edf5dbcf1a6a",
+    "hash": "d07cffba38aff638",
+    "text": "Kde je é?",
     "file": "letter.E.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22007,
-    "generatedAt": "2026-09-21T07:38:31.869Z"
+    "bytes": 17919,
+    "generatedAt": "2026-09-22T18:07:58.909Z"
   },
   "letter.E.word": {
     "hash": "c42e7d72932b94b5",
@@ -608,12 +632,13 @@
     "generatedAt": "2026-09-21T07:38:33.019Z"
   },
   "letter.F.intro": {
-    "hash": "c0d0f06e4ed6f0d7",
+    "hash": "f76918cc1e0c3fa0",
+    "text": "Ef jako flétna.",
     "file": "letter.F.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 59495,
-    "generatedAt": "2026-09-21T07:39:59.574Z"
+    "bytes": 14288,
+    "generatedAt": "2026-09-22T18:08:42.800Z"
   },
   "letter.F.name": {
     "hash": "50858f8b93dda1ca",
@@ -640,28 +665,31 @@
     "generatedAt": "2026-09-21T07:40:03.063Z"
   },
   "letter.F.this": {
-    "hash": "23b2722f1c0b44da",
+    "hash": "77aa853e569897d5",
+    "text": "To je ef.",
     "file": "letter.F.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20087,
-    "generatedAt": "2026-09-21T07:40:00.162Z"
+    "bytes": 9811,
+    "generatedAt": "2026-09-22T18:08:43.411Z"
   },
   "letter.F.tryFind": {
-    "hash": "9130793aada62c2c",
+    "hash": "6b3a68037cda3230",
+    "text": "Zkus najít ef.",
     "file": "letter.F.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 24132,
-    "generatedAt": "2026-09-21T07:40:01.345Z"
+    "bytes": 15248,
+    "generatedAt": "2026-09-22T18:08:44.582Z"
   },
   "letter.F.where": {
-    "hash": "808706acf471a9be",
+    "hash": "d927c7f7602c90e4",
+    "text": "Kde je ef?",
     "file": "letter.F.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21534,
-    "generatedAt": "2026-09-21T07:40:00.750Z"
+    "bytes": 11842,
+    "generatedAt": "2026-09-22T18:08:44.000Z"
   },
   "letter.F.word": {
     "hash": "6a1474d41e98aa8c",
@@ -672,12 +700,13 @@
     "generatedAt": "2026-09-21T07:40:01.909Z"
   },
   "letter.G.intro": {
-    "hash": "3e26c66137c4a55e",
+    "hash": "2ee741ec7e59ca32",
+    "text": "Gé jako gorila.",
     "file": "letter.G.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 57942,
-    "generatedAt": "2026-09-21T07:40:04.294Z"
+    "bytes": 14155,
+    "generatedAt": "2026-09-22T18:08:45.196Z"
   },
   "letter.G.name": {
     "hash": "fb0ee36aa8108b5d",
@@ -704,28 +733,31 @@
     "generatedAt": "2026-09-21T07:40:07.789Z"
   },
   "letter.G.this": {
-    "hash": "ec30baae973374e5",
+    "hash": "50ce4f17f4b6eb91",
+    "text": "To je gé.",
     "file": "letter.G.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18512,
-    "generatedAt": "2026-09-21T07:40:04.882Z"
+    "bytes": 9507,
+    "generatedAt": "2026-09-22T18:08:45.824Z"
   },
   "letter.G.tryFind": {
-    "hash": "86309f2819f7e59e",
+    "hash": "3e2a63b3649bc905",
+    "text": "Zkus najít gé.",
     "file": "letter.G.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21565,
-    "generatedAt": "2026-09-21T07:40:06.072Z"
+    "bytes": 14942,
+    "generatedAt": "2026-09-22T18:08:47.079Z"
   },
   "letter.G.where": {
-    "hash": "b65a9d4b8eae5990",
+    "hash": "0fa4aa3497a6cdee",
+    "text": "Kde je gé?",
     "file": "letter.G.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20043,
-    "generatedAt": "2026-09-21T07:40:05.475Z"
+    "bytes": 12006,
+    "generatedAt": "2026-09-22T18:08:46.444Z"
   },
   "letter.G.word": {
     "hash": "11f7f706efc89069",
@@ -736,12 +768,13 @@
     "generatedAt": "2026-09-21T07:40:06.636Z"
   },
   "letter.H.intro": {
-    "hash": "9fbae5a1d73e0b32",
+    "hash": "19db27eca2ef4850",
+    "text": "Há jako had.",
     "file": "letter.H.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 51487,
-    "generatedAt": "2026-09-21T07:39:50.177Z"
+    "bytes": 11112,
+    "generatedAt": "2026-09-22T18:08:38.096Z"
   },
   "letter.H.name": {
     "hash": "175ec7b287bd0d68",
@@ -768,28 +801,31 @@
     "generatedAt": "2026-09-21T07:39:53.632Z"
   },
   "letter.H.this": {
-    "hash": "0d3aaf0ba33f28ca",
+    "hash": "b5ca4a2c5b61a7c6",
+    "text": "To je há.",
     "file": "letter.H.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17272,
-    "generatedAt": "2026-09-21T07:39:50.757Z"
+    "bytes": 9327,
+    "generatedAt": "2026-09-22T18:08:38.684Z"
   },
   "letter.H.tryFind": {
-    "hash": "35da19e3e9c419ab",
+    "hash": "8a0b42b57374ac7d",
+    "text": "Zkus najít há.",
     "file": "letter.H.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20436,
-    "generatedAt": "2026-09-21T07:39:51.928Z"
+    "bytes": 14136,
+    "generatedAt": "2026-09-22T18:08:39.833Z"
   },
   "letter.H.where": {
-    "hash": "d9e92f114bcc42b4",
+    "hash": "ad828d7c528fb215",
+    "text": "Kde je há?",
     "file": "letter.H.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18760,
-    "generatedAt": "2026-09-21T07:39:51.339Z"
+    "bytes": 11141,
+    "generatedAt": "2026-09-22T18:08:39.257Z"
   },
   "letter.H.word": {
     "hash": "09702f4302899120",
@@ -800,12 +836,13 @@
     "generatedAt": "2026-09-21T07:39:52.489Z"
   },
   "letter.CH.intro": {
-    "hash": "7dac23c3d66bfd73",
+    "hash": "d342e82443e0df0a",
+    "text": "Chá jako chobotnice.",
     "file": "letter.CH.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 56402,
-    "generatedAt": "2026-09-21T07:40:27.863Z"
+    "bytes": 15693,
+    "generatedAt": "2026-09-22T18:08:57.584Z"
   },
   "letter.CH.name": {
     "hash": "06b850b7d66e7edd",
@@ -832,28 +869,31 @@
     "generatedAt": "2026-09-21T07:40:31.389Z"
   },
   "letter.CH.this": {
-    "hash": "c3122edb1975c934",
+    "hash": "bd41cb2ff00e96e0",
+    "text": "To je chá.",
     "file": "letter.CH.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21639,
-    "generatedAt": "2026-09-21T07:40:28.458Z"
+    "bytes": 9173,
+    "generatedAt": "2026-09-22T18:08:58.156Z"
   },
   "letter.CH.tryFind": {
-    "hash": "d88477493fe4b4ec",
+    "hash": "7909523b5b011f1f",
+    "text": "Zkus najít chá.",
     "file": "letter.CH.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 26050,
-    "generatedAt": "2026-09-21T07:40:29.656Z"
+    "bytes": 13608,
+    "generatedAt": "2026-09-22T18:08:59.328Z"
   },
   "letter.CH.where": {
-    "hash": "f824ae5d93f14755",
+    "hash": "b43f4230ee979eec",
+    "text": "Kde je chá?",
     "file": "letter.CH.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22064,
-    "generatedAt": "2026-09-21T07:40:29.054Z"
+    "bytes": 11369,
+    "generatedAt": "2026-09-22T18:08:58.739Z"
   },
   "letter.CH.word": {
     "hash": "d6972d0e0f1e650e",
@@ -864,12 +904,13 @@
     "generatedAt": "2026-09-21T07:40:30.226Z"
   },
   "letter.I.intro": {
-    "hash": "54d2db217dbf81a0",
+    "hash": "c5a55b36e46da899",
+    "text": "Í jako iglú.",
     "file": "letter.I.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 54800,
-    "generatedAt": "2026-09-21T07:38:58.635Z"
+    "bytes": 21321,
+    "generatedAt": "2026-09-22T18:08:11.968Z"
   },
   "letter.I.name": {
     "hash": "91900c1ecc338500",
@@ -896,28 +937,31 @@
     "generatedAt": "2026-09-21T07:39:02.095Z"
   },
   "letter.I.this": {
-    "hash": "e62931df76cefeea",
+    "hash": "9b3e628fd3b2f7f3",
+    "text": "To je í.",
     "file": "letter.I.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18548,
-    "generatedAt": "2026-09-21T07:38:59.224Z"
+    "bytes": 17071,
+    "generatedAt": "2026-09-22T18:08:12.578Z"
   },
   "letter.I.tryFind": {
-    "hash": "74650bd1bad55675",
+    "hash": "59530696006eb08f",
+    "text": "Zkus najít í.",
     "file": "letter.I.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21821,
-    "generatedAt": "2026-09-21T07:39:00.395Z"
+    "bytes": 22074,
+    "generatedAt": "2026-09-22T18:08:13.771Z"
   },
   "letter.I.where": {
-    "hash": "618e0c3642386e54",
+    "hash": "12e865ed156215e9",
+    "text": "Kde je í?",
     "file": "letter.I.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20684,
-    "generatedAt": "2026-09-21T07:38:59.808Z"
+    "bytes": 18575,
+    "generatedAt": "2026-09-22T18:08:13.176Z"
   },
   "letter.I.word": {
     "hash": "f8383ae4c4d9c9f8",
@@ -928,12 +972,13 @@
     "generatedAt": "2026-09-21T07:39:00.953Z"
   },
   "letter.J.intro": {
-    "hash": "ed7533f85f20b406",
+    "hash": "6421d9c8e14b43c3",
+    "text": "Jé jako jablko.",
     "file": "letter.J.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 58103,
-    "generatedAt": "2026-09-21T07:39:08.009Z"
+    "bytes": 14979,
+    "generatedAt": "2026-09-22T18:08:16.787Z"
   },
   "letter.J.name": {
     "hash": "77c96de0d40983ff",
@@ -960,28 +1005,31 @@
     "generatedAt": "2026-09-21T07:39:11.467Z"
   },
   "letter.J.this": {
-    "hash": "4ce36df7a95e73a0",
+    "hash": "bf8daaf704aa1947",
+    "text": "To je jé.",
     "file": "letter.J.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19382,
-    "generatedAt": "2026-09-21T07:39:08.589Z"
+    "bytes": 8630,
+    "generatedAt": "2026-09-22T18:08:17.381Z"
   },
   "letter.J.tryFind": {
-    "hash": "cf5b1e12665cadc3",
+    "hash": "1bccd889fbcf3009",
+    "text": "Zkus najít jé.",
     "file": "letter.J.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23711,
-    "generatedAt": "2026-09-21T07:39:09.766Z"
+    "bytes": 13820,
+    "generatedAt": "2026-09-22T18:08:18.567Z"
   },
   "letter.J.where": {
-    "hash": "0b468c616ec14d5c",
+    "hash": "2c1832a069c8a72d",
+    "text": "Kde je jé?",
     "file": "letter.J.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21919,
-    "generatedAt": "2026-09-21T07:39:09.175Z"
+    "bytes": 10793,
+    "generatedAt": "2026-09-22T18:08:17.971Z"
   },
   "letter.J.word": {
     "hash": "9f468c290023d526",
@@ -992,12 +1040,13 @@
     "generatedAt": "2026-09-21T07:39:10.324Z"
   },
   "letter.K.intro": {
-    "hash": "d2b0198a74b21d3a",
+    "hash": "d9072e5e74ab3e9d",
+    "text": "Ká jako kočka.",
     "file": "letter.K.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 54454,
-    "generatedAt": "2026-09-21T07:39:17.351Z"
+    "bytes": 12874,
+    "generatedAt": "2026-09-22T18:08:21.477Z"
   },
   "letter.K.name": {
     "hash": "c10d38e82f4bcd66",
@@ -1024,28 +1073,31 @@
     "generatedAt": "2026-09-21T07:39:20.826Z"
   },
   "letter.K.this": {
-    "hash": "68970eac569f9f36",
+    "hash": "11b8d25ad07f5faa",
+    "text": "To je ká.",
     "file": "letter.K.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19352,
-    "generatedAt": "2026-09-21T07:39:17.931Z"
+    "bytes": 9267,
+    "generatedAt": "2026-09-22T18:08:22.051Z"
   },
   "letter.K.tryFind": {
-    "hash": "895e3b9914922f4f",
+    "hash": "4236013aeb2486d1",
+    "text": "Zkus najít ká.",
     "file": "letter.K.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23462,
-    "generatedAt": "2026-09-21T07:39:19.107Z"
+    "bytes": 13961,
+    "generatedAt": "2026-09-22T18:08:23.196Z"
   },
   "letter.K.where": {
-    "hash": "7dc13656af61a04d",
+    "hash": "7e0cb05c44ea146b",
+    "text": "Kde je ká?",
     "file": "letter.K.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22101,
-    "generatedAt": "2026-09-21T07:39:18.514Z"
+    "bytes": 11454,
+    "generatedAt": "2026-09-22T18:08:22.620Z"
   },
   "letter.K.word": {
     "hash": "207c476f4d4e3d68",
@@ -1056,12 +1108,13 @@
     "generatedAt": "2026-09-21T07:39:19.674Z"
   },
   "letter.L.intro": {
-    "hash": "9746bb9fe50c35be",
+    "hash": "4ae5621fef7bd912",
+    "text": "El jako lev.",
     "file": "letter.L.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 52826,
-    "generatedAt": "2026-09-21T07:38:35.368Z"
+    "bytes": 12516,
+    "generatedAt": "2026-09-22T18:08:00.060Z"
   },
   "letter.L.name": {
     "hash": "609cc4392fdb24fa",
@@ -1088,28 +1141,31 @@
     "generatedAt": "2026-09-21T07:38:38.782Z"
   },
   "letter.L.this": {
-    "hash": "42a60ce729293543",
+    "hash": "45c5f68770c8c37b",
+    "text": "To je el.",
     "file": "letter.L.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 16246,
-    "generatedAt": "2026-09-21T07:38:35.940Z"
+    "bytes": 8886,
+    "generatedAt": "2026-09-22T18:08:00.622Z"
   },
   "letter.L.tryFind": {
-    "hash": "0e86279256e15a66",
+    "hash": "184ff348ca620c93",
+    "text": "Zkus najít el.",
     "file": "letter.L.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20262,
-    "generatedAt": "2026-09-21T07:38:37.099Z"
+    "bytes": 13499,
+    "generatedAt": "2026-09-22T18:08:01.786Z"
   },
   "letter.L.where": {
-    "hash": "4ec08ade62e92a61",
+    "hash": "2d891b4a4bbd615f",
+    "text": "Kde je el?",
     "file": "letter.L.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18917,
-    "generatedAt": "2026-09-21T07:38:36.516Z"
+    "bytes": 11621,
+    "generatedAt": "2026-09-22T18:08:01.208Z"
   },
   "letter.L.word": {
     "hash": "c2367a80bf1d4459",
@@ -1128,12 +1184,13 @@
     "generatedAt": "2026-09-21T07:41:57.913Z"
   },
   "letter.M.intro": {
-    "hash": "675d06186ef2c730",
+    "hash": "608b7f084ebd5fce",
+    "text": "Em jako Mikuláš.",
     "file": "letter.M.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55108,
-    "generatedAt": "2026-09-21T07:38:21.417Z"
+    "bytes": 15268,
+    "generatedAt": "2026-09-22T18:07:53.188Z"
   },
   "letter.M.name": {
     "hash": "667bd5595a5bc646",
@@ -1160,28 +1217,31 @@
     "generatedAt": "2026-09-21T07:38:24.836Z"
   },
   "letter.M.this": {
-    "hash": "45180cfb9b97150d",
+    "hash": "74d8f20f411301e0",
+    "text": "To je em.",
     "file": "letter.M.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22254,
-    "generatedAt": "2026-09-21T07:38:21.992Z"
+    "bytes": 8815,
+    "generatedAt": "2026-09-22T18:07:53.754Z"
   },
   "letter.M.tryFind": {
-    "hash": "402056682ba8027d",
+    "hash": "c808bc93d5df141f",
+    "text": "Zkus najít em.",
     "file": "letter.M.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 25189,
-    "generatedAt": "2026-09-21T07:38:23.157Z"
+    "bytes": 14708,
+    "generatedAt": "2026-09-22T18:07:54.884Z"
   },
   "letter.M.where": {
-    "hash": "cf3250a4f6ed8f7a",
+    "hash": "1c0b0025565be5ef",
+    "text": "Kde je em?",
     "file": "letter.M.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23629,
-    "generatedAt": "2026-09-21T07:38:22.571Z"
+    "bytes": 11117,
+    "generatedAt": "2026-09-22T18:07:54.313Z"
   },
   "letter.M.word": {
     "hash": "116bbb46efb9ac4c",
@@ -1192,12 +1252,13 @@
     "generatedAt": "2026-09-21T07:38:23.709Z"
   },
   "letter.N.intro": {
-    "hash": "25fede2cfb52cd53",
+    "hash": "46c2e5ccdf25bbc8",
+    "text": "En jako nos.",
     "file": "letter.N.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 53179,
-    "generatedAt": "2026-09-21T07:39:26.746Z"
+    "bytes": 12190,
+    "generatedAt": "2026-09-22T18:08:26.176Z"
   },
   "letter.N.name": {
     "hash": "3b5476034ff6c1c9",
@@ -1224,28 +1285,31 @@
     "generatedAt": "2026-09-21T07:39:30.204Z"
   },
   "letter.N.this": {
-    "hash": "be82952242ff55df",
+    "hash": "99d1013f47517f1f",
+    "text": "To je en.",
     "file": "letter.N.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17753,
-    "generatedAt": "2026-09-21T07:39:27.330Z"
+    "bytes": 8690,
+    "generatedAt": "2026-09-22T18:08:26.787Z"
   },
   "letter.N.tryFind": {
-    "hash": "35a7f58f478e75fa",
+    "hash": "55d1c40df4b685ba",
+    "text": "Zkus najít en.",
     "file": "letter.N.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20848,
-    "generatedAt": "2026-09-21T07:39:28.504Z"
+    "bytes": 13616,
+    "generatedAt": "2026-09-22T18:08:27.991Z"
   },
   "letter.N.where": {
-    "hash": "229825738fa922e8",
+    "hash": "51abe565294b29d4",
+    "text": "Kde je en?",
     "file": "letter.N.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19667,
-    "generatedAt": "2026-09-21T07:39:27.915Z"
+    "bytes": 11128,
+    "generatedAt": "2026-09-22T18:08:27.399Z"
   },
   "letter.N.word": {
     "hash": "fad2b852111ad142",
@@ -1256,12 +1320,13 @@
     "generatedAt": "2026-09-21T07:39:29.068Z"
   },
   "letter.O.intro": {
-    "hash": "2c49196c193cc411",
+    "hash": "cdf6d861e964a50a",
+    "text": "Ó jako oko.",
     "file": "letter.O.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 52698,
-    "generatedAt": "2026-09-21T07:38:39.983Z"
+    "bytes": 19448,
+    "generatedAt": "2026-09-22T18:08:02.364Z"
   },
   "letter.O.name": {
     "hash": "b826e03b05f6639a",
@@ -1288,28 +1353,31 @@
     "generatedAt": "2026-09-21T07:38:43.406Z"
   },
   "letter.O.this": {
-    "hash": "f3197a8286fce91e",
+    "hash": "6e387cb792e3b03c",
+    "text": "To je ó.",
     "file": "letter.O.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 16857,
-    "generatedAt": "2026-09-21T07:38:40.556Z"
+    "bytes": 16681,
+    "generatedAt": "2026-09-22T18:08:02.939Z"
   },
   "letter.O.tryFind": {
-    "hash": "783842598f89f989",
+    "hash": "bbce65f22e7b77be",
+    "text": "Zkus najít ó.",
     "file": "letter.O.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21858,
-    "generatedAt": "2026-09-21T07:38:41.722Z"
+    "bytes": 21502,
+    "generatedAt": "2026-09-22T18:08:04.113Z"
   },
   "letter.O.where": {
-    "hash": "c258be130bfe6525",
+    "hash": "733a77b6862e4f45",
+    "text": "Kde je ó?",
     "file": "letter.O.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20117,
-    "generatedAt": "2026-09-21T07:38:41.136Z"
+    "bytes": 17439,
+    "generatedAt": "2026-09-22T18:08:03.524Z"
   },
   "letter.O.word": {
     "hash": "fb3f23117056ab72",
@@ -1320,12 +1388,13 @@
     "generatedAt": "2026-09-21T07:38:42.276Z"
   },
   "letter.P.intro": {
-    "hash": "59aeb501dcfd2c95",
+    "hash": "7c3e81dfd5fdb395",
+    "text": "Pé jako pes.",
     "file": "letter.P.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 56614,
-    "generatedAt": "2026-09-21T07:38:44.629Z"
+    "bytes": 12891,
+    "generatedAt": "2026-09-22T18:08:04.736Z"
   },
   "letter.P.name": {
     "hash": "9db0f49bc2b3a864",
@@ -1352,28 +1421,31 @@
     "generatedAt": "2026-09-21T07:38:48.078Z"
   },
   "letter.P.this": {
-    "hash": "601ec308b325d784",
+    "hash": "e1be5e1b2158edbe",
+    "text": "To je pé.",
     "file": "letter.P.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17017,
-    "generatedAt": "2026-09-21T07:38:45.229Z"
+    "bytes": 10678,
+    "generatedAt": "2026-09-22T18:08:05.348Z"
   },
   "letter.P.tryFind": {
-    "hash": "01f51d8ac16788ed",
+    "hash": "a48178c69d72d41f",
+    "text": "Zkus najít pé.",
     "file": "letter.P.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21342,
-    "generatedAt": "2026-09-21T07:38:46.392Z"
+    "bytes": 14452,
+    "generatedAt": "2026-09-22T18:08:06.561Z"
   },
   "letter.P.where": {
-    "hash": "d77870f791549022",
+    "hash": "00d69543acd15186",
+    "text": "Kde je pé?",
     "file": "letter.P.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18920,
-    "generatedAt": "2026-09-21T07:38:45.808Z"
+    "bytes": 11749,
+    "generatedAt": "2026-09-22T18:08:05.949Z"
   },
   "letter.P.word": {
     "hash": "6fb771ead92a88be",
@@ -1384,12 +1456,13 @@
     "generatedAt": "2026-09-21T07:38:46.948Z"
   },
   "letter.R.intro": {
-    "hash": "c07515b1d8561b9f",
+    "hash": "0d2c438df94f81b0",
+    "text": "Er jako ryba.",
     "file": "letter.R.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 53987,
-    "generatedAt": "2026-09-21T07:39:36.104Z"
+    "bytes": 11436,
+    "generatedAt": "2026-09-22T18:08:30.962Z"
   },
   "letter.R.name": {
     "hash": "262d35a18fd7631b",
@@ -1416,28 +1489,31 @@
     "generatedAt": "2026-09-21T07:39:39.561Z"
   },
   "letter.R.this": {
-    "hash": "72627d9648b46318",
+    "hash": "642c76bb76e8f44f",
+    "text": "To je er.",
     "file": "letter.R.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17424,
-    "generatedAt": "2026-09-21T07:39:36.686Z"
+    "bytes": 8542,
+    "generatedAt": "2026-09-22T18:08:31.560Z"
   },
   "letter.R.tryFind": {
-    "hash": "2bfc399760aaa2ac",
+    "hash": "55a6017443dc30d2",
+    "text": "Zkus najít er.",
     "file": "letter.R.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20711,
-    "generatedAt": "2026-09-21T07:39:37.863Z"
+    "bytes": 14314,
+    "generatedAt": "2026-09-22T18:08:32.750Z"
   },
   "letter.R.where": {
-    "hash": "f73f607c054938fe",
+    "hash": "a766a76e2850c954",
+    "text": "Kde je er?",
     "file": "letter.R.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19668,
-    "generatedAt": "2026-09-21T07:39:37.269Z"
+    "bytes": 10812,
+    "generatedAt": "2026-09-22T18:08:32.165Z"
   },
   "letter.R.word": {
     "hash": "75a036f56ab9e07b",
@@ -1448,12 +1524,13 @@
     "generatedAt": "2026-09-21T07:39:38.422Z"
   },
   "letter.Ř.intro": {
-    "hash": "619e40570956582c",
+    "hash": "e4020319504c0ce0",
+    "text": "Eř jako řepa.",
     "file": "letter.R_.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55447,
-    "generatedAt": "2026-09-21T07:40:13.717Z"
+    "bytes": 11832,
+    "generatedAt": "2026-09-22T18:08:50.108Z"
   },
   "letter.Ř.name": {
     "hash": "2da496b31ba98a02",
@@ -1480,28 +1557,31 @@
     "generatedAt": "2026-09-21T07:40:17.192Z"
   },
   "letter.Ř.this": {
-    "hash": "c880420105e2b755",
+    "hash": "51215fd8dbcf8fe4",
+    "text": "To je eř.",
     "file": "letter.R_.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17114,
-    "generatedAt": "2026-09-21T07:40:14.303Z"
+    "bytes": 8888,
+    "generatedAt": "2026-09-22T18:08:50.695Z"
   },
   "letter.Ř.tryFind": {
-    "hash": "15c4ed4a693bd0ef",
+    "hash": "199cd46b6ce26f4d",
+    "text": "Zkus najít eř.",
     "file": "letter.R_.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21363,
-    "generatedAt": "2026-09-21T07:40:15.482Z"
+    "bytes": 13345,
+    "generatedAt": "2026-09-22T18:08:51.944Z"
   },
   "letter.Ř.where": {
-    "hash": "5a792e65fddbdf13",
+    "hash": "5041fbadb50496c2",
+    "text": "Kde je eř?",
     "file": "letter.R_.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19184,
-    "generatedAt": "2026-09-21T07:40:14.890Z"
+    "bytes": 10997,
+    "generatedAt": "2026-09-22T18:08:51.337Z"
   },
   "letter.Ř.word": {
     "hash": "6fa263d178ab2437",
@@ -1512,12 +1592,13 @@
     "generatedAt": "2026-09-21T07:40:16.043Z"
   },
   "letter.S.intro": {
-    "hash": "37e4bbec22e6df17",
+    "hash": "2e2f0c0e1777cb32",
+    "text": "Es jako sova.",
     "file": "letter.S.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55053,
-    "generatedAt": "2026-09-21T07:38:49.279Z"
+    "bytes": 11993,
+    "generatedAt": "2026-09-22T18:08:07.172Z"
   },
   "letter.S.name": {
     "hash": "a1b7fe750a63b4cf",
@@ -1544,28 +1625,31 @@
     "generatedAt": "2026-09-21T07:38:52.716Z"
   },
   "letter.S.this": {
-    "hash": "e6c37e5d16fcc037",
+    "hash": "ae8a172fb1727970",
+    "text": "To je es.",
     "file": "letter.S.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17038,
-    "generatedAt": "2026-09-21T07:38:49.855Z"
+    "bytes": 10041,
+    "generatedAt": "2026-09-22T18:08:07.778Z"
   },
   "letter.S.tryFind": {
-    "hash": "ca0b58b11cf2da3d",
+    "hash": "168ffe134c987065",
+    "text": "Zkus najít es.",
     "file": "letter.S.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22211,
-    "generatedAt": "2026-09-21T07:38:51.025Z"
+    "bytes": 15835,
+    "generatedAt": "2026-09-22T18:08:08.932Z"
   },
   "letter.S.where": {
-    "hash": "ad496ccc349d6968",
+    "hash": "142eff0c223a8892",
+    "text": "Kde je es?",
     "file": "letter.S.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18944,
-    "generatedAt": "2026-09-21T07:38:50.438Z"
+    "bytes": 11830,
+    "generatedAt": "2026-09-22T18:08:08.355Z"
   },
   "letter.S.word": {
     "hash": "89f8f6d87a9351db",
@@ -1576,12 +1660,13 @@
     "generatedAt": "2026-09-21T07:38:51.582Z"
   },
   "letter.Š.intro": {
-    "hash": "ba3d13445f23915c",
+    "hash": "6d6ff34d4aaf4728",
+    "text": "Eš jako šnek.",
     "file": "letter.S_.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55200,
-    "generatedAt": "2026-09-21T07:40:18.416Z"
+    "bytes": 14064,
+    "generatedAt": "2026-09-22T18:08:52.528Z"
   },
   "letter.Š.name": {
     "hash": "bd76f9540c181835",
@@ -1608,28 +1693,31 @@
     "generatedAt": "2026-09-21T07:40:21.902Z"
   },
   "letter.Š.this": {
-    "hash": "33de308305300cdc",
+    "hash": "56f08c1ed5acce28",
+    "text": "To je eš.",
     "file": "letter.S_.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18661,
-    "generatedAt": "2026-09-21T07:40:18.998Z"
+    "bytes": 10526,
+    "generatedAt": "2026-09-22T18:08:53.109Z"
   },
   "letter.Š.tryFind": {
-    "hash": "e18b096f77557b67",
+    "hash": "9dcfe8e7c1316e4a",
+    "text": "Zkus najít eš.",
     "file": "letter.S_.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22932,
-    "generatedAt": "2026-09-21T07:40:20.182Z"
+    "bytes": 15201,
+    "generatedAt": "2026-09-22T18:08:54.563Z"
   },
   "letter.Š.where": {
-    "hash": "195078ba99af665a",
+    "hash": "73064fd3ebd77572",
+    "text": "Kde je eš?",
     "file": "letter.S_.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20591,
-    "generatedAt": "2026-09-21T07:40:19.591Z"
+    "bytes": 12017,
+    "generatedAt": "2026-09-22T18:08:53.912Z"
   },
   "letter.Š.word": {
     "hash": "d82b03ca1ac5a9dc",
@@ -1640,12 +1728,13 @@
     "generatedAt": "2026-09-21T07:40:20.749Z"
   },
   "letter.T.intro": {
-    "hash": "18e296065d4d65c2",
+    "hash": "06b4c12898accc59",
+    "text": "Té jako tygr.",
     "file": "letter.T.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55457,
-    "generatedAt": "2026-09-21T07:39:03.321Z"
+    "bytes": 11983,
+    "generatedAt": "2026-09-22T18:08:14.364Z"
   },
   "letter.T.name": {
     "hash": "0297ab41b9382ba0",
@@ -1672,28 +1761,31 @@
     "generatedAt": "2026-09-21T07:39:06.787Z"
   },
   "letter.T.this": {
-    "hash": "ee048d098662c8fd",
+    "hash": "551e0f6f6164de10",
+    "text": "To je té.",
     "file": "letter.T.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18904,
-    "generatedAt": "2026-09-21T07:39:03.901Z"
+    "bytes": 9301,
+    "generatedAt": "2026-09-22T18:08:14.958Z"
   },
   "letter.T.tryFind": {
-    "hash": "f2230a4084bd6f2e",
+    "hash": "dc60c85802c2a7f7",
+    "text": "Zkus najít té.",
     "file": "letter.T.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22533,
-    "generatedAt": "2026-09-21T07:39:05.082Z"
+    "bytes": 15571,
+    "generatedAt": "2026-09-22T18:08:16.200Z"
   },
   "letter.T.where": {
-    "hash": "d07748f0c06a9295",
+    "hash": "8756910736c1dea1",
+    "text": "Kde je té?",
     "file": "letter.T.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20457,
-    "generatedAt": "2026-09-21T07:39:04.488Z"
+    "bytes": 11221,
+    "generatedAt": "2026-09-22T18:08:15.601Z"
   },
   "letter.T.word": {
     "hash": "d0d27f9402f57815",
@@ -1704,12 +1796,13 @@
     "generatedAt": "2026-09-21T07:39:05.641Z"
   },
   "letter.U.intro": {
-    "hash": "d0895c078e6042ee",
+    "hash": "64d9dcb22588b5b2",
+    "text": "Ú jako ucho.",
     "file": "letter.U.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 54226,
-    "generatedAt": "2026-09-21T07:38:53.929Z"
+    "bytes": 19262,
+    "generatedAt": "2026-09-22T18:08:09.513Z"
   },
   "letter.U.name": {
     "hash": "4b17ccb9ed65e37e",
@@ -1736,28 +1829,31 @@
     "generatedAt": "2026-09-21T07:38:57.406Z"
   },
   "letter.U.this": {
-    "hash": "f06d157102f0b171",
+    "hash": "a672fd27f16c1b29",
+    "text": "To je ú.",
     "file": "letter.U.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18274,
-    "generatedAt": "2026-09-21T07:38:54.506Z"
+    "bytes": 15844,
+    "generatedAt": "2026-09-22T18:08:10.093Z"
   },
   "letter.U.tryFind": {
-    "hash": "b3df938f46772dc6",
+    "hash": "37167ee950fd10dd",
+    "text": "Zkus najít ú.",
     "file": "letter.U.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22225,
-    "generatedAt": "2026-09-21T07:38:55.694Z"
+    "bytes": 20520,
+    "generatedAt": "2026-09-22T18:08:11.357Z"
   },
   "letter.U.where": {
-    "hash": "3cf81b0ac55d6cda",
+    "hash": "9e3f8c6a5d1c26e4",
+    "text": "Kde je ú?",
     "file": "letter.U.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 20155,
-    "generatedAt": "2026-09-21T07:38:55.090Z"
+    "bytes": 17612,
+    "generatedAt": "2026-09-22T18:08:10.723Z"
   },
   "letter.U.word": {
     "hash": "1d7a91a620c1a6bc",
@@ -1768,12 +1864,13 @@
     "generatedAt": "2026-09-21T07:38:56.253Z"
   },
   "letter.V.intro": {
-    "hash": "f16e8d0fa00eab03",
+    "hash": "9e8a1b303c6dae98",
+    "text": "Vé jako vlak.",
     "file": "letter.V.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 51900,
-    "generatedAt": "2026-09-21T07:39:12.678Z"
+    "bytes": 13289,
+    "generatedAt": "2026-09-22T18:08:19.162Z"
   },
   "letter.V.name": {
     "hash": "e318e9ebfe884951",
@@ -1800,28 +1897,31 @@
     "generatedAt": "2026-09-21T07:39:16.131Z"
   },
   "letter.V.this": {
-    "hash": "65a287e72f8b3f6c",
+    "hash": "cb96bc4a105f4008",
+    "text": "To je vé.",
     "file": "letter.V.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18861,
-    "generatedAt": "2026-09-21T07:39:13.257Z"
+    "bytes": 9219,
+    "generatedAt": "2026-09-22T18:08:19.747Z"
   },
   "letter.V.tryFind": {
-    "hash": "17c912d6e015c541",
+    "hash": "cbc67b5f66a43a92",
+    "text": "Zkus najít vé.",
     "file": "letter.V.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21591,
-    "generatedAt": "2026-09-21T07:39:14.432Z"
+    "bytes": 14295,
+    "generatedAt": "2026-09-22T18:08:20.900Z"
   },
   "letter.V.where": {
-    "hash": "d78a164bcbba3b1f",
+    "hash": "73a8619939cbfdc2",
+    "text": "Kde je vé?",
     "file": "letter.V.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19386,
-    "generatedAt": "2026-09-21T07:39:13.842Z"
+    "bytes": 11027,
+    "generatedAt": "2026-09-22T18:08:20.319Z"
   },
   "letter.V.word": {
     "hash": "c1dff9bdf720c6f6",
@@ -1840,12 +1940,13 @@
     "generatedAt": "2026-09-21T07:41:57.314Z"
   },
   "letter.Y.intro": {
-    "hash": "43f79ce8a5412481",
+    "hash": "59da1ac398e568cd",
+    "text": "Ypsilon. Schovává se uprostřed slova myš.",
     "file": "letter.Y.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 46991,
-    "generatedAt": "2026-09-21T07:39:54.839Z"
+    "bytes": 31783,
+    "generatedAt": "2026-09-22T18:08:40.461Z"
   },
   "letter.Y.name": {
     "hash": "1a49a267d6dd1614",
@@ -1872,28 +1973,31 @@
     "generatedAt": "2026-09-21T07:39:58.331Z"
   },
   "letter.Y.this": {
-    "hash": "7a5042d8de7e042b",
+    "hash": "a8f734da6bc7bf9d",
+    "text": "To je ypsilon.",
     "file": "letter.Y.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19681,
-    "generatedAt": "2026-09-21T07:39:55.435Z"
+    "bytes": 12445,
+    "generatedAt": "2026-09-22T18:08:41.038Z"
   },
   "letter.Y.tryFind": {
-    "hash": "d34905dda2648d04",
+    "hash": "dfb68879d0e0c127",
+    "text": "Zkus najít ypsilon.",
     "file": "letter.Y.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 23282,
-    "generatedAt": "2026-09-21T07:39:56.626Z"
+    "bytes": 17784,
+    "generatedAt": "2026-09-22T18:08:42.205Z"
   },
   "letter.Y.where": {
-    "hash": "53f029dbce57c7db",
+    "hash": "981fb42ce9e822cc",
+    "text": "Kde je ypsilon?",
     "file": "letter.Y.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21735,
-    "generatedAt": "2026-09-21T07:39:56.026Z"
+    "bytes": 14619,
+    "generatedAt": "2026-09-22T18:08:41.618Z"
   },
   "letter.Y.word": {
     "hash": "6a68cae5a5f66185",
@@ -1904,12 +2008,13 @@
     "generatedAt": "2026-09-21T07:39:57.188Z"
   },
   "letter.Z.intro": {
-    "hash": "9f9e3ae79dff1929",
+    "hash": "c633e2967c551ddb",
+    "text": "Zet jako zebra.",
     "file": "letter.Z.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 55208,
-    "generatedAt": "2026-09-21T07:39:31.423Z"
+    "bytes": 12636,
+    "generatedAt": "2026-09-22T18:08:28.576Z"
   },
   "letter.Z.name": {
     "hash": "fbae1b54424d69fb",
@@ -1936,28 +2041,31 @@
     "generatedAt": "2026-09-21T07:39:34.884Z"
   },
   "letter.Z.this": {
-    "hash": "df9e1fef11ce552c",
+    "hash": "66df72295d5ec583",
+    "text": "To je zet.",
     "file": "letter.Z.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 17335,
-    "generatedAt": "2026-09-21T07:39:32.004Z"
+    "bytes": 9731,
+    "generatedAt": "2026-09-22T18:08:29.153Z"
   },
   "letter.Z.tryFind": {
-    "hash": "065c1dcd7d75c06d",
+    "hash": "3309622fb1aab5e7",
+    "text": "Zkus najít zet.",
     "file": "letter.Z.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21207,
-    "generatedAt": "2026-09-21T07:39:33.182Z"
+    "bytes": 14140,
+    "generatedAt": "2026-09-22T18:08:30.344Z"
   },
   "letter.Z.where": {
-    "hash": "a4819fb2e36578a2",
+    "hash": "56b3e7e18fbed3a8",
+    "text": "Kde je zet?",
     "file": "letter.Z.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 19513,
-    "generatedAt": "2026-09-21T07:39:32.593Z"
+    "bytes": 11981,
+    "generatedAt": "2026-09-22T18:08:29.727Z"
   },
   "letter.Z.word": {
     "hash": "d6c3c9caa0f24a9c",
@@ -1968,12 +2076,13 @@
     "generatedAt": "2026-09-21T07:39:33.740Z"
   },
   "letter.Ž.intro": {
-    "hash": "d68ba998a9fa26e4",
+    "hash": "03ce5aa0b590be49",
+    "text": "Žet jako žába.",
     "file": "letter.Z_.intro.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 57818,
-    "generatedAt": "2026-09-21T07:40:23.135Z"
+    "bytes": 13087,
+    "generatedAt": "2026-09-22T18:08:55.227Z"
   },
   "letter.Ž.name": {
     "hash": "fc29075b5243bb64",
@@ -2000,28 +2109,31 @@
     "generatedAt": "2026-09-21T07:40:26.624Z"
   },
   "letter.Ž.this": {
-    "hash": "640d1703748f2b0b",
+    "hash": "bbd26f3dcc860c62",
+    "text": "To je žet.",
     "file": "letter.Z_.this.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 18565,
-    "generatedAt": "2026-09-21T07:40:23.720Z"
+    "bytes": 9905,
+    "generatedAt": "2026-09-22T18:08:55.818Z"
   },
   "letter.Ž.tryFind": {
-    "hash": "c6516c60362b720f",
+    "hash": "e60b8443fdc67a3a",
+    "text": "Zkus najít žet.",
     "file": "letter.Z_.tryFind.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 22172,
-    "generatedAt": "2026-09-21T07:40:24.899Z"
+    "bytes": 14858,
+    "generatedAt": "2026-09-22T18:08:56.987Z"
   },
   "letter.Ž.where": {
-    "hash": "db2283d0e10d91dd",
+    "hash": "bc62532ead8636fc",
+    "text": "Kde je žet?",
     "file": "letter.Z_.where.m4a",
     "provider": "macos-say",
     "voice": "Zuzana (Premium)",
-    "bytes": 21004,
-    "generatedAt": "2026-09-21T07:40:24.309Z"
+    "bytes": 11564,
+    "generatedAt": "2026-09-22T18:08:56.403Z"
   },
   "letter.Ž.word": {
     "hash": "8efcc87cdefb51b3",
