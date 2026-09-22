@@ -104,6 +104,7 @@ npm run audio                      # jen chybějící a změněné
 npm run audio -- --only=letter.M.intro,praise.3
 npm run audio -- --rate=160 --pause=0
 npm run audio -- --force
+npm run audio -- --prune            # smaže klipy po zrušených promluvách
 ```
 
 Manifest v `public/audio/manifest.json` drží hash textu i nastavení hlasu, takže změna

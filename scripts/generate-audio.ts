@@ -7,6 +7,7 @@
  *   npm run audio -- --voice="Zuzana (Premium)" --rate=150
  *   npm run audio -- --provider=elevenlabs
  *   npm run audio:dry                  # jen ukáže, co by se dělo
+ *   npm run audio -- --prune           # smaže klipy po zrušených promluvách
  *
  * Klipy, které už existují a jejichž text se nezměnil, se přeskakují — takže
  * když později prohodíš slovo u jednoho písmene, přegeneruje se pár souborů,
@@ -14,6 +15,7 @@
  */
 
 import { join, relative } from 'node:path';
+import { rm } from 'node:fs/promises';
 import { SPEECH } from '../src/content/speech.ts';
 import { createProvider } from './tts/index.ts';
 import { hashLine, readManifest, safeFileBase, writeManifest, type Manifest } from './lib/manifest.ts';
@@ -40,6 +42,23 @@ async function main(): Promise<void> {
   if (!dry) await provider.preflight();
 
   const manifest: Manifest = await readManifest(MANIFEST);
+
+  /*
+    Když promluva z obsahu zmizí, její klip zůstane ležet v public/audio
+    a doputuje až do offline balíku, kde zabírá místo za nic. `--prune`
+    ho smaže i se záznamem v manifestu.
+  */
+  if (args.prune === true) {
+    const known = new Set(SPEECH.map((l) => l.id));
+    const orphans = Object.keys(manifest).filter((id) => !known.has(id));
+    for (const id of orphans) {
+      await rm(join(AUDIO_DIR, manifest[id]!.file), { force: true });
+      delete manifest[id];
+    }
+    await writeManifest(MANIFEST, manifest);
+    console.log(`Uklizeno osiřelých klipů: ${orphans.length}`);
+  }
+
   const lines = only ? SPEECH.filter((l) => only.includes(l.id)) : SPEECH;
 
   if (only && lines.length !== only.length) {
