@@ -24,11 +24,32 @@ Postranní vchody pro vývoj a kontrolu, v běžném provozu na ně nikdo nesáh
 
 | Adresa | Co ukáže |
 |---|---|
+| `?uloha=cesta&hotovo=8` | cesta s vymyšleným postupem |
 | `?koncepty` | tři původní koncepty světa a maskoty |
 | `?uloha=pocitani&polozka=num:7` | klepací počítání |
 | `?uloha=obrazek&polozka=let:M` | přiřazení obrázku k písmenu |
 | `?uloha=obtahovani&polozka=let:M` | obtahování prstem |
-| `?uloha=mapa&hotovo=11` | mapa s vymyšleným postupem |
+| `?uloha=mezihra&varianta=1` | mezihra mezi úlohami |
+
+## Jak je to poskládané
+
+```
+dotek  →  CESTA  ⇄  sezení (úloha ⇄ mezihra)  →  děkovačka  →  CESTA
+                 ⇄  rodičovská zóna
+```
+
+**Cesta** je domovská obrazovka. Vidíš na ní, kde jsi, co máš za sebou a co tě
+čeká; hraje se klepnutím na svítící místo, kde se pokračuje. Nahoře se přepíná
+mezi cestou písmen a cestou čísel.
+
+**Ze sezení se dá kdykoliv odejít** domečkem vlevo nahoře — bez ptaní, postup
+se ukládá po každé odpovědi.
+
+**Rampa** dole ukazuje postup v běžícím sezení: rozsvítit ji celou je cíl.
+Dlouhodobý postup patří na cestu.
+
+Sezení se prokládají **mezihrami**, ve kterých se nic nevyhodnocuje a nedá se
+v nich chybovat.
 
 ## Jak se to učí
 
@@ -153,6 +174,7 @@ bez adresního řádku.
 | `src/data/` | postup za rozhraním `ProgressRepository` (IndexedDB, později Supabase) |
 | `src/audio/` | přehrávání promluv, syntéza efektů ve Web Audio |
 | `src/theatre/` | jeviště, rampa, diapozitivy, ilustrace, počítané motivy |
+| `src/screens/RoadScreen.tsx` | cesta — domovská obrazovka a páteř celé aplikace |
 | `src/screens/` | jednotlivé obrazovky a typy úloh |
 | `src/mascots/` | Kulisák a zahozené návrhy |
 | `src/concepts/` | původní tři koncepty světa, ponechané pro srovnání |

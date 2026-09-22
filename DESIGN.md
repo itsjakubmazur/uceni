@@ -12,6 +12,38 @@ Postup je fyzický: každé zvládnuté písmeno nebo číslo natrvalo rozsvít�
 lampičku na rampě a do scény sjede další kulisa. Žádné body, žádné hvězdičky.
 Divadlo se postupně zaplňuje a rozsvěcí — to je celá motivace.
 
+## Kostra
+
+Všechno vychází z **cesty** a všechno se na ni vrací.
+
+```
+dotek  →  CESTA  ⇄  sezení (úloha ⇄ mezihra)  →  děkovačka  →  CESTA
+                 ⇄  rodičovská zóna
+```
+
+Cesta je domovská obrazovka, ne mapa schovaná za tlačítkem. Dítě na ní vidí
+naráz tři věci: kde je (Kulisák stojí na místě, kde se pokračuje), co má za
+sebou (rozsvícené lampy, na které se dá klepat) a co ho čeká (další zastávky
+jsou vidět dopředu, jen zhasnuté). Hraje se klepnutím na to velké svítící
+místo, ne přes menu.
+
+**Ze sezení se dá kdykoliv odejít.** Domeček vlevo nahoře, bez ptaní a bez
+potvrzování. Postup se ukládá po každé odpovědi, takže se nic neztratí.
+Aplikace, ze které se nedá odejít, je past, a past pětiletému nenabízíme.
+
+## Dvojí postup
+
+Postup se ukazuje na dvou místech a každé odpovídá na jinou otázku:
+
+| Kde | Co říká | Odpovídá na |
+|---|---|---|
+| **Rampa** u paty jeviště | kolik úloh z tohohle sezení je za mnou | „kdy to skončí?" |
+| **Cesta** na domovské obrazovce | kolik písmen a čísel už umím | „jak jsem daleko?" |
+
+Rampa je cíl sezení: rozsvítit ji celou. Do dvanácti úloh je jedna lampička
+jedna úloha, u delších sezení se plní poměrně. Nikdy se nenasytí a nikdy
+neukazuje nic jiného než právě běžící sezení.
+
 ## Principy
 
 1. **Papír, ne sklo a chrom.** Každá plocha je výstřižek. Má trhaný okraj, vlákno

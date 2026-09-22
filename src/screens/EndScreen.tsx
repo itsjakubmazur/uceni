@@ -9,24 +9,30 @@ import type { ItemId } from '../engine/types.ts';
 /**
  * Konec sezení.
  *
- * Laskavé ukončení, ne „došel ti čas". Ukáže se, co se dneska naučil —
- * a když nic nezvládl celé, ukáže se, co si zkoušel. Nikdy prázdná obrazovka
- * s hodnocením.
+ * Děkovačka, ne vysvědčení. Rampa dosvítila, představení skončilo.
+ *
+ * Když dnes něco zvládl celé, vyjde si to na jeviště poklonit. Když ne,
+ * není tu žádné hodnocení ani prázdno — jen Kulisák, který se raduje,
+ * a cesta zpátky. Sezení musí skončit dobře vždycky.
  */
-export function EndScreen({
-  mastered,
-  touched,
-  onHome,
-}: {
-  mastered: ItemId[];
-  touched: ItemId[];
-  onHome: () => void;
-}) {
-  const shown = mastered.length ? mastered : touched.slice(0, 4);
+export function EndScreen({ mastered, onHome }: { mastered: ItemId[]; onHome: () => void }) {
+  const shown = mastered.slice(0, 5);
 
   return (
     <div className="absolute inset-0 z-30 grid place-items-center pb-[14%]">
       <div className="flex flex-col items-center gap-[clamp(18px,3vh,36px)]">
+        {shown.length === 0 && (
+          <motion.p
+            className="max-w-[70%] text-center text-[clamp(20px,2.6vw,34px)] leading-tight text-[#F6EBD4]"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            style={{ textShadow: '0 2px 10px rgba(35,26,19,.8)' }}
+          >
+            Dneska jsme si zahráli.
+          </motion.p>
+        )}
+
         <motion.div
           className="flex gap-[clamp(12px,2.4vw,34px)]"
           initial="hidden"

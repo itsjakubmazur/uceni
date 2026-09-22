@@ -49,7 +49,7 @@ const SOURCES = {
   },
 };
 
-export type Phase = 'locked' | 'home' | 'task' | 'interlude' | 'map' | 'end' | 'rodice';
+export type Phase = 'locked' | 'cesta' | 'task' | 'interlude' | 'end' | 'rodice';
 
 export interface SessionApi {
   phase: Phase;
@@ -58,7 +58,11 @@ export interface SessionApi {
   interlude: Interlude | null;
   state: EngineState | null;
   settings: Settings;
-  litCount: number;
+  /** Postup v běžícím sezení: kolik úloh z kolika. */
+  progress: { done: number; total: number };
+  /** Která cesta je na domovské obrazovce vybraná. */
+  area: Area;
+  setArea(area: Area): void;
   /** Kolikrát se u aktuální úlohy spletl. Po dvou se zvýrazní správná možnost. */
   mistakes: number;
   masteredToday: ItemId[];
@@ -68,7 +72,6 @@ export interface SessionApi {
   finishIntro(): void;
   finishCount(): void;
   finishInterlude(): void;
-  showMap(): void;
   openParentZone(): void;
   changeSettings(patch: Partial<Settings>): void;
   resetProgress(): void;
@@ -86,7 +89,8 @@ export function useSession(): SessionApi {
   const [interlude, setInterlude] = useState<Interlude | null>(null);
   const [mistakes, setMistakes] = useState(0);
   const [masteredToday, setMasteredToday] = useState<ItemId[]>([]);
-  const [areas, setAreas] = useState<Area[]>(['numbers']);
+  const [area, setArea] = useState<Area>('letters');
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
 
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
@@ -109,11 +113,6 @@ export function useSession(): SessionApi {
     })();
   }, [repo]);
 
-  const litCount = useMemo(() => {
-    if (!state) return 0;
-    return Object.values(state.items).filter((p) => p.state === 'mastered').length;
-  }, [state]);
-
   const persist = useCallback(
     (next: EngineState) => {
       setState(next);
@@ -127,7 +126,7 @@ export function useSession(): SessionApi {
     await audio.unlock();
     if (audio.context) sfx.attach(audio.context, settings.effectsVolume);
     audio.setVolume(settings.speechVolume);
-    setPhase('home');
+    setPhase('cesta');
     director.say('ui.welcome');
   }, [settings.effectsVolume, settings.speechVolume]);
 
@@ -172,6 +171,7 @@ export function useSession(): SessionApi {
 
   const pushStep = useCallback(
     (from: EngineState, active: Area[]) => {
+      setProgress({ done: cursor.current.done, total: cursor.current.plan.taskBudget });
       const step: Step | null = nextStep(from, cursor.current, active, SOURCES, rng);
 
       if (!step) {
@@ -186,6 +186,7 @@ export function useSession(): SessionApi {
         return;
       }
 
+
       setTask(step);
       setInterlude(null);
       setPhase('task');
@@ -197,10 +198,10 @@ export function useSession(): SessionApi {
   );
 
   const chooseArea = useCallback(
-    (area: Area) => {
+    (chosen: Area) => {
       if (!state) return;
-      const active: Area[] = [area];
-      setAreas(active);
+      const active: Area[] = [chosen];
+      setArea(chosen);
 
       director.reset();
       heardFullPrompt.current = new Set();
@@ -280,12 +281,12 @@ export function useSession(): SessionApi {
             }
             return;
           }
-          pushStep(unlocked, areas);
+          pushStep(unlocked, [area]);
         },
         justMastered ? 1500 : 850,
       );
     },
-    [areas, persist, pushStep, repo, state, task],
+    [area, persist, pushStep, repo, state, task],
   );
 
   const answer = useCallback(
@@ -333,17 +334,13 @@ export function useSession(): SessionApi {
 
   const finishInterlude = useCallback(() => {
     if (!state) return;
-    pushStep(state, areas);
-  }, [areas, pushStep, state]);
-
-  const showMap = useCallback(() => {
-    setPhase('map');
-    director.say('map.intro');
-  }, []);
+    pushStep(state, [area]);
+  }, [area, pushStep, state]);
 
   const goHome = useCallback(() => {
     audio.stop();
-    setPhase('home');
+    busy.current = false;
+    setPhase('cesta');
     setTask(null);
     setInterlude(null);
     // Na rozcestníku je restart neškodný, takže tady se nasadí čekající verze.
@@ -388,7 +385,9 @@ export function useSession(): SessionApi {
     interlude,
     state,
     settings,
-    litCount,
+    progress,
+    area,
+    setArea,
     mistakes,
     masteredToday,
     begin,
@@ -397,7 +396,6 @@ export function useSession(): SessionApi {
     finishIntro,
     finishCount,
     finishInterlude,
-    showMap,
     openParentZone,
     changeSettings,
     resetProgress,

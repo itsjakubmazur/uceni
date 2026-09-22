@@ -21,8 +21,6 @@ async function describe(page: Page): Promise<string> {
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   const base = typeof args.base === 'string' ? args.base : 'http://127.0.0.1:4173';
-  const area = args.pismena ? 'M' : '3';
-
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || undefined });
   const page = await browser.newPage({ viewport: { width: 1180, height: 820 } });
 
@@ -34,9 +32,15 @@ async function main(): Promise<void> {
 
   await page.goto(base, { waitUntil: 'load' });
   await page.mouse.click(590, 410);
-  await page.waitForTimeout(800);
-  await page.locator('button').filter({ hasText: area }).first().click({ force: true });
-  await page.waitForTimeout(1600);
+  await page.waitForTimeout(900);
+
+  // Přepnout cestu a vyrazit z místa, kde se pokračuje.
+  await page
+    .locator(`button[aria-label="${args.pismena ? 'písmena' : 'čísla'}"]`)
+    .click({ force: true });
+  await page.waitForTimeout(700);
+  await page.locator('[data-zastavka="ted"]').first().click({ force: true });
+  await page.waitForTimeout(1700);
 
   const seq: string[] = [];
 
