@@ -200,19 +200,6 @@ function Preferences({
         </div>
       </Field>
 
-      <Field label="Říkat i názvy písmen">
-        <Toggle
-          checked={settings.sayLetterNames}
-          label={'„Říká se mu em."'}
-          onChange={(v) => onChange({ sayLetterNames: v })}
-        />
-        <p className="mt-1 max-w-[560px] text-[14px] text-[#7A6A52]">
-          Výchozí je vypnuto. Názvy písmen jsou učivo druhé třídy a v pěti letech překážejí
-          při skládání slov: kdo zná M jako „em" a Á jako „á", přečte MÁMA jako „em-á-em-á".
-          Aplikace proto písmeno ukotvuje slovem.
-        </p>
-      </Field>
-
       <Field label="Hlasitost">
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-3 text-[15px]">

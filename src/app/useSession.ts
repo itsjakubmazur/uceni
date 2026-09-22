@@ -100,8 +100,8 @@ export function useSession(): SessionApi {
   const sessionId = useRef<string | null>(null);
   const correctFirstTry = useRef(0);
   const masteredTodayRef = useRef<ItemId[]>([]);
-  /** Položky, u kterých už dnes zazněla celá otázka. Podruhé stačí kratší pobídnutí. */
-  const heardFullPrompt = useRef<Set<ItemId>>(new Set());
+  /** Kolikrát už položka v sezení dostala pokyn. Řídí, jak moc se mluví. */
+  const promptCount = useRef<Map<ItemId, number>>(new Map());
 
   useEffect(() => {
     void (async () => {
@@ -139,33 +139,36 @@ export function useSession(): SessionApi {
    */
   const speakPrompt = useCallback((step: Task) => {
     audio.stop();
-    const first = !heardFullPrompt.current.has(step.itemId);
-    heardFullPrompt.current.add(step.itemId);
+    const seen = promptCount.current.get(step.itemId) ?? 0;
+    promptCount.current.set(step.itemId, seen + 1);
 
     if (step.kind === 'intro') {
-      const names = settingsRef.current.sayLetterNames && step.area === 'letters';
-      director.sayAlways(
-        say.intro(step.itemId),
-        'letter.write',
-        ...(names ? [`${speechKey(step.itemId)}.name`] : []),
-      );
+      director.sayAlways(say.intro(step.itemId));
       return;
     }
 
     if (step.kind === 'choose') {
-      if (first) director.sayAlways(say.where(step.itemId));
-      else director.sayAlways(say.word(step.itemId));
+      /*
+        Mluví se čím dál míň.
+
+        Poprvé celá otázka. Podruhé stačí samotné písmeno — dítě už ví, co
+        se po něm chce. Potřetí a dál ticho: dlaždice jsou na obrazovce,
+        úloha je pořád stejná a opakovat ji podvacáté je jen otravné.
+      */
+      if (seen === 0) director.sayAlways(say.where(step.itemId));
+      else if (seen === 1) director.sayAlways(say.this(step.itemId));
       return;
     }
 
     if (step.kind === 'match') {
-      director.sayAlways(`${speechKey(step.itemId)}.pickPicture`);
+      if (seen <= 1) director.sayAlways(`${speechKey(step.itemId)}.pickPicture`);
       return;
     }
 
     if (step.kind === 'count') {
-      // Pokyn k počítání stačí jednou za čas, ne u každého počítání.
-      director.say('count.prompt');
+      // Jak se počítá, pochopí dítě napoprvé. Podruhé už je to vysvětlování
+      // něčeho, co zrovna dělá.
+      director.sayOnce('pocitani', 'count.prompt');
     }
   }, []);
 
@@ -204,7 +207,7 @@ export function useSession(): SessionApi {
       setArea(chosen);
 
       director.reset();
-      heardFullPrompt.current = new Set();
+      promptCount.current = new Map();
       cursor.current = startSession(
         planSession(settings.sessionMinutes, rng, DEFAULT_CONFIG, availableCount(state, active)),
       );

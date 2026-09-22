@@ -104,9 +104,9 @@ describe('promluvy', () => {
     }
   });
 
-  it('ukotví písmeno slovem a nikdy nevysloví znak samotný', () => {
+  it('v každé promluvě k písmenu je buď jeho název, nebo jeho slovo', () => {
     for (const l of LETTERS) {
-      const forms = [l.word, l.wordGenitive, l.wordAccusative];
+      const forms = [l.word, l.wordGenitive, l.wordAccusative, l.letterName];
       for (const suffix of ['intro', 'this', 'where', 'tryFind', 'word', 'pickPicture', 'pickPictureRetry']) {
         const text = speechById.get(`letter.${l.glyph}.${suffix}`)!.text.toLowerCase();
         const anchored = forms.some((form) => text.includes(form.toLowerCase()));
@@ -115,32 +115,26 @@ describe('promluvy', () => {
     }
   });
 
-  it('vyvodí hlásku ze tří slov, ne z izolovaného zvuku', () => {
+  it('představí písmeno názvem a hned slovem', () => {
+    // „É jako ementál." Přesně to, co řekne rodič u obrázkové abecedy.
     for (const l of LETTERS) {
       const intro = speechById.get(`letter.${l.glyph}.intro`)!.text;
-      for (const word of [l.word, ...l.echoWords]) {
-        expect(intro.toLowerCase(), l.glyph).toContain(word.toLowerCase());
+      if (l.soundInsideWord) continue;
+      expect(intro, l.glyph).toBe(`${cap(l.letterName)} jako ${l.word}.`);
+    }
+  });
+
+  it('drží pokyny krátké, protože zazní mnohokrát', () => {
+    for (const l of LETTERS) {
+      for (const suffix of ['this', 'where', 'tryFind']) {
+        const text = speechById.get(`letter.${l.glyph}.${suffix}`)!.text;
+        expect(text.length, `${l.glyph}.${suffix}: „${text}"`).toBeLessThanOrEqual(26);
       }
     }
   });
 
-  it('drží název písmene stranou v samostatné promluvě', () => {
-    // Název je učivo 2. třídy. Smí existovat, ale nesmí se vloudit jinam.
-    for (const l of LETTERS) {
-      expect(speechById.get(`letter.${l.glyph}.name`)!.text).toBe(`Říká se mu ${l.letterName}.`);
-    }
-  });
-
-  it('neobsahují názvy písmen ani protahované hlásky', () => {
-    // „eř", „em", „bé" dítěti překážejí při skládání slov; „Mmm" syntéza neumí.
-    // \b je v JS jen ASCII, takže by „obtažené" falešně matchlo „en“.
-    // Hranice slova proto hlídáme přes Unicode písmena.
-    // „té" a „já" jsou zároveň běžná česká slova, ty hlídat nejde.
-    const NAMES = 'em|en|es|ef|el|er|eř|eš|bé|cé|čé|dé|gé|há|chá|ká|pé|vé|žet|zet|ypsilon';
-    const letterNames = new RegExp(`(?<!\\p{L})(${NAMES})(?!\\p{L})`, 'iu');
+  it('nikdy neprotahují hlásku, protože to syntéza neumí', () => {
     for (const s of SPEECH) {
-      if (s.id.endsWith('.name')) continue; // jediné místo, kde název smí zaznít
-      expect(s.text, s.id).not.toMatch(letterNames);
       expect(s.text, s.id).not.toMatch(/(.)\1{2,}/i);
     }
   });
@@ -252,3 +246,9 @@ describe('směr tahů', () => {
     }
   });
 });
+
+
+/** Velké první písmeno — stejně jako v content/speech.ts. */
+function cap(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}

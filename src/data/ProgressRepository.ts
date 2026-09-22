@@ -3,8 +3,6 @@ import type { Attempt, EngineState } from '../engine/types.ts';
 export interface Settings {
   sessionMinutes: number;
   areas: { numbers: boolean; letters: boolean };
-  /** Název písmene („Říká se mu em.") je učivo 2. třídy, proto výchozí false. */
-  sayLetterNames: boolean;
   speechVolume: number;
   effectsVolume: number;
 }
@@ -12,7 +10,6 @@ export interface Settings {
 export const DEFAULT_SETTINGS: Settings = {
   sessionMinutes: 10,
   areas: { numbers: true, letters: true },
-  sayLetterNames: false,
   speechVolume: 1,
   effectsVolume: 0.7,
 };

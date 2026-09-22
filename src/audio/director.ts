@@ -19,14 +19,21 @@ import { audio } from './AudioEngine.ts';
  */
 
 /** Jak dlouho se stejná věta nesmí zopakovat. */
-const COOLDOWN_MS = 45_000;
+const COOLDOWN_MS = 90_000;
 
-/** Jak často zazní mluvená pochvala. Zbytek odpovědí dostane jen zvuk. */
-const PRAISE_CHANCE = 0.55;
+/**
+ * Jak často zazní mluvená pochvala.
+ *
+ * Většina správných odpovědí dostane jen tón a reakci scény. Pochvala po
+ * každé odpovědi není pochvala, je to zvuková kulisa — a po dvaceti úlohách
+ * je k nesnesení.
+ */
+const PRAISE_CHANCE = 0.35;
 
 export class SpeechDirector {
   private lastSaid = new Map<string, number>();
   private lastVariant = new Map<string, string>();
+  private saidOnce = new Set<string>();
 
   /** Přehraje promluvy za sebou. Vrací, jestli něco opravdu zaznělo. */
   say(...ids: string[]): boolean {
@@ -36,6 +43,18 @@ export class SpeechDirector {
     for (const id of fresh) this.lastSaid.set(id, now);
     void audio.say(...fresh);
     return true;
+  }
+
+  /**
+   * Přehraje jen jednou za sezení.
+   *
+   * Pro pokyny, které dítě pochopí napoprvé: jak se počítá, jak se obtahuje.
+   * Podruhé už je to vysvětlování něčeho, co zrovna dělá.
+   */
+  sayOnce(key: string, ...ids: string[]): boolean {
+    if (this.saidOnce.has(key)) return false;
+    this.saidOnce.add(key);
+    return this.say(...ids);
   }
 
   /** Přehraje bez ohledu na to, kdy zazněla naposledy. Pro věci, které nesmí chybět. */
@@ -91,6 +110,7 @@ export class SpeechDirector {
   reset(): void {
     this.lastSaid.clear();
     this.lastVariant.clear();
+    this.saidOnce.clear();
   }
 }
 

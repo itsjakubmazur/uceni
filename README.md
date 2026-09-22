@@ -53,14 +53,18 @@ v nich chybovat.
 
 ## Jak se to učí
 
-Obě hlavní české metody prvopočátečního čtení učí **hlásku**, ne název písmene; názvy
-a abeceda jsou učivo druhé třídy. Syntéza ale izolovanou hlásku vyslovit neumí, takže
-se vyvozuje ze tří slov — přesně jak to dělá učitelka:
+Písmeno se představí tak, jak to dělá každý rodič u obrázkové abecedy — názvem a hned
+slovem, které jím začíná:
 
-> „Poslouchej. Mikuláš. Máma. Med. Slyšíš, jak začínají stejně?"
+> „É jako ementál."
 
-Písmeno pak v promluvách vystupuje jako **„písmeno od Mikuláše"** a nikdy se nevysloví
-samo. Podrobnosti proč jsou v hlavičce [`src/content/items.letters.ts`](src/content/items.letters.ts).
+Pokyny v úlohách jsou krátké („Kde je é?"), protože zazní mnohokrát za sezení. Izolovaná
+hláska se nepoužívá: syntéza ji vyslovit neumí, vyzkoušeno a zahozeno.
+
+**Mluví se čím dál míň.** Poprvé celá otázka, podruhé jen písmeno, potřetí a dál ticho.
+Pochvala zazní asi u třetiny správných odpovědí, zbytek dostane tón a reakci scény.
+Pokyny typu „jak se počítá" zazní jednou za sezení. Mezi tahy při obtahování se nemluví
+vůbec. Pravidla jsou v [`src/audio/director.ts`](src/audio/director.ts).
 
 Položka prochází pěti stupni: seznámení → poznávání ze dvou → poznávání ze tří až čtyř →
 přiřazení (počet k číslici, obrázek k písmenu) → obtahování. **Zvládnutá je při čtyřech

@@ -56,7 +56,7 @@ export function TraceTask({ itemId, onDone }: { itemId: ItemId; onDone: () => vo
     coveredRef.current = [];
     advancing.current = false;
     setTrail([]);
-    director.say('trace.start');
+    director.sayOnce('obtahovani', 'trace.start');
   }, [itemId]);
 
   useEffect(() => {

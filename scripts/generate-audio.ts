@@ -47,15 +47,32 @@ async function main(): Promise<void> {
     throw new Error(`Tyhle promluvy v content/speech.ts nejsou: ${missing.join(', ')}`);
   }
 
+  /*
+    Mimo macOS se jméno hlasu nedá zjistit dopředu — vybírá se až při
+    preflightu ze seznamu nainstalovaných hlasů. Porovnání přes hash by pak
+    označilo za změněné úplně všechno a běh nanečisto by lhal.
+
+    Manifest si ale u každého klipu pamatuje, jakým hlasem vznikl, takže se
+    hash dá dopočítat zpětně s ním. Výsledek je přesný: změněné jsou právě
+    ty promluvy, kterým se změnil text.
+  */
+  const voiceKnown = !String(provider.signature.voice ?? '').startsWith('(');
+
   const todo = lines.filter((line) => {
     if (force) return true;
     const entry = manifest[line.id];
-    return !entry || entry.hash !== hashLine(line.text, provider.signature);
+    if (!entry) return true;
+
+    const signature = voiceKnown ? provider.signature : { ...provider.signature, voice: entry.voice };
+    return entry.hash !== hashLine(line.text, signature);
   });
 
   console.log(`Promluv celkem: ${SPEECH.length}`);
   console.log(`Ke zpracování:  ${todo.length}${force ? ' (--force)' : ''}`);
   console.log(`Provider:       ${provider.name} ${JSON.stringify(provider.signature)}`);
+  if (dry && !voiceKnown) {
+    console.log('(hlas se vybere až na macOS; porovnáno proti hlasu z manifestu)');
+  }
 
   if (!todo.length) {
     console.log('\nVšechno je aktuální, není co dělat.');
@@ -80,6 +97,7 @@ async function main(): Promise<void> {
       });
       manifest[line.id] = {
         hash: hashLine(line.text, provider.signature),
+        text: line.text,
         file: relative(AUDIO_DIR, result.path),
         provider: provider.name,
         voice: String(provider.signature.voice ?? ''),

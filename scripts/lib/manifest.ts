@@ -7,6 +7,14 @@ export interface ManifestEntry {
   readonly hash: string;
   /** Název souboru včetně přípony, relativně k adresáři s audiem. */
   readonly file: string;
+  /**
+   * Text, ze kterého klip vznikl.
+   *
+   * Drží se tu proto, aby šlo i bez přístupu k hlasu poznat, co se doopravdy
+   * změnilo. Bez toho hlásil běh nanečisto, že se přegeneruje všechno, jen
+   * protože si mimo macOS neumí zjistit jméno hlasu.
+   */
+  readonly text?: string;
   readonly provider: string;
   readonly voice: string;
   readonly bytes: number;
